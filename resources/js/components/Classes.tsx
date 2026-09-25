@@ -1,6 +1,4 @@
-"use client";
 
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { classes, site, type FitnessClass } from "@/lib/site";
 import { Icon } from "./Icon";
@@ -45,12 +43,12 @@ export function Classes() {
                 style={{ "--accent": c.accent } as React.CSSProperties}
               >
                 {c.image ? (
-                  <Image
+                  <img
                     src={c.image}
                     alt=""
-                    fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    className="object-cover object-bottom opacity-60 transition duration-700 group-hover:scale-105 group-hover:opacity-80"
+                    className="absolute inset-0 h-full w-full object-cover object-bottom opacity-60 transition duration-700 group-hover:scale-105 group-hover:opacity-80"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <div
@@ -143,7 +141,7 @@ function ClassDialog({ c, onClose }: { c: FitnessClass; onClose: () => void }) {
 
         <div className="relative min-h-[320px] overflow-hidden bg-ink md:min-h-[520px]">
           {c.image ? (
-            <Image src={c.image} alt={`Afiș ${c.name} — MUV Exclusive`} fill sizes="(min-width: 768px) 40vw, 100vw" className="object-contain" />
+            <img src={c.image} alt={`Afiș ${c.name} — MUV Exclusive`} className="absolute inset-0 h-full w-full object-contain" loading="lazy" decoding="async" />
           ) : (
             <div
               className="absolute inset-0 grid place-items-center text-white/80"

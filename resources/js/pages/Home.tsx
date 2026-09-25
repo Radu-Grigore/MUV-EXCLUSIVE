@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Classes } from "@/components/Classes";
 import { ContactForm } from "@/components/ContactForm";
 import { Countdown } from "@/components/Countdown";
@@ -94,13 +93,12 @@ function Hero() {
         <Reveal delay={200} className="relative mx-auto w-full max-w-[300px] sm:max-w-[420px]">
           <div className="absolute -inset-6 animate-glow rounded-t-full rounded-b-[3rem] border border-gold/60 shadow-[0_0_60px_8px_rgba(230,207,166,0.55)]" />
           <div className="relative aspect-[380/640] overflow-hidden rounded-t-full rounded-b-[2.5rem] bg-sand shadow-[0_40px_80px_-40px_rgba(42,32,26,0.6)]">
-            <Image
+            <img
               src="/images/athlete.webp"
               alt="Femeie antrenându-se în studioul MUV Exclusive"
-              fill
-              preload
-              sizes="(min-width: 1024px) 420px, 90vw"
-              className="object-cover object-top"
+              className="absolute inset-0 h-full w-full object-cover object-top"
+              fetchPriority="high"
+              decoding="async"
             />
           </div>
 
@@ -151,12 +149,12 @@ function About() {
           <div className="absolute inset-0 -z-10 scale-110 rounded-full bg-gold-soft/60 blur-3xl" />
           <div className="relative aspect-square overflow-hidden rounded-full border border-gold/40 p-3">
             <div className="relative h-full w-full overflow-hidden rounded-full">
-              <Image
+              <img
                 src="/images/logo-sign.webp"
                 alt="Logo MUV Exclusive — Women Only Fitness Studio, iluminat pe perete"
-                fill
-                sizes="(min-width: 1024px) 448px, 90vw"
-                className="object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="lazy"
+                decoding="async"
               />
             </div>
           </div>
@@ -270,23 +268,23 @@ function Gallery() {
         <div className="mt-12 grid gap-5 lg:grid-cols-3">
           <Reveal className="lg:col-span-2">
             <figure className="group relative aspect-[16/9] overflow-hidden rounded-[2rem] bg-sand">
-              <Image
+              <img
                 src="/images/campaign.webp"
                 alt="Afiș MUV Exclusive — În curând în Ploiești, zona Albert, MRS Village"
-                fill
-                sizes="(min-width: 1024px) 66vw, 100vw"
-                className="object-cover transition duration-700 group-hover:scale-[1.03]"
+                className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
               />
             </figure>
           </Reveal>
           <Reveal delay={120}>
             <figure className="group relative aspect-square overflow-hidden rounded-[2rem] bg-sand lg:aspect-auto lg:h-full">
-              <Image
+              <img
                 src="/images/classes-poster.webp"
                 alt="Afiș cu clasele MUV Exclusive: Khai Bo, Functional Training, Step Aerobic, Total Body, Pilates, Tabata, Instructor Personal"
-                fill
-                sizes="(min-width: 1024px) 33vw, 100vw"
-                className="object-cover object-top transition duration-700 group-hover:scale-[1.03]"
+                className="absolute inset-0 h-full w-full object-cover object-top transition duration-700 group-hover:scale-[1.03]"
+                loading="lazy"
+                decoding="async"
               />
             </figure>
           </Reveal>

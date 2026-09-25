@@ -1,4 +1,3 @@
-"use client";
 
 import { useState } from "react";
 import { classes, site } from "@/lib/site";
