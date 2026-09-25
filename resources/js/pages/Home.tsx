@@ -11,7 +11,6 @@ import { Hero } from '@/components/sections/Hero';
 import { Kids } from '@/components/sections/Kids';
 import { Manifesto } from '@/components/sections/Manifesto';
 import { Opening } from '@/components/sections/Opening';
-import { VelocityMarquee } from '@/components/VelocityMarquee';
 import { gsap, initSmoothScroll, ScrollTrigger, SplitText } from '@/lib/scroll';
 
 export default function Home() {
@@ -53,7 +52,6 @@ export default function Home() {
             <main className="relative z-10 bg-cream lg:rounded-b-[3rem] lg:shadow-[0_40px_60px_-30px_rgba(22,17,14,0.45)]">
                 <Hero />
                 <Manifesto />
-                <VelocityMarquee />
                 <Classes />
                 <Kids />
                 <Gallery />

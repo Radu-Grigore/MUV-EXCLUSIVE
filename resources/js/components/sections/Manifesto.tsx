@@ -2,6 +2,7 @@ import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { asset } from '@/lib/site';
 import { gsap } from '@/lib/scroll';
+import { VelocityMarquee } from '../VelocityMarquee';
 
 const text =
     'Un studio creat doar pentru femei. Un loc cald, intim și elegant, în care te miști în ritmul tău — fără presiune, fără priviri. Aici prinzi putere, îți găsești echilibrul și cunoști femei care te susțin.';
@@ -36,8 +37,8 @@ export function Manifesto() {
     );
 
     return (
-        <section ref={root} id="despre" className="relative overflow-hidden py-20 sm:py-24">
-            <div className="mx-auto grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:px-12">
+        <section ref={root} id="despre" data-snap className="relative flex flex-col overflow-hidden pt-20 sm:pt-24 lg:min-h-[calc(100svh-72px)] lg:pt-12">
+            <div className="mx-auto grid w-full max-w-[1440px] gap-14 px-5 sm:px-8 lg:my-auto lg:grid-cols-12 lg:px-12">
                 <div className="lg:col-span-3">
                     <p className="eyebrow flex items-center gap-3 text-bronze">
                         <span className="h-px w-8 bg-gold" /> Despre MUV
@@ -80,6 +81,7 @@ export function Manifesto() {
                     <p className="mt-14 hidden font-script text-6xl text-bronze lg:block">More than a workout, a better you.</p>
                 </div>
             </div>
+            <VelocityMarquee className="mt-12 shrink-0 lg:mt-6" />
         </section>
     );
 }

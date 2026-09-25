@@ -58,7 +58,7 @@ export function Hero() {
     );
 
     return (
-        <section ref={root} id="top" className="relative min-h-[640px] p-2 sm:p-3 lg:min-h-[720px]" style={{ height: '100svh' }}>
+        <section ref={root} id="top" data-snap className="relative min-h-[640px] p-2 sm:p-3 lg:min-h-[720px]" style={{ height: '100svh' }}>
             <div className="relative isolate flex h-full flex-col overflow-hidden rounded-[1.75rem] pt-[64px] sm:rounded-[2.25rem]">
                 <div
                     className="pointer-events-none absolute inset-0 -z-10"

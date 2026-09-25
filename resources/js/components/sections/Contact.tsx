@@ -15,8 +15,8 @@ export function Contact() {
     ];
 
     return (
-        <section id="contact" className="py-20 sm:py-24">
-            <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
+        <section id="contact" data-snap className="py-20 sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12">
+            <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
                 <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                     <div>
                         <p className="eyebrow flex items-center gap-3 text-bronze">

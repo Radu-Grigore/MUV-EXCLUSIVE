@@ -68,13 +68,13 @@ export function Gallery() {
     );
 
     return (
-        <section ref={root} id="galerie" className="relative overflow-hidden bg-espresso py-20 text-cream sm:py-24">
+        <section ref={root} id="galerie" data-snap className="relative overflow-hidden bg-espresso py-20 text-cream sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12">
             <div
                 className="pointer-events-none absolute inset-0"
                 style={{ background: 'radial-gradient(45% 55% at 28% 50%, rgba(199,160,106,0.28) 0%, transparent 70%)' }}
             />
 
-            <div className="relative mx-auto grid max-w-[1440px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16 lg:px-12">
+            <div className="relative mx-auto grid w-full max-w-[1440px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16 lg:px-12">
                 <div data-showcase-poster className="[perspective:1200px] lg:col-span-6">
                     <button
                         ref={frame}

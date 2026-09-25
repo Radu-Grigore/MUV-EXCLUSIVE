@@ -46,7 +46,7 @@ export function Opening() {
     );
 
     return (
-        <section ref={root} id="deschidere" data-scroll-edge className="relative overflow-hidden bg-ink py-20 text-cream sm:flex sm:min-h-[calc(100svh-72px)] sm:flex-col sm:justify-center sm:py-24">
+        <section ref={root} id="deschidere" data-snap className="relative overflow-hidden bg-ink py-20 text-cream sm:flex sm:min-h-[calc(100svh-72px)] sm:flex-col sm:justify-center sm:py-24">
             <div className="pointer-events-none absolute inset-0 opacity-70">
                 <ShaderClouds colors={MIST} speed={0.7} />
             </div>

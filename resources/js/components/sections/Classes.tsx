@@ -58,7 +58,7 @@ export function Classes() {
         <section
             ref={root}
             id="clase"
-            data-scroll-edge
+            data-snap
             className="relative bg-sand py-20 text-espresso sm:py-24 lg:flex lg:h-[calc(100svh-72px)] lg:min-h-[560px] lg:flex-col lg:py-10"
         >
             {/* Desktop: the section fills the screen under the header and the posters take whatever height is left. */}
@@ -77,10 +77,10 @@ export function Classes() {
 
             <ul
                 ref={track}
-                className="no-scrollbar mx-auto mt-10 flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-8 lg:mt-8 lg:flex lg:min-h-0 lg:w-full lg:flex-1 lg:items-start lg:justify-center lg:px-12 lg:pb-0 lg:[container-type:size]"
+                className="no-scrollbar mx-auto mt-10 flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-8 lg:mt-8 lg:flex lg:min-h-0 lg:w-full lg:flex-1 lg:items-center lg:justify-center lg:px-12 lg:pb-0 lg:[container-type:size]"
             >
                 {classes.map((c) => (
-                    <li key={c.id} data-poster-item className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none lg:w-[min(calc((100cqh_-_4rem)_*_0.6667),calc((100cqw_-_10.5rem)_/_4))] lg:max-w-none">
+                    <li key={c.id} data-poster-item className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none lg:w-[min(calc((100cqh_-_4rem)_*_0.7187),calc((100cqw_-_10.5rem)_/_4))] lg:max-w-none">
                         <PosterCard
                             c={c}
                             onOpen={() => {
@@ -121,9 +121,9 @@ function PosterCard({ c, onOpen }: { c: FitnessClass; onOpen: () => void }) {
         >
             <span className="block overflow-hidden rounded-[1.25rem] bg-espresso shadow-[0_24px_50px_-30px_rgba(42,32,26,0.7)] transition-[transform,box-shadow] duration-700 ease-out-expo group-hover:-translate-y-2 group-hover:shadow-[0_40px_70px_-35px_rgba(42,32,26,0.8)] group-focus-visible:ring-2 group-focus-visible:ring-bronze">
                 {poster ? (
-                    <img src={poster} alt={`Afiș ${c.name} — MUV Exclusive`} loading="lazy" decoding="async" className="block h-auto w-full" />
+                    <img src={poster} alt={`Afiș ${c.name} — MUV Exclusive`} loading="lazy" decoding="async" className="block aspect-[1063/1479] w-full object-cover" />
                 ) : (
-                    <span className="flex aspect-[2/3] w-full items-end p-6 font-display text-4xl text-cream">{c.name}</span>
+                    <span className="flex aspect-[1063/1479] w-full items-end p-6 font-display text-4xl text-cream">{c.name}</span>
                 )}
             </span>
             <span className="mt-3 flex shrink-0 items-center justify-between gap-3 px-1">

@@ -31,16 +31,103 @@ export function initSmoothScroll() {
         scrollToTarget(hash);
     });
 
-    if (lenis || prefersReducedMotion()) return;
+    // Phones and tablets keep native scrolling, with CSS scroll-snap on the sections (see app.css).
+    if (lenis || window.matchMedia('(pointer: coarse)').matches) return;
 
     lenis = new Lenis({
         lerp: 0.09,
         allowNestedScroll: true,
+        virtualScroll: (data) => sectionLock.onWheel(data),
     });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => lenis?.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
+
+    window.addEventListener('keydown', sectionLock.onKey);
 }
+
+/** Every section boundary the page can rest on (desktop), in page pixels. */
+function sectionStops() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const stops = new Set<number>([0, Math.round(max)]);
+    document.querySelectorAll<HTMLElement>('[data-snap]').forEach((section) => {
+        const isHero = section.id === 'top';
+        const start = isHero ? 0 : section.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT;
+        stops.add(Math.round(start));
+        // Taller than the screen: also stop at its bottom edge so nothing is skipped.
+        const overflow = section.offsetHeight - (window.innerHeight - (isHero ? 0 : HEADER_HEIGHT));
+        if (overflow > window.innerHeight * 0.2) stops.add(Math.round(start + overflow));
+    });
+    return [...stops].filter((v) => v >= 0 && v <= max).sort((x, y) => x - y);
+}
+
+/**
+ * Desktop section lock: one wheel/trackpad gesture moves exactly one section, which lands
+ * right under the header. Input during the animation, and trackpad inertia right after it,
+ * is swallowed so sections are never skipped.
+ */
+const sectionLock = (() => {
+    let animating = false;
+    let waitForPause = false;
+    let lastInput = 0;
+    let accumulated = 0;
+
+    const go = (direction: number) => {
+        if (!lenis) return;
+        const current = lenis.animatedScroll;
+        const stops = sectionStops();
+        const target = direction > 0 ? stops.find((v) => v > current + 4) : [...stops].reverse().find((v) => v < current - 4);
+        if (target === undefined) return;
+        animating = true;
+        lenis.scrollTo(target, {
+            duration: 1.1,
+            easing: (t) => 1 - Math.pow(1 - t, 4),
+            lock: true,
+            force: true,
+            onComplete: () => {
+                animating = false;
+                waitForPause = true;
+            },
+        });
+    };
+
+    const onWheel = ({ deltaY, event }: { deltaY: number; event: WheelEvent | TouchEvent }) => {
+        // Leave zoom, touch, paused scrolling (open dialogs) and scrollable panels to Lenis.
+        if (!event.type.includes('wheel') || (event as WheelEvent).ctrlKey || lenis?.isStopped) return true;
+        if (event.composedPath().some((n) => n instanceof HTMLElement && n.hasAttribute('data-lenis-prevent'))) return true;
+        if (event.cancelable) event.preventDefault();
+
+        const now = performance.now();
+        const gap = now - lastInput;
+        lastInput = now;
+        if (animating) return false;
+        if (waitForPause) {
+            if (gap < 200) return false; // still the tail of the previous gesture
+            waitForPause = false;
+        }
+        if (gap > 200) accumulated = 0;
+        accumulated += deltaY;
+        if (Math.abs(accumulated) < 25) return false;
+        const direction = Math.sign(accumulated);
+        accumulated = 0;
+        go(direction);
+        return false;
+    };
+
+    // Keyboard: arrows, Page Up/Down and space move one section too.
+    const onKey = (e: KeyboardEvent) => {
+        if (!lenis || lenis.isStopped || animating) return;
+        const target = e.target as HTMLElement;
+        if (target.closest('input, textarea, select, [contenteditable]')) return;
+        const down = ['ArrowDown', 'PageDown', ' '].includes(e.key) && !e.shiftKey;
+        const up = ['ArrowUp', 'PageUp'].includes(e.key) || (e.key === ' ' && e.shiftKey);
+        if (!down && !up) return;
+        e.preventDefault();
+        go(down ? 1 : -1);
+    };
+
+    return { onWheel, onKey };
+})();
 
 /** Height of the fixed header; every section lands with its top edge right below it. */
 const HEADER_HEIGHT = 72;
@@ -52,16 +139,9 @@ export function isNavigating() {
     return navigating;
 }
 
-/** Gap between the header and a section's first content after a menu jump. */
-const CONTENT_GAP = 32;
-
-/** Lands the section's first content CONTENT_GAP px below the header, whatever its top padding. */
+/** Every section lands with its top edge right under the header (the hero at the very top). */
 function targetY(el: HTMLElement) {
-    const top = el.getBoundingClientRect().top + window.scrollY;
-    // Full-bleed sections (data-scroll-edge) land with their own top edge under the header.
-    if (el.hasAttribute('data-scroll-edge')) return Math.max(0, top - HEADER_HEIGHT);
-    const padding = parseFloat(getComputedStyle(el).paddingTop) || 0;
-    return Math.max(0, top + padding - HEADER_HEIGHT - CONTENT_GAP);
+    return Math.max(0, el.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT);
 }
 
 export function scrollToTarget(target: string | HTMLElement | number) {

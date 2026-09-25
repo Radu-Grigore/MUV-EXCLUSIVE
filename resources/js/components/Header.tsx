@@ -1,20 +1,18 @@
 import { useEffect, useRef, useState } from 'react';
 import { navLinks, site } from '@/lib/site';
-import { isNavigating, lockScroll, onScroll, scrollToTarget } from '@/lib/scroll';
+import { lockScroll, onScroll, scrollToTarget } from '@/lib/scroll';
 import { Icon } from './Icon';
 import { Logo } from './Logo';
 
 export function Header() {
     const [scrolled, setScrolled] = useState(false);
-    const [hidden, setHidden] = useState(false);
     const [open, setOpen] = useState(false);
     const progress = useRef<HTMLSpanElement>(null);
 
     useEffect(
         () =>
-            onScroll((y, direction) => {
+            onScroll((y) => {
                 setScrolled(y > 24);
-                setHidden(!isNavigating() && y > 240 && direction > 0);
                 const max = document.documentElement.scrollHeight - window.innerHeight;
                 if (progress.current) progress.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
             }),
@@ -39,7 +37,7 @@ export function Header() {
         <>
             <header
                 className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,box-shadow] duration-500 ease-out-expo ${
-                    hidden && !open ? '-translate-y-full' : 'translate-y-0'
+                    'translate-y-0'
                 } ${scrolled && !open ? 'bg-cream/80 shadow-[0_1px_0_rgba(139,108,79,0.12)] backdrop-blur-lg' : ''}`}
             >
                 <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12">

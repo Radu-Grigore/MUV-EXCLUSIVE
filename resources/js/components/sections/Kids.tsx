@@ -84,8 +84,8 @@ export function Kids() {
     };
 
     return (
-        <section ref={root} id="kids" className="px-3 py-3 sm:px-5 sm:py-5">
-            <div data-kids-frame className="relative isolate mx-auto max-w-[1600px] overflow-hidden rounded-[2rem] bg-[#f4efe2] sm:rounded-[3rem] lg:min-h-[min(860px,100svh)]">
+        <section ref={root} id="kids" data-snap className="px-3 py-3 sm:px-5 sm:py-5">
+            <div data-kids-frame className="relative isolate mx-auto max-w-[1600px] overflow-hidden rounded-[2rem] bg-[#f4efe2] sm:rounded-[3rem] lg:min-h-[calc(100svh-112px)]">
                 {/* The room */}
                 <div className="absolute inset-x-0 top-0 -z-10 h-[360px] overflow-hidden sm:h-[440px] lg:inset-0 lg:h-auto">
                     <img
@@ -103,7 +103,7 @@ export function Kids() {
 
                 <KidsPlayground />
 
-                <div className="relative z-20 mx-auto flex max-w-[1300px] flex-col gap-10 px-4 pt-[280px] pb-6 sm:px-10 sm:pt-[340px] sm:pb-10 lg:min-h-[min(860px,100svh)] lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-16">
+                <div className="relative z-20 mx-auto flex max-w-[1300px] flex-col gap-10 px-4 pt-[280px] pb-6 sm:px-10 sm:pt-[340px] sm:pb-10 lg:min-h-[calc(100svh-112px)] lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-16">
                     {/* Text card */}
                     <div data-kids-card className="rounded-[2rem] bg-white/85 p-7 shadow-[0_40px_80px_-40px_rgba(42,32,26,0.55)] backdrop-blur-md sm:p-10 lg:max-w-[520px]">
                         <span

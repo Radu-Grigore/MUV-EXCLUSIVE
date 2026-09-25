@@ -111,3 +111,21 @@ html.has-cursor textarea {
   display: none;
 }
 
+/* Phones/tablets: native scroll-snap so each section settles right under the fixed header.
+   Sections taller than the screen still scroll freely inside and only lock at their edges. */
+@media (pointer: coarse) {
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 0;
+  }
+  [data-snap] {
+    scroll-snap-align: start;
+    scroll-margin-top: 72px;
+  }
+  #top[data-snap] {
+    scroll-margin-top: 0;
+  }
+  footer {
+    scroll-snap-align: end;
+  }
+}
