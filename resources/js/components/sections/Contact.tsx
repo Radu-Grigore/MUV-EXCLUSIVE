@@ -15,23 +15,23 @@ export function Contact() {
     ];
 
     return (
-        <section id="contact" data-snap className="py-20 sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12">
+        <section id="contact" data-snap className="phone-screen py-6 sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12">
             <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
                 <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                     <div>
                         <p className="eyebrow flex items-center gap-3 text-bronze">
                             <span className="h-px w-8 bg-gold" /> Contact
                         </p>
-                        <h2 data-split className="mt-5 font-display text-5xl leading-none font-light sm:text-7xl">
+                        <h2 data-split className="mt-3 font-display text-[2.4rem] leading-none font-light sm:mt-5 sm:text-7xl">
                             Hai să ne <em className="text-bronze">cunoaștem</em>
                         </h2>
                     </div>
-                    <p className="max-w-sm text-cocoa">Ai o întrebare sau vrei să îți rezervi locul? Suntem la un mesaj distanță.</p>
+                    <p className="hidden max-w-sm text-cocoa sm:block">Ai o întrebare sau vrei să îți rezervi locul? Suntem la un mesaj distanță.</p>
                 </Reveal>
 
-                <div className="mt-14 grid grid-cols-1 gap-5 lg:grid-cols-[1fr_1.05fr]">
+                <div className="mt-5 grid grid-cols-1 gap-4 sm:mt-14 sm:gap-5 lg:grid-cols-[1fr_1.05fr]">
                     <Reveal className="flex min-w-0 flex-col gap-5">
-                        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                        <div className="grid grid-cols-4 gap-2 sm:grid-cols-2 sm:gap-3">
                             {cards.map((c) => {
                                 const external = c.href.startsWith('http');
                                 return (
@@ -40,26 +40,28 @@ export function Contact() {
                                         href={c.href}
                                         target={external ? '_blank' : undefined}
                                         rel={external ? 'noopener noreferrer' : undefined}
-                                        className="group flex items-center gap-4 rounded-3xl border border-bronze/15 bg-white/60 p-5 transition-[background-color,box-shadow] duration-500 hover:bg-white hover:shadow-[0_24px_50px_-30px_rgba(139,108,79,0.6)]"
+                                        className="group flex flex-col items-center gap-1.5 rounded-2xl border border-bronze/15 bg-white/60 px-1 py-2.5 transition sm:flex-row sm:gap-4 sm:rounded-3xl sm:p-5-[background-color,box-shadow] duration-500 hover:bg-white hover:shadow-[0_24px_50px_-30px_rgba(139,108,79,0.6)]"
                                     >
                                         <span className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-sand text-bronze transition-colors group-hover:bg-espresso group-hover:text-gold-soft">
                                             <Icon name={c.icon} className="h-5 w-5" />
                                         </span>
-                                        <span className="min-w-0">
-                                            <span className="eyebrow block text-bronze">{c.label}</span>
-                                            <span className="mt-1 block truncate text-sm font-medium text-espresso">{c.value}</span>
+                                        <span className="min-w-0 text-center sm:text-left">
+                                            <span className="block text-[0.66rem] font-medium text-bronze sm:text-[0.7rem] sm:tracking-[0.34em] sm:uppercase">{c.label}</span>
+                                            <span className="mt-1 hidden truncate text-sm font-medium text-espresso sm:block">{c.value}</span>
                                         </span>
                                     </a>
                                 );
                             })}
                         </div>
-                        <MapFacade />
+                        <div className="hidden min-h-[280px] flex-1 flex-col sm:flex">
+                            <MapFacade />
+                        </div>
                     </Reveal>
 
                     <Reveal delay={120}>
                         <div className="h-full rounded-[1.75rem] bg-espresso p-5 text-cream sm:rounded-[2rem] sm:p-10">
-                            <h3 className="font-display text-3xl font-light sm:text-4xl">Scrie-ne un mesaj</h3>
-                            <p className="mt-1 mb-5 text-sm text-cream/60 sm:mt-2 sm:mb-8">Completează formularul și îți răspundem rapid pe WhatsApp.</p>
+                            <h3 className="mb-3 font-display text-2xl font-light sm:mb-0 sm:text-4xl">Scrie-ne un mesaj</h3>
+                            <p className="mt-1 mb-4 hidden text-sm text-cream/60 sm:mt-2 sm:mb-8 sm:block">Completează formularul și îți răspundem rapid pe WhatsApp.</p>
                             <ContactForm />
                         </div>
                     </Reveal>

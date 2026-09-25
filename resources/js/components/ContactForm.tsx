@@ -67,7 +67,7 @@ export function ContactForm() {
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className={`${field} resize-none`}
+                    className={`${field} h-[4.25rem] resize-none sm:h-auto`}
                     placeholder="Spune-ne cu ce te putem ajuta"
                 />
             </label>
@@ -77,7 +77,7 @@ export function ContactForm() {
             >
                 <Icon name="whatsapp" className="h-4 w-4" /> Trimite pe WhatsApp
             </button>
-            <p className="text-center text-xs text-cream/50">
+            <p className="hidden text-center text-xs text-cream/50 sm:block">
                 Sau sună-ne direct la{' '}
                 <a href={site.phoneHref} className="font-semibold text-gold-soft underline-offset-4 hover:underline">
                     {site.phone}

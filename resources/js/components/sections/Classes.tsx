@@ -45,27 +45,28 @@ export function Classes() {
             ref={root}
             id="clase"
             data-snap
-            className="relative bg-sand py-20 text-espresso sm:py-24 lg:flex lg:h-[calc(100svh-72px)] lg:min-h-[560px] lg:flex-col lg:py-10"
+            className="phone-screen relative bg-sand py-6 text-espresso sm:py-24 lg:flex lg:h-[calc(100svh-72px)] lg:min-h-[560px] lg:flex-col lg:py-10"
         >
             {/* Desktop: the section fills the screen under the header and the posters take whatever height is left. */}
             <div className="mx-auto max-w-[1440px] px-5 text-center sm:px-8 lg:shrink-0 lg:px-12">
                 <p className="eyebrow inline-flex items-center gap-3 text-bronze">
                     <span className="h-px w-8 bg-gold" /> Clasele noastre <span className="h-px w-8 bg-gold" />
                 </p>
-                <h2 data-split className="mt-4 font-display text-5xl leading-[0.95] sm:text-6xl lg:text-[clamp(2.75rem,6svh,4.5rem)]">
+                <h2 data-split className="mt-3 font-display text-[2.1rem] leading-[0.95] sm:mt-4 sm:text-6xl lg:text-[clamp(2.75rem,6svh,4.5rem)]">
                     Găsește mișcarea <em className="text-bronze">care ți se potrivește</em>
                 </h2>
-                <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-cocoa">
-                    Experiențe diferite, un singur scop: să te simți puternică, liberă și bine în pielea ta. Apasă pe o clasă pentru detalii.
+                <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-cocoa sm:mt-4">
+                    <span className="hidden sm:inline">Experiențe diferite, un singur scop: să te simți puternică, liberă și bine în pielea ta. </span>
+                    Apasă pe o clasă pentru detalii.
                 </p>
             </div>
 
             <ul
                 ref={track}
-                className="mx-auto mt-8 grid max-w-[1440px] grid-cols-2 gap-x-3 gap-y-6 px-4 sm:mt-10 sm:gap-6 sm:px-8 lg:mt-8 lg:flex lg:min-h-0 lg:w-full lg:flex-1 lg:items-center lg:justify-center lg:px-12 lg:pb-0 lg:[container-type:size]"
+                className="mx-auto mt-5 grid max-w-[1440px] grid-cols-[repeat(2,auto)] justify-center gap-x-3 gap-y-4 px-4 sm:mt-10 sm:grid-cols-2 sm:gap-6 sm:px-8 lg:mt-8 lg:flex lg:min-h-0 lg:w-full lg:flex-1 lg:items-center lg:justify-center lg:px-12 lg:pb-0 lg:[container-type:size]"
             >
                 {classes.map((c) => (
-                    <li key={c.id} data-poster-item className="min-w-0 lg:w-[min(calc((100cqh_-_4rem)_*_0.7187),calc((100cqw_-_10.5rem)_/_4))] lg:max-w-none">
+                    <li key={c.id} data-poster-item className="w-[min(calc((100vw_-_2.75rem)_/_2),calc((100svh_-_23.5rem)_*_0.3594))] min-w-0 sm:w-auto lg:w-[min(calc((100cqh_-_4rem)_*_0.7187),calc((100cqw_-_10.5rem)_/_4))] lg:max-w-none">
                         <PosterCard
                             c={c}
                             onOpen={() => {
@@ -107,10 +108,10 @@ function PosterCard({ c, onOpen }: { c: FitnessClass; onOpen: () => void }) {
             </span>
             <span className="mt-2.5 flex shrink-0 items-center justify-between gap-2 px-0.5 sm:mt-3 sm:gap-3 sm:px-1">
                 <span className="min-w-0">
-                    <span className="block truncate font-display text-xl leading-none sm:text-2xl">{c.name}</span>
+                    <span className="block truncate font-display text-xl leading-none max-[400px]:text-lg sm:text-2xl">{c.name}</span>
                     <span className="mt-1.5 hidden truncate text-[0.6rem] tracking-[0.2em] text-cocoa/70 uppercase sm:block">{c.keywords.join(' · ')}</span>
                 </span>
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-espresso/15 sm:h-10 sm:w-10 transition-colors duration-500 group-hover:border-espresso group-hover:bg-espresso group-hover:text-cream">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-espresso/15 max-[400px]:hidden sm:h-10 sm:w-10 transition-colors duration-500 group-hover:border-espresso group-hover:bg-espresso group-hover:text-cream">
                     <Icon name="plus" className="h-4 w-4" />
                 </span>
             </span>

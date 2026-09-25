@@ -38,7 +38,7 @@ export function Countdown() {
     return (
         <div className="grid grid-cols-4 gap-2 sm:gap-4" role="timer" aria-label="Timp rămas până la deschidere">
             {labels.map(([key, label]) => (
-                <div key={key} className="flex flex-col items-center rounded-2xl border border-gold/20 bg-white/[0.04] px-1 py-4 sm:px-4 sm:py-6">
+                <div key={key} className="flex flex-col items-center rounded-2xl border border-gold/20 bg-white/[0.04] px-1 py-3 sm:px-4 sm:py-6">
                     <NumberFlow
                         value={parts[key]}
                         format={{ minimumIntegerDigits: 2 }}

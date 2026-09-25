@@ -142,7 +142,7 @@ export function KidsPlayground() {
     );
 
     return (
-        <div ref={root} aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[360px] overflow-hidden sm:h-[440px] lg:inset-0 lg:h-auto">
+        <div ref={root} aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[45%] overflow-hidden sm:h-[440px] lg:inset-0 lg:h-auto">
             {/* Flight path + plane, in a shared coordinate space */}
             <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice" className="absolute inset-0 h-full w-full">
                 <path

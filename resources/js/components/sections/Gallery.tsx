@@ -68,14 +68,14 @@ export function Gallery() {
     );
 
     return (
-        <section ref={root} id="galerie" data-snap className="relative overflow-hidden bg-espresso py-20 text-cream sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12">
+        <section ref={root} id="galerie" data-snap className="phone-screen relative overflow-hidden bg-espresso py-6 text-cream sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12">
             <div
                 className="pointer-events-none absolute inset-0"
                 style={{ background: 'radial-gradient(45% 55% at 28% 50%, rgba(199,160,106,0.28) 0%, transparent 70%)' }}
             />
 
-            <div className="relative mx-auto grid w-full max-w-[1440px] items-center gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:gap-16 lg:px-12">
-                <div data-showcase-poster className="[perspective:1200px] lg:col-span-6">
+            <div className="relative mx-auto grid w-full max-w-[1440px] items-center gap-5 px-5 sm:gap-14 sm:px-8 lg:grid-cols-12 lg:gap-16 lg:px-12">
+                <div data-showcase-poster className="mx-auto w-[max(9rem,min(100%,calc(100svh_-_31rem)))] [perspective:1200px] sm:w-full lg:col-span-6">
                     <button
                         ref={frame}
                         type="button"
@@ -85,7 +85,7 @@ export function Gallery() {
                             setZoomed(true);
                         }}
                         aria-label="Vezi afișul Clasele MUV mărit"
-                        className="group relative block w-full overflow-hidden rounded-[2rem] border border-gold/30 bg-ink p-2 shadow-[0_0_80px_-10px_rgba(199,160,106,0.45),0_50px_90px_-40px_rgba(0,0,0,0.8)] [transform-style:preserve-3d]"
+                        className="group relative block w-full overflow-hidden rounded-[1.4rem] border border-gold/30 bg-ink p-1.5 sm:rounded-[2rem] sm:p-2 shadow-[0_0_80px_-10px_rgba(199,160,106,0.45),0_50px_90px_-40px_rgba(0,0,0,0.8)] [transform-style:preserve-3d]"
                     >
                         <img
                             src={poster.src}
@@ -94,7 +94,7 @@ export function Gallery() {
                             height={poster.height}
                             loading="lazy"
                             decoding="async"
-                            className="block aspect-square w-full rounded-[1.6rem] object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.02]"
+                            className="block aspect-square w-full rounded-[1.1rem] object-cover sm:rounded-[1.6rem] transition-transform duration-700 ease-out-expo group-hover:scale-[1.02]"
                         />
                     </button>
                 </div>
@@ -103,23 +103,23 @@ export function Gallery() {
                     <p className="eyebrow flex items-center gap-3 text-gold">
                         <span className="h-px w-8 bg-gold" /> Pregătim ceva frumos
                     </p>
-                    <h2 data-split className="mt-5 font-display text-5xl leading-[0.95] sm:text-7xl">
+                    <h2 data-split className="mt-3 font-display text-[2.6rem] leading-[0.95] sm:mt-5 sm:text-7xl">
                         Clasele <em className="text-gold-soft">MUV</em>
                     </h2>
-                    <p className="mt-6 max-w-md leading-relaxed text-cream/70">
+                    <p className="mt-6 hidden max-w-md leading-relaxed text-cream/70 sm:block">
                         Energie, forță, echilibru și ritm — fiecare clasă are povestea ei. Alege-o pe cea care ți se potrivește azi.
                     </p>
 
-                    <ul data-showcase-list className="mt-10 border-t border-cream/10">
+                    <ul data-showcase-list className="mt-4 border-t border-cream/10 sm:mt-10">
                         {classes.map((c, i) => (
                             <li key={c.id} data-showcase-row>
                                 <a
                                     href="#clase"
-                                    className="group flex items-center gap-5 border-b border-cream/10 py-4 transition-colors hover:text-gold-soft"
+                                    className="group flex items-center gap-4 border-b border-cream/10 py-2.5 transition-colors hover:text-gold-soft sm:gap-5 sm:py-4"
                                 >
                                     <span className="w-6 text-[0.62rem] tracking-[0.2em] text-cream/40">{String(i + 1).padStart(2, '0')}</span>
                                     <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: c.accent }} />
-                                    <span className="flex-1 font-display text-3xl leading-none">{c.name}</span>
+                                    <span className="flex-1 font-display text-2xl leading-none sm:text-3xl">{c.name}</span>
                                     <span className="hidden text-[0.6rem] tracking-[0.2em] text-cream/45 uppercase sm:block">{c.keywords[0]}</span>
                                     <Icon name="arrow-up-right" className="h-4 w-4 opacity-40 transition-all duration-500 group-hover:rotate-45 group-hover:opacity-100" />
                                 </a>
@@ -131,7 +131,7 @@ export function Gallery() {
                         href={site.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group mt-10 inline-flex items-center gap-3 rounded-full border border-cream/20 py-2 pr-2 pl-5 text-[0.64rem] font-semibold tracking-[0.22em] uppercase transition-colors hover:border-cream"
+                        className="group mt-4 inline-flex items-center gap-3 rounded-full border border-cream/20 py-1.5 pr-1.5 pl-4 sm:mt-10 sm:py-2 sm:pr-2 sm:pl-5 text-[0.64rem] font-semibold tracking-[0.22em] uppercase transition-colors hover:border-cream"
                     >
                         <Icon name="instagram" className="h-4 w-4" /> {site.instagramHandle}
                         <span className="grid h-8 w-8 place-items-center rounded-full bg-cream text-espresso transition-transform duration-500 ease-out-expo group-hover:rotate-45">

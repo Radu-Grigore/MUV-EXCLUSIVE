@@ -46,7 +46,7 @@ export function Opening() {
     );
 
     return (
-        <section ref={root} id="deschidere" data-snap className="relative overflow-hidden bg-ink py-20 text-cream sm:flex sm:min-h-[calc(100svh-72px)] sm:flex-col sm:justify-center sm:py-24">
+        <section ref={root} id="deschidere" data-snap className="phone-screen relative overflow-hidden bg-ink py-8 text-cream sm:flex sm:min-h-[calc(100svh-72px)] sm:flex-col sm:justify-center sm:py-24">
             <div className="pointer-events-none absolute inset-0 opacity-70">
                 <ShaderClouds colors={MIST} speed={0.7} />
             </div>
@@ -64,16 +64,16 @@ export function Opening() {
             </svg>
             <div className="relative mx-auto w-full max-w-4xl px-5 text-center sm:px-8">
                 <p className="eyebrow text-gold">Deschidere oficială</p>
-                <h2 data-date className="mt-6 font-display text-[17vw] leading-none font-light whitespace-nowrap sm:text-8xl lg:text-9xl">
+                <h2 data-date className="mt-4 font-display sm:mt-6 text-[17vw] leading-none font-light whitespace-nowrap sm:text-8xl lg:text-9xl">
                     01<span className="text-gold">.</span>11<span className="text-gold">.</span>2026
                 </h2>
-                <p className="mt-4 font-script text-5xl text-gold-soft sm:text-6xl">Te așteptăm!</p>
+                <p className="mt-2 font-script text-4xl text-gold-soft sm:mt-4 sm:text-6xl">Te așteptăm!</p>
 
-                <div className="mx-auto mt-12 max-w-2xl">
+                <div className="mx-auto mt-6 max-w-2xl sm:mt-12">
                     <Countdown />
                 </div>
 
-                <p className="mx-auto mt-10 max-w-xl text-sm leading-relaxed text-cream/65">
+                <p className="mx-auto mt-6 max-w-xl text-[0.82rem] leading-relaxed text-cream/65 sm:mt-10 sm:text-sm">
                     Locurile în grupe sunt limitate. Scrie-ne acum și îți păstrăm un loc la primele clase — plus o surpriză pentru membrele fondatoare.
                 </p>
                 <a
@@ -81,7 +81,7 @@ export function Opening() {
                     target="_blank"
                     rel="noopener noreferrer"
                     data-magnetic
-                    className="group mt-8 inline-flex items-center gap-3 rounded-full bg-gold py-3 pr-3 pl-7 text-[0.66rem] font-semibold tracking-[0.22em] text-ink uppercase transition-colors hover:bg-gold-soft"
+                    className="group mt-5 inline-flex items-center gap-3 rounded-full bg-gold py-2.5 pr-2.5 pl-6 sm:mt-8 sm:py-3 sm:pr-3 sm:pl-7 text-[0.66rem] font-semibold tracking-[0.22em] text-ink uppercase transition-colors hover:bg-gold-soft"
                 >
                     Vreau să fiu printre primele
                     <span className="grid h-9 w-9 place-items-center rounded-full bg-ink text-gold-soft transition-transform duration-500 ease-out-expo group-hover:rotate-[-45deg]">

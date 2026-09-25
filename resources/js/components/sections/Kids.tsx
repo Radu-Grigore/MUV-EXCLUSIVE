@@ -84,10 +84,10 @@ export function Kids() {
     };
 
     return (
-        <section ref={root} id="kids" data-snap className="px-3 py-3 sm:px-5 sm:py-5">
-            <div data-kids-frame className="relative isolate mx-auto max-w-[1600px] overflow-hidden rounded-[2rem] bg-[#f4efe2] sm:rounded-[3rem] lg:min-h-[calc(100svh-112px)]">
+        <section ref={root} id="kids" data-snap className="phone-screen px-3 py-3 sm:px-5 sm:py-5">
+            <div data-kids-frame className="relative isolate mx-auto flex w-full max-w-[1600px] flex-1 flex-col overflow-hidden rounded-[1.75rem] bg-[#f4efe2] sm:block sm:flex-none sm:rounded-[3rem] lg:min-h-[calc(100svh-112px)]">
                 {/* The room */}
-                <div className="absolute inset-x-0 top-0 -z-10 h-[360px] overflow-hidden sm:h-[440px] lg:inset-0 lg:h-auto">
+                <div className="absolute inset-0 -z-10 overflow-hidden sm:inset-x-0 sm:top-0 sm:bottom-auto sm:h-[440px] lg:inset-0 lg:h-auto">
                     <img
                         data-kids-room
                         src={asset('/images/kids-room.webp')}
@@ -98,37 +98,37 @@ export function Kids() {
                         decoding="async"
                         className="h-full w-full object-cover object-[50%_60%]"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f4efe2] lg:bg-gradient-to-r lg:from-[#f4efe2]/90 lg:via-[#f4efe2]/20 lg:to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent via-40% to-[#f4efe2]/90 sm:via-transparent sm:to-[#f4efe2] lg:bg-gradient-to-r lg:from-[#f4efe2]/90 lg:via-[#f4efe2]/20 lg:to-transparent" />
                 </div>
 
                 <KidsPlayground />
 
-                <div className="relative z-20 mx-auto flex max-w-[1300px] flex-col gap-10 px-4 pt-[280px] pb-6 sm:px-10 sm:pt-[340px] sm:pb-10 lg:min-h-[calc(100svh-112px)] lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-16">
+                <div className="relative z-20 mx-auto flex w-full max-w-[1300px] flex-1 flex-col justify-end gap-10 px-3 pt-[28svh] pb-3 sm:flex-none sm:justify-start sm:px-10 sm:pt-[340px] sm:pb-10 lg:min-h-[calc(100svh-112px)] lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-16">
                     {/* Text card */}
-                    <div data-kids-card className="rounded-[2rem] bg-white/85 p-7 shadow-[0_40px_80px_-40px_rgba(42,32,26,0.55)] backdrop-blur-md sm:p-10 lg:max-w-[520px]">
+                    <div data-kids-card className="rounded-[1.5rem] bg-white/90 p-5 shadow sm:rounded-[2rem] sm:bg-white/85 sm:p-10 sm:shadow-[0_40px_80px_-40px_rgba(42,32,26,0.55)] backdrop-blur-md sm:p-10 lg:max-w-[520px]">
                         <span
                             data-kids-new
                             className="inline-block -rotate-6 rounded-xl bg-[#6f7f4d] px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-white uppercase shadow-lg"
                         >
                             New
                         </span>
-                        <h2 data-split className="mt-5 font-display text-6xl leading-[0.95] sm:text-7xl">
+                        <h2 data-split className="mt-3 font-display text-[2.6rem] leading-[0.95] sm:mt-5 sm:text-7xl">
                             Kids Corner
-                            <em className="mt-1 block text-4xl text-bronze sm:text-5xl">la MUV Exclusive</em>
+                            <em className="mt-1 block text-2xl text-bronze sm:text-5xl">la MUV Exclusive</em>
                         </h2>
-                        <p className="mt-6 leading-relaxed text-cocoa">
-                            Pentru mai mult timp pentru tine. În timp ce tu te antrenezi, cei mici se joacă într-un colț amenajat special pentru ei — cu jucării,
-                            cărți, desene animate și multă voie bună.
+                        <p className="mt-3 text-[0.92rem] leading-relaxed text-cocoa sm:mt-6 sm:text-base">
+                            <span className="hidden sm:inline">Pentru mai mult timp pentru tine. </span>În timp ce tu te antrenezi, cei mici se joacă într-un colț
+                            amenajat special pentru ei<span className="hidden sm:inline"> — cu jucării, cărți, desene animate și multă voie bună</span>.
                         </p>
-                        <p className="mt-5 font-script text-[2.6rem] leading-tight text-[#6f7f4d]">Un loc special pentru cei mici!</p>
-                        <ul className="mt-6 flex flex-wrap gap-2">
+                        <p className="mt-5 hidden font-script text-[2.6rem] leading-tight text-[#6f7f4d] sm:block">Un loc special pentru cei mici!</p>
+                        <ul className="mt-4 grid grid-cols-2 gap-1.5 sm:mt-6 sm:flex sm:flex-wrap sm:gap-2">
                             {kidsFeatures.map((f, i) => (
                                 <li
                                     key={f.title}
                                     data-kids-pill
-                                    className="flex items-center gap-2 rounded-full bg-[#f4efe2] py-1.5 pr-4 pl-1.5 text-[0.82rem] text-espresso"
+                                    className="flex items-center gap-2 rounded-full bg-[#f4efe2] py-1 pr-2.5 pl-1 text-[0.7rem] leading-tight text-espresso sm:py-1.5 sm:pr-4 sm:pl-1.5 sm:text-[0.82rem]"
                                 >
-                                    <span className="grid h-7 w-7 place-items-center rounded-full text-white" style={{ background: colors[i % colors.length] }}>
+                                    <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full text-white sm:h-7 sm:w-7" style={{ background: colors[i % colors.length] }}>
                                         <Icon name={f.icon} className="h-3.5 w-3.5" />
                                     </span>
                                     {f.title}

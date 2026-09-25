@@ -37,8 +37,8 @@ export function Manifesto() {
     );
 
     return (
-        <section ref={root} id="despre" data-snap className="relative flex flex-col overflow-hidden pt-20 sm:pt-24 lg:min-h-[calc(100svh-72px)] lg:pt-12">
-            <div className="mx-auto grid w-full max-w-[1440px] gap-14 px-5 sm:px-8 lg:my-auto lg:grid-cols-12 lg:px-12">
+        <section ref={root} id="despre" data-snap className="phone-screen relative flex flex-col overflow-hidden pt-6 sm:pt-24 lg:min-h-[calc(100svh-72px)] lg:pt-12">
+            <div className="mx-auto my-auto grid w-full max-w-[1440px] gap-5 px-5 sm:gap-14 sm:px-8 lg:grid-cols-12 lg:px-12">
                 <div className="lg:col-span-3">
                     <p className="eyebrow flex items-center gap-3 text-bronze">
                         <span className="h-px w-8 bg-gold" /> Despre MUV
@@ -58,7 +58,7 @@ export function Manifesto() {
                 </div>
 
                 <div className="lg:col-span-9">
-                    <p data-words className="font-display text-[2.1rem] leading-[1.12] font-light text-espresso sm:text-5xl lg:text-[4.2rem]">
+                    <p data-words className="font-display text-[min(1.8rem,4.3svh)] leading-[1.14] font-light text-espresso sm:text-5xl lg:text-[4.2rem]">
                         {text.split(' ').map((w, i) => (
                             <span key={i} data-word className={highlight.has(w) ? 'text-bronze italic' : undefined}>
                                 {w}{' '}
@@ -66,7 +66,7 @@ export function Manifesto() {
                         ))}
                     </p>
 
-                    <div className="mt-14 flex items-center gap-6 lg:hidden">
+                    <div className="mt-5 flex items-center gap-4 sm:mt-14 sm:gap-6 lg:hidden">
                         <img
                             src={asset('/images/logo-sign.webp')}
                             alt=""
@@ -74,14 +74,14 @@ export function Manifesto() {
                             height={750}
                             loading="lazy"
                             decoding="async"
-                            className="h-24 w-24 rounded-full object-cover"
+                            className="h-14 w-14 rounded-full object-cover sm:h-24 sm:w-24"
                         />
-                        <p className="font-script text-4xl text-bronze">More than a workout</p>
+                        <p className="font-script text-3xl text-bronze sm:text-4xl">More than a workout</p>
                     </div>
                     <p className="mt-14 hidden font-script text-6xl text-bronze lg:block">More than a workout, a better you.</p>
                 </div>
             </div>
-            <VelocityMarquee className="mt-12 shrink-0 lg:mt-6" />
+            <VelocityMarquee className="mt-4 shrink-0 sm:mt-12 lg:mt-6" />
         </section>
     );
 }

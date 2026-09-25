@@ -56,18 +56,18 @@ export function VelocityMarquee({ className = '' }: { className?: string }) {
     const row = [...words, ...words];
 
     return (
-        <div ref={root} className={`overflow-hidden py-6 sm:py-10 ${className}`} aria-hidden="true">
+        <div ref={root} className={`overflow-hidden py-3 sm:py-10 ${className}`} aria-hidden="true">
             <div ref={track} className="flex w-max items-center will-change-transform">
                 {[...row, ...row].map((w, i) => (
                     <span key={i} className="flex items-center">
                         <span
-                            className={`px-6 font-display text-[15vw] leading-none font-light whitespace-nowrap sm:px-10 sm:text-[9vw] ${
+                            className={`px-4 font-display text-[12vw] leading-none font-light whitespace-nowrap sm:px-10 sm:text-[9vw] ${
                                 i % 2 ? 'text-transparent [-webkit-text-stroke:1px_var(--color-bronze)]' : 'text-espresso'
                             }`}
                         >
                             {w}
                         </span>
-                        <svg viewBox="0 0 24 24" className="h-[5vw] w-[5vw] shrink-0 text-gold sm:h-[3vw] sm:w-[3vw]">
+                        <svg viewBox="0 0 24 24" className="h-[4vw] w-[4vw] shrink-0 text-gold sm:h-[3vw] sm:w-[3vw]">
                             <path fill="currentColor" d="M12 0c.6 6.6 5.4 11.4 12 12-6.6.6-11.4 5.4-12 12-.6-6.6-5.4-11.4-12-12C6.6 11.4 11.4 6.6 12 0Z" />
                         </svg>
                     </span>
