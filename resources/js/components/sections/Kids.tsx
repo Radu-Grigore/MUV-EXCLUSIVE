@@ -3,6 +3,7 @@ import { lazy, Suspense, useRef, useState } from 'react';
 import { kidsFeatures, type GalleryItem } from '@/lib/site';
 import { gsap, hasFinePointer } from '@/lib/scroll';
 import { Icon } from '../Icon';
+import { KidsPlayground } from '../KidsPlayground';
 
 const Lightbox = lazy(() => import('./Lightbox'));
 
@@ -15,20 +16,6 @@ const poster: GalleryItem = {
     width: 1145,
     height: 1374,
 };
-
-const star = 'M12 2l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.7-6.2 3.7 1.6-7L2 9.2l7.1-.6z';
-const heart = 'M12 21s-7.5-4.6-9-9.4C2 8.3 4.2 5.5 7.2 5.5c2 0 3.6 1.1 4.8 2.8 1.2-1.7 2.8-2.8 4.8-2.8 3 0 5.2 2.8 4.2 6.1-1.5 4.8-9 9.4-9 9.4Z';
-const cloud = 'M6 18a4 4 0 0 1 0-8 5.5 5.5 0 0 1 10.6-1.6A4 4 0 1 1 18 18Z';
-
-// Playful shapes drifting over the room; `speed` sets the scroll parallax depth.
-const doodles = [
-    { d: star, color: '#e9b949', speed: -60, className: 'top-[8%] left-[46%] h-10 w-10 lg:h-12 lg:w-12' },
-    { d: cloud, color: '#ffffff', speed: -30, className: 'top-[14%] right-[8%] h-16 w-16 opacity-90 lg:h-24 lg:w-24' },
-    { d: heart, color: '#c86b6b', speed: -90, className: 'top-[34%] right-[30%] hidden h-9 w-9 lg:block' },
-    { d: star, color: '#6f7f4d', speed: -40, className: 'top-[4%] right-[34%] h-7 w-7' },
-    { d: cloud, color: '#5b8fc7', speed: -70, className: 'top-[26%] left-[6%] h-12 w-12 lg:left-auto lg:right-[48%] lg:top-[58%]' },
-    { d: star, color: '#e0a93b', speed: -110, className: 'bottom-[18%] right-[40%] hidden h-8 w-8 lg:block' },
-];
 
 export function Kids() {
     const root = useRef<HTMLElement>(null);
@@ -55,18 +42,6 @@ export function Kids() {
                     { scale: 1.3 },
                     { scale: 1.05, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true } },
                 );
-
-                gsap.utils.toArray<HTMLElement>('[data-doodle]').forEach((el, i) => {
-                    gsap.to(el, { y: Number(el.dataset.speed), ease: 'none', scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true } });
-                    gsap.to(el.firstElementChild, {
-                        y: i % 2 ? 12 : -12,
-                        rotate: i % 2 ? -14 : 14,
-                        duration: 2.2 + i * 0.35,
-                        ease: 'sine.inOut',
-                        yoyo: true,
-                        repeat: -1,
-                    });
-                });
 
                 const enter = gsap.timeline({ scrollTrigger: { trigger: '[data-kids-card]', start: 'top 80%', once: true } });
                 enter
@@ -110,7 +85,7 @@ export function Kids() {
 
     return (
         <section ref={root} id="kids" data-scroll-offset="-84" className="px-3 py-3 sm:px-5 sm:py-5">
-            <div data-kids-frame className="relative isolate overflow-hidden rounded-[2rem] bg-[#f4efe2] sm:rounded-[3rem] lg:min-h-[min(860px,100svh)]">
+            <div data-kids-frame className="relative isolate mx-auto max-w-[1600px] overflow-hidden rounded-[2rem] bg-[#f4efe2] sm:rounded-[3rem] lg:min-h-[min(860px,100svh)]">
                 {/* The room */}
                 <div className="absolute inset-x-0 top-0 -z-10 h-[360px] overflow-hidden sm:h-[440px] lg:inset-0 lg:h-auto">
                     <img
@@ -126,13 +101,7 @@ export function Kids() {
                     <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#f4efe2] lg:bg-gradient-to-r lg:from-[#f4efe2]/90 lg:via-[#f4efe2]/20 lg:to-transparent" />
                 </div>
 
-                {doodles.map((s, i) => (
-                    <span key={i} data-doodle data-speed={s.speed} aria-hidden="true" className={`pointer-events-none absolute z-10 ${s.className}`}>
-                        <svg viewBox="0 0 24 24" className="h-full w-full drop-shadow-[0_6px_10px_rgba(42,32,26,0.25)]">
-                            <path d={s.d} fill={s.color} />
-                        </svg>
-                    </span>
-                ))}
+                <KidsPlayground />
 
                 <div className="relative z-20 mx-auto flex max-w-[1300px] flex-col gap-10 px-4 pt-[280px] pb-6 sm:px-10 sm:pt-[340px] sm:pb-10 lg:min-h-[min(860px,100svh)] lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-16">
                     {/* Text card */}
