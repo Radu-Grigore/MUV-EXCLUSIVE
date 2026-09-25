@@ -22,7 +22,7 @@ export function Contact() {
                         <p className="eyebrow flex items-center gap-3 text-bronze">
                             <span className="h-px w-8 bg-gold" /> Contact
                         </p>
-                        <h2 className="mt-5 font-display text-5xl leading-none font-light sm:text-7xl">
+                        <h2 data-split className="mt-5 font-display text-5xl leading-none font-light sm:text-7xl">
                             Hai să ne <em className="text-bronze">cunoaștem</em>
                         </h2>
                     </div>

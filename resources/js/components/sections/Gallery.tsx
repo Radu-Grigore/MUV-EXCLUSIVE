@@ -42,7 +42,7 @@ export function Gallery() {
                     <p className="eyebrow flex items-center gap-3 text-bronze">
                         <span className="h-px w-8 bg-gold" /> Pregătim ceva frumos
                     </p>
-                    <h2 className="mt-5 font-display text-5xl leading-none font-light sm:text-7xl">
+                    <h2 data-split className="mt-5 font-display text-5xl leading-none font-light sm:text-7xl">
                         Din lumea <em className="text-bronze">MUV</em>
                     </h2>
                 </div>
@@ -65,6 +65,8 @@ export function Gallery() {
             >
                 {/* Stage */}
                 <div
+                    data-cursor="Următoarea"
+                    onClick={(e) => (e.target as HTMLElement).closest('button') || go(index + 1)}
                     className="relative overflow-hidden rounded-[2rem] bg-espresso lg:col-span-8"
                     onMouseEnter={() => setPaused(true)}
                     onMouseLeave={() => setPaused(false)}

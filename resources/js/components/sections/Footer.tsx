@@ -5,7 +5,7 @@ import { Icon } from '../Icon';
 
 export function Footer() {
     return (
-        <footer className="relative overflow-hidden bg-espresso pt-20 text-cream/70">
+        <footer className="relative z-0 overflow-hidden bg-espresso pt-20 text-cream/70 lg:sticky lg:bottom-0 lg:-mt-12 lg:pt-32">
             <div className="mx-auto grid max-w-[1440px] gap-12 px-5 sm:px-8 md:grid-cols-12 lg:px-12">
                 <div className="md:col-span-5">
                     <p className="font-script text-5xl text-gold-soft">Move · Feel · Balance · Belong</p>
@@ -64,7 +64,7 @@ export function Footer() {
 
             <p
                 aria-hidden="true"
-                className="text-gold-gradient pointer-events-none pt-10 pb-[3vw] text-center font-display text-[30vw] leading-[0.8] font-medium tracking-[-0.03em] select-none"
+                className="text-gold-gradient pointer-events-none pt-10 pb-[3vw] text-center font-display text-[30vw] leading-[0.8] lg:text-[min(26vw,24rem)] font-medium tracking-[-0.03em] select-none"
             >
                 MUV
             </p>
@@ -88,6 +88,7 @@ export function FloatingActions() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Scrie-ne pe WhatsApp"
+                data-magnetic
                 className="grid h-12 w-12 place-items-center rounded-full bg-[#25d366] text-white shadow-[0_14px_30px_-10px_rgba(37,211,102,0.7)] transition-transform hover:scale-105"
             >
                 <Icon name="whatsapp" className="h-6 w-6" />

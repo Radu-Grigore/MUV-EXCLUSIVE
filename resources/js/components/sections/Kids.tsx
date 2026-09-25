@@ -6,7 +6,7 @@ const colors = ['#6f7f4d', '#e0a93b', '#3f6fa3', '#c86b6b'];
 
 export function Kids() {
     return (
-        <section id="kids" className="px-3 py-3 sm:px-5 sm:py-5">
+        <section id="kids" data-scroll-offset="-84" className="px-3 py-3 sm:px-5 sm:py-5">
             <div
                 className="relative overflow-hidden rounded-[2rem] px-5 py-20 sm:rounded-[3rem] sm:px-10 sm:py-28 lg:px-16"
                 style={{
@@ -19,7 +19,7 @@ export function Kids() {
                         <span className="inline-block -rotate-3 rounded-xl bg-[#6f7f4d] px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-white uppercase shadow-lg">
                             New
                         </span>
-                        <h2 className="mt-6 font-display text-6xl leading-[0.95] font-light sm:text-7xl">
+                        <h2 data-split className="mt-6 font-display text-6xl leading-[0.95] font-light sm:text-7xl">
                             Kids Corner
                             <em className="mt-2 block text-4xl text-bronze sm:text-5xl">la MUV Exclusive</em>
                         </h2>

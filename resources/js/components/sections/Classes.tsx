@@ -71,7 +71,7 @@ export function Classes() {
                         <p className="eyebrow flex items-center gap-3 text-bronze">
                             <span className="h-px w-8 bg-gold" /> Clasele noastre · 07
                         </p>
-                        <h2 className="mt-5 font-display text-5xl leading-[0.95] font-light sm:text-6xl lg:text-7xl">
+                        <h2 data-split className="mt-5 font-display text-5xl leading-[0.95] font-light sm:text-6xl lg:text-7xl">
                             Găsește mișcarea
                             <br />
                             <em className="text-bronze">care ți se potrivește</em>
@@ -136,7 +136,7 @@ export function Classes() {
 
             {dialogUsed && (
                 <Suspense fallback={null}>
-                    <ClassDialogHost active={active} onClose={() => setActive(null)} />
+                    <ClassDialogHost active={active} onClose={() => setActive(null)} onChange={setActive} />
                 </Suspense>
             )}
         </section>
@@ -149,6 +149,7 @@ function ClassCard({ c, index, onOpen }: { c: FitnessClass; index: number; onOpe
             as="button"
             onClick={onOpen}
             ariaLabel={`${c.name} — vezi detalii`}
+            cursor="Detalii"
             notchColor={SECTION_BG}
             className="flex h-[420px] flex-col bg-white/85 p-7 shadow-[0_30px_60px_-45px_rgba(42,32,26,0.55)] transition-[background-color,transform] duration-700 ease-out-expo hover:-translate-y-1.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze lg:h-[min(58svh,480px)]"
             badge={

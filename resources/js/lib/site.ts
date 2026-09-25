@@ -46,7 +46,6 @@ export type FitnessClass = {
   benefits: string[];
   icon: IconName;
   accent: string;
-  image?: string;
   script?: string;
 };
 
@@ -60,7 +59,6 @@ export const classes: FitnessClass[] = [
     benefits: ["Arde calorii", "Tonifiază tot corpul", "Crește rezistența", "Eliberează stresul"],
     icon: "fist",
     accent: "#c9a25e",
-    image: "/images/khaibo.webp",
     script: "Stronger, Faster, You",
   },
   {
@@ -87,7 +85,6 @@ export const classes: FitnessClass[] = [
     ],
     icon: "step",
     accent: "#8fa06a",
-    image: "/images/step.webp",
     script: "More than fitness",
   },
   {
@@ -109,7 +106,6 @@ export const classes: FitnessClass[] = [
     benefits: ["Postură corectă", "Corp mai puternic", "Echilibru mental", "Mai multă energie"],
     icon: "lotus",
     accent: "#9a7bb0",
-    image: "/images/pilates.webp",
     script: "Stronger You",
   },
   {
@@ -121,7 +117,6 @@ export const classes: FitnessClass[] = [
     benefits: ["Arde calorii", "Crește rezistența", "Îmbunătățește condiția fizică", "Tonifiază tot corpul"],
     icon: "flame",
     accent: "#d0a04a",
-    image: "/images/tabata.webp",
     script: "Stronger, Faster, You",
   },
   {
@@ -165,6 +160,8 @@ export const pillars: { word: string; title: string; text: string; icon: IconNam
 
 export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number };
 
+// Only images with enough resolution for large display. The single-class posters (Step, Khai Bo,
+// Tabata, Pilates) come back here once the original high-resolution files are available.
 export const gallery: GalleryItem[] = [
     {
         src: '/images/campaign.webp',
@@ -180,10 +177,13 @@ export const gallery: GalleryItem[] = [
         width: 750,
         height: 750,
     },
-    { src: '/images/step.webp', title: 'Step Aerobic', caption: 'Ritm, cardio și bună dispoziție. More than fitness.', width: 209, height: 374 },
-    { src: '/images/khaibo.webp', title: 'Khai Bo', caption: 'Energie, disciplină și încredere. Stronger, faster, you.', width: 209, height: 374 },
-    { src: '/images/tabata.webp', title: 'Tabata', caption: 'Intervale intense pentru rezultate rapide.', width: 209, height: 374 },
-    { src: '/images/pilates.webp', title: 'Pilates', caption: 'Postură, flexibilitate și echilibru. Stronger you.', width: 209, height: 374 },
+    {
+        src: '/images/athlete.webp',
+        title: 'Move · Feel · Belong',
+        caption: 'Un spațiu în care te miști în ritmul tău.',
+        width: 760,
+        height: 1500,
+    },
     {
         src: '/images/logo-sign.webp',
         title: 'Identitatea MUV',

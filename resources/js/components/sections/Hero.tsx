@@ -1,8 +1,11 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { site } from '@/lib/site';
-import { gsap, scrollToTarget } from '@/lib/scroll';
+import { gsap, hasFinePointer, introDone, scrollToTarget } from '@/lib/scroll';
 import { Icon } from '../Icon';
+import { ShaderClouds } from '../ShaderClouds';
+
+const CLOUDS: [string, string, string, string] = ['#d9c3a6', '#e9dac7', '#f3e7d6', '#fdf8f1'];
 
 export function Hero() {
     const root = useRef<HTMLElement>(null);
@@ -11,13 +14,37 @@ export function Hero() {
         () => {
             const mm = gsap.matchMedia();
             mm.add('(prefers-reduced-motion: no-preference)', () => {
-                const intro = gsap.timeline({ defaults: { ease: 'expo.out', duration: 1.4 } });
+                const intro = gsap.timeline({ paused: true, defaults: { ease: 'expo.out', duration: 1.4 } });
                 intro
                     .from('[data-hero-cover]', { scaleY: 1, duration: 1.6, ease: 'expo.inOut' }, 0)
                     .from('[data-hero-img]', { scale: 1.35, duration: 2.2 }, 0.2)
                     .from('[data-hero-letter]', { yPercent: 105, stagger: 0.08 }, 0.35)
                     .from('[data-hero-fade]', { autoAlpha: 0, y: 24, stagger: 0.08, duration: 1.1 }, 0.7)
                     .from('[data-hero-badge]', { autoAlpha: 0, scale: 0.6, rotate: -60, duration: 1.4 }, 0.9);
+                introDone.then(() => intro.play());
+
+                // Desktop: the photo, badge and wordmark drift with the pointer for depth.
+                if (hasFinePointer()) {
+                    const layers = [
+                        { el: '[data-hero-img]', depth: -18 },
+                        { el: '[data-hero-badge]', depth: 26 },
+                        { el: '[data-hero-letters]', depth: 12 },
+                    ].map(({ el, depth }) => ({
+                        depth,
+                        x: gsap.quickTo(el, 'x', { duration: 1.2, ease: 'power3' }),
+                        y: gsap.quickTo(el, 'y', { duration: 1.2, ease: 'power3' }),
+                    }));
+                    const onMove = (e: PointerEvent) => {
+                        const nx = e.clientX / window.innerWidth - 0.5;
+                        const ny = e.clientY / window.innerHeight - 0.5;
+                        layers.forEach((l) => {
+                            l.x(nx * l.depth);
+                            l.y(ny * l.depth);
+                        });
+                    };
+                    window.addEventListener('pointermove', onMove, { passive: true });
+                    return () => window.removeEventListener('pointermove', onMove);
+                }
 
                 gsap.timeline({
                     scrollTrigger: { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true },
@@ -40,6 +67,9 @@ export function Hero() {
                             'radial-gradient(55% 60% at 78% 28%, rgba(255,246,228,0.95) 0%, transparent 70%), radial-gradient(60% 50% at 8% 95%, rgba(214,192,165,0.7) 0%, transparent 70%), linear-gradient(160deg, #efe3d3 0%, #e7d6c2 100%)',
                     }}
                 />
+                <div className="absolute inset-0 -z-10">
+                    <ShaderClouds colors={CLOUDS} />
+                </div>
 
                 <div className="relative mx-auto flex w-full max-w-[1440px] flex-1 flex-col px-5 sm:px-8 lg:px-12">
                     {/* Top row */}
@@ -58,6 +88,7 @@ export function Hero() {
                                         e.preventDefault();
                                         scrollToTarget('#contact');
                                     }}
+                                    data-magnetic
                                     className="group inline-flex items-center gap-2 rounded-full bg-espresso py-3.5 pr-3.5 pl-6 text-[0.66rem] font-semibold tracking-[0.22em] text-cream uppercase transition-colors hover:bg-bronze"
                                 >
                                     Rezervă-ți locul
@@ -86,8 +117,8 @@ export function Hero() {
                                 data-hero-img
                                 src="/images/athlete.webp"
                                 alt="Femeie antrenându-se în studioul MUV Exclusive"
-                                width={380}
-                                height={750}
+                                width={760}
+                                height={1500}
                                 className="absolute inset-0 h-[115%] w-full object-cover object-top"
                                 fetchPriority="high"
                                 decoding="async"
@@ -126,7 +157,7 @@ export function Hero() {
                     <div data-hero-word className="relative z-20 mt-auto pb-24 sm:pb-8 lg:pb-10">
                         <h1 className="flex flex-col">
                             <span className="sr-only">MUV Exclusive — Boutique Fitness Studio, Women Only, Ploiești</span>
-                            <span aria-hidden="true" className="flex font-display text-[39vw] leading-[0.74] font-medium tracking-[-0.03em] sm:text-[30vw] lg:text-[23vw] 2xl:text-[20rem]">
+                            <span aria-hidden="true" data-hero-letters className="flex font-display text-[39vw] leading-[0.74] font-medium tracking-[-0.03em] sm:text-[30vw] lg:text-[23vw] 2xl:text-[20rem]">
                                 {'MUV'.split('').map((l, i) => (
                                     <span key={i} className="line-mask">
                                         <span data-hero-letter className="text-gold-gradient block">

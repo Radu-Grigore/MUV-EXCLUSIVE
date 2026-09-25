@@ -1,12 +1,15 @@
 import { gsap } from 'gsap';
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from 'gsap/SplitText';
 import Lenis from 'lenis';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
 
 let lenis: Lenis | null = null;
 
-export const HEADER_OFFSET = -72;
+/** Header height (72px) plus breathing room. */
+const CONTENT_TOP = 104;
 
 export function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -17,11 +20,20 @@ export function prefersReducedMotion() {
  * Touch devices keep native scrolling, which is smoother and cheaper on phones.
  */
 export function initSmoothScroll() {
+    // In-page links (#despre, #clase…) all go through scrollToTarget so they land consistently.
+    document.addEventListener('click', (e) => {
+        if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey) return;
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+        const hash = a?.getAttribute('href');
+        if (!hash || hash === '#') return;
+        e.preventDefault();
+        scrollToTarget(hash);
+    });
+
     if (lenis || prefersReducedMotion()) return;
 
     lenis = new Lenis({
         lerp: 0.09,
-        anchors: { offset: HEADER_OFFSET },
         allowNestedScroll: true,
     });
     lenis.on('scroll', ScrollTrigger.update);
@@ -29,17 +41,29 @@ export function initSmoothScroll() {
     gsap.ticker.lagSmoothing(0);
 }
 
+/**
+ * Where a section should land: its first content sits CONTENT_TOP px below the viewport top,
+ * whatever padding the section has. `data-scroll-offset` overrides this for special layouts.
+ */
+function targetY(el: HTMLElement) {
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const custom = el.dataset.scrollOffset;
+    if (custom !== undefined) return top + Number(custom);
+    const padding = parseFloat(getComputedStyle(el).paddingTop) || 0;
+    return top + Math.max(0, padding - CONTENT_TOP);
+}
+
 export function scrollToTarget(target: string | HTMLElement | number) {
-    if (lenis) {
-        lenis.scrollTo(target, { offset: typeof target === 'number' ? 0 : HEADER_OFFSET });
-        return;
-    }
+    let y: number;
     if (typeof target === 'number') {
-        window.scrollTo({ top: target });
-        return;
+        y = target;
+    } else {
+        const el = typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target;
+        if (!el) return;
+        y = el.id === 'top' ? 0 : targetY(el);
     }
-    const el = typeof target === 'string' ? document.querySelector(target) : target;
-    el?.scrollIntoView();
+    if (lenis) lenis.scrollTo(y, { duration: 1.4 });
+    else window.scrollTo({ top: y, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
 }
 
 export function lockScroll(locked: boolean) {
@@ -60,4 +84,13 @@ export function onScroll(callback: (y: number, direction: number) => void) {
     return () => window.removeEventListener('scroll', handler);
 }
 
-export { gsap, ScrollTrigger };
+export function hasFinePointer() {
+    return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+}
+
+// The hero intro waits for the preloader curtain to lift.
+let finishIntro: () => void = () => {};
+export const introDone = new Promise<void>((resolve) => (finishIntro = resolve));
+export { finishIntro };
+
+export { gsap, ScrollTrigger, SplitText };

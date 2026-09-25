@@ -15,8 +15,8 @@
   --color-cocoa: #4a3a2e;
   --color-ink: #16110e;
 
-  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-satoshi, var(--font-dmsans)), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-instrument), Georgia, serif;
   --font-script: var(--font-allura), cursive;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
@@ -96,6 +96,16 @@ body {
 .reveal.is-visible {
   opacity: 1;
   transform: none;
+}
+
+/* Desktop custom cursor replaces the native one, except where typing */
+html.has-cursor,
+html.has-cursor * {
+  cursor: none;
+}
+html.has-cursor input,
+html.has-cursor textarea {
+  cursor: text;
 }
 
 .no-scrollbar {

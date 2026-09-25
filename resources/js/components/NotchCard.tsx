@@ -9,6 +9,8 @@ type Props = {
     as?: 'div' | 'button';
     onClick?: () => void;
     ariaLabel?: string;
+    /** Label shown in the custom desktop cursor while hovering. */
+    cursor?: string;
 };
 
 const NOTCH = 84; // px, size of the cut-out
@@ -19,7 +21,7 @@ const FILLET = 22; // px, radius of the concave joins
  * The cut-out is painted in the surrounding background colour, with two concave
  * fillets so the card edge curves smoothly into it.
  */
-export function NotchCard({ children, badge, notchColor, badgeClassName = '', className = '', as = 'div', onClick, ariaLabel }: Props) {
+export function NotchCard({ children, badge, notchColor, badgeClassName = '', className = '', as = 'div', onClick, ariaLabel, cursor }: Props) {
     const Tag = as;
     const fillet = `radial-gradient(circle at 0 0, transparent ${FILLET - 0.5}px, ${notchColor} ${FILLET}px)`;
 
@@ -28,6 +30,7 @@ export function NotchCard({ children, badge, notchColor, badgeClassName = '', cl
             type={as === 'button' ? 'button' : undefined}
             onClick={onClick}
             aria-label={ariaLabel}
+            data-cursor={cursor}
             className={`group relative block w-full rounded-[2rem] text-left ${className}`}
         >
             {children}
