@@ -14,7 +14,7 @@ export function Opening() {
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
-            mm.add('(prefers-reduced-motion: no-preference)', () => {
+            mm.add('all', () => {
                 gsap.fromTo(
                     '[data-date]',
                     { scale: 0.72, letterSpacing: '0.2em' },

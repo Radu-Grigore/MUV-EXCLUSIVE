@@ -13,7 +13,7 @@ export function Hero() {
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
-            mm.add('(prefers-reduced-motion: no-preference)', () => {
+            mm.add('all', () => {
                 const intro = gsap.timeline({ paused: true, defaults: { ease: 'expo.out', duration: 1.4 } });
                 intro
                     .from('[data-hero-cover]', { scaleY: 1, duration: 1.6, ease: 'expo.inOut' }, 0)

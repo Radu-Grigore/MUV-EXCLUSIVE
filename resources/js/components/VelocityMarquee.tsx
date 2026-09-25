@@ -15,7 +15,7 @@ export function VelocityMarquee({ className = '' }: { className?: string }) {
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
-            mm.add('(prefers-reduced-motion: no-preference)', () => {
+            mm.add('all', () => {
                 let x = 0;
                 let direction = 1;
                 let boost = 0;

@@ -26,7 +26,7 @@ export function Kids() {
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
-            mm.add('(prefers-reduced-motion: no-preference)', () => {
+            mm.add('all', () => {
                 // The room opens up from a smaller rounded window as the section scrolls in.
                 gsap.fromTo(
                     '[data-kids-frame]',

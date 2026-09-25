@@ -14,7 +14,7 @@ export function Manifesto() {
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
-            mm.add('(prefers-reduced-motion: no-preference)', () => {
+            mm.add('all', () => {
                 gsap.fromTo(
                     '[data-word]',
                     { opacity: 0.14 },

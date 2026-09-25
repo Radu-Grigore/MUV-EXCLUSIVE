@@ -24,7 +24,7 @@ export function Gallery() {
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
-            mm.add('(prefers-reduced-motion: no-preference)', () => {
+            mm.add('all', () => {
                 gsap.from('[data-showcase-poster]', {
                     y: 80,
                     scale: 0.92,

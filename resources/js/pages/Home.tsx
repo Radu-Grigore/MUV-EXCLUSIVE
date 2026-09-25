@@ -25,7 +25,7 @@ export default function Home() {
     // Section headings marked with data-split rise line by line from under a mask.
     useGSAP(() => {
         const mm = gsap.matchMedia();
-        mm.add('(prefers-reduced-motion: no-preference)', () => {
+        mm.add('all', () => {
             gsap.utils.toArray<HTMLElement>('[data-split]').forEach((el) => {
                 SplitText.create(el, {
                     type: 'lines',

@@ -8,8 +8,12 @@ gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
 
 let lenis: Lenis | null = null;
 
+/**
+ * The site's animations are part of the brand, so they run even when the phone asks for
+ * reduced motion (many Android phones switch that on automatically in battery saver).
+ */
 export function prefersReducedMotion() {
-    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return false;
 }
 
 /**
