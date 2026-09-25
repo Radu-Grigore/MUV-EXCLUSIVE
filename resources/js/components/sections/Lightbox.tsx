@@ -4,7 +4,6 @@ import { createPortal } from 'react-dom';
 import type { GalleryItem } from '@/lib/site';
 import { lockScroll } from '@/lib/scroll';
 import { Icon } from '../Icon';
-import { fallbackOnError } from './Gallery';
 
 export default function Lightbox({ item, onClose }: { item: GalleryItem | null; onClose: () => void }) {
     useEffect(() => {
@@ -30,7 +29,6 @@ export default function Lightbox({ item, onClose }: { item: GalleryItem | null; 
                 >
                     <motion.img
                         src={item.src}
-                        onError={fallbackOnError(item)}
                         alt={item.title}
                         className="max-h-full max-w-full rounded-2xl object-contain shadow-2xl"
                         initial={{ scale: 0.92, opacity: 0 }}

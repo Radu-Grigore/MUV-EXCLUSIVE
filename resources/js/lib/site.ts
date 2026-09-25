@@ -100,47 +100,7 @@ export const classes: FitnessClass[] = [
     script: "Stronger, Faster, You",
   },];
 
-export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number; fallback?: string };
-
-// Only images with enough resolution for large display. The single-class posters (Step, Khai Bo,
-// Tabata, Pilates) come back here once the original high-resolution files are available.
-export const gallery: GalleryItem[] = [
-    {
-        src: '/images/campaign.webp',
-        title: 'Campania de lansare',
-        caption: 'În curând în Ploiești — zona Albert, MRS Village.',
-        width: 1334,
-        height: 750,
-    },
-    {
-        src: '/images/classes-poster.webp',
-        title: 'Clasele MUV',
-        caption: 'Șapte experiențe, de la Khai Bo la antrenament personal.',
-        width: 750,
-        height: 750,
-    },
-    {
-        src: '/images/kids-corner.webp',
-        title: 'Kids Corner',
-        caption: 'Un loc special pentru cei mici, cât timp tu te antrenezi.',
-        width: 1145,
-        height: 1374,
-    },
-    {
-        src: '/images/athlete.webp',
-        title: 'Move · Feel · Belong',
-        caption: 'Un spațiu în care te miști în ritmul tău.',
-        width: 760,
-        height: 1500,
-    },
-    {
-        src: '/images/logo-sign.webp',
-        title: 'Identitatea MUV',
-        caption: 'Sigla noastră, în lumina caldă a studioului.',
-        width: 750,
-        height: 750,
-    },
-];
+export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number };
 
 export const kidsFeatures: { icon: IconName; title: string }[] = [
   { icon: "home", title: "Spațiu amenajat pentru cei mici" },
