@@ -57,9 +57,9 @@ export function Contact() {
                     </Reveal>
 
                     <Reveal delay={120}>
-                        <div className="h-full rounded-[2rem] bg-espresso p-7 text-cream sm:p-10">
-                            <h3 className="font-display text-4xl font-light">Scrie-ne un mesaj</h3>
-                            <p className="mt-2 mb-8 text-sm text-cream/60">Completează formularul și îți răspundem rapid pe WhatsApp.</p>
+                        <div className="h-full rounded-[1.75rem] bg-espresso p-5 text-cream sm:rounded-[2rem] sm:p-10">
+                            <h3 className="font-display text-3xl font-light sm:text-4xl">Scrie-ne un mesaj</h3>
+                            <p className="mt-1 mb-5 text-sm text-cream/60 sm:mt-2 sm:mb-8">Completează formularul și îți răspundem rapid pe WhatsApp.</p>
                             <ContactForm />
                         </div>
                     </Reveal>
