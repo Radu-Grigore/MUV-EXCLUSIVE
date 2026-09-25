@@ -171,12 +171,18 @@ export const gallery: GalleryItem[] = [
         height: 750,
     },
     {
-        src: '/images/clase-afis.png',
-        fallback: '/images/classes-poster.webp',
+        src: '/images/classes-poster.webp',
         title: 'Clasele MUV',
         caption: 'Șapte experiențe, de la Khai Bo la antrenament personal.',
-        width: 1254,
-        height: 1254,
+        width: 750,
+        height: 750,
+    },
+    {
+        src: '/images/kids-corner.webp',
+        title: 'Kids Corner',
+        caption: 'Un loc special pentru cei mici, cât timp tu te antrenezi.',
+        width: 1145,
+        height: 1374,
     },
     {
         src: '/images/athlete.webp',
