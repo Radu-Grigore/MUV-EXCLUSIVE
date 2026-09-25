@@ -15,7 +15,7 @@
   --color-cocoa: #4a3a2e;
   --color-ink: #16110e;
 
-  --font-sans: var(--font-satoshi, var(--font-dmsans)), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Satoshi', var(--font-dmsans), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-instrument), Georgia, serif;
   --font-script: var(--font-allura), cursive;
 

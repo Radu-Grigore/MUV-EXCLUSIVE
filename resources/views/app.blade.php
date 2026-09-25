@@ -15,6 +15,10 @@
         <meta property="og:url" content="{{ url('/') }}">
         <meta property="og:image" content="{{ asset('images/campaign.webp') }}">
 
+        {{-- Satoshi is served by Fontshare (their recommended embed); DM Sans is the fallback --}}
+        <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+        <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap">
         @fonts
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx'])

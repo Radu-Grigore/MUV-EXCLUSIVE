@@ -19,9 +19,9 @@ export function Classes() {
         () => {
             const mm = gsap.matchMedia();
             mm.add('(prefers-reduced-motion: no-preference)', () => {
-                gsap.from('[data-poster]', {
-                    y: 80,
-                    rotate: (i) => (i % 2 ? 4 : -4),
+                // Animates the <li> wrappers; the cards themselves keep their CSS hover transition.
+                gsap.from('[data-poster-item]', {
+                    y: 60,
                     autoAlpha: 0,
                     duration: 1.2,
                     stagger: 0.12,
@@ -78,7 +78,7 @@ export function Classes() {
                 className="no-scrollbar mx-auto mt-12 flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-8 lg:mt-16 lg:grid-cols-4 lg:px-12"
             >
                 {classes.map((c) => (
-                    <li key={c.id} className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none">
+                    <li key={c.id} data-poster-item className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none">
                         <PosterCard
                             c={c}
                             onOpen={() => {
@@ -105,34 +105,38 @@ export function Classes() {
     );
 }
 
-/** The class poster shown whole, in its own portrait format. */
+/** The class poster shown whole, in its own portrait format, with its name underneath. */
 function PosterCard({ c, onOpen }: { c: FitnessClass; onOpen: () => void }) {
     const poster = posterFor(c.id);
 
     return (
         <button
             type="button"
-            data-poster
             data-cursor="Detalii"
             onClick={onOpen}
             aria-label={`${c.name} — vezi detalii`}
-            className="group relative block w-full overflow-hidden rounded-[1.5rem] bg-espresso text-left shadow-[0_30px_60px_-35px_rgba(42,32,26,0.75)] transition-transform duration-700 ease-out-expo hover:-translate-y-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze"
+            className="group block w-full text-left focus-visible:outline-none"
         >
-            {poster ? (
-                <img
-                    src={poster}
-                    alt={`Afiș ${c.name} — MUV Exclusive`}
-                    loading="lazy"
-                    decoding="async"
-                    className="block aspect-[209/374] w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
-                />
-            ) : (
-                <span className="flex aspect-[209/374] w-full items-end p-6 font-display text-4xl text-cream">{c.name}</span>
-            )}
-            <span className="absolute right-4 bottom-4 flex items-center gap-2 rounded-full bg-cream/95 py-2 pr-2 pl-4 text-[0.62rem] font-semibold tracking-[0.2em] text-espresso uppercase shadow-lg transition-transform duration-500 ease-out-expo group-hover:-translate-y-1">
-                Detalii
-                <span className="grid h-7 w-7 place-items-center rounded-full bg-espresso text-cream transition-transform duration-500 ease-out-expo group-hover:rotate-90">
-                    <Icon name="plus" className="h-3.5 w-3.5" />
+            <span className="block overflow-hidden rounded-[1.25rem] bg-espresso shadow-[0_24px_50px_-30px_rgba(42,32,26,0.7)] transition-[transform,box-shadow] duration-700 ease-out-expo group-hover:-translate-y-2 group-hover:shadow-[0_40px_70px_-35px_rgba(42,32,26,0.8)] group-focus-visible:ring-2 group-focus-visible:ring-bronze">
+                {poster ? (
+                    <img
+                        src={poster}
+                        alt={`Afiș ${c.name} — MUV Exclusive`}
+                        loading="lazy"
+                        decoding="async"
+                        className="block aspect-[209/374] w-full object-cover"
+                    />
+                ) : (
+                    <span className="flex aspect-[209/374] w-full items-end p-6 font-display text-4xl text-cream">{c.name}</span>
+                )}
+            </span>
+            <span className="mt-4 flex items-center justify-between gap-3 px-1">
+                <span>
+                    <span className="block font-display text-2xl leading-none">{c.name}</span>
+                    <span className="mt-1.5 block text-[0.6rem] tracking-[0.2em] text-cocoa/70 uppercase">{c.keywords.join(' · ')}</span>
+                </span>
+                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-espresso/15 transition-colors duration-500 group-hover:border-espresso group-hover:bg-espresso group-hover:text-cream">
+                    <Icon name="plus" className="h-4 w-4" />
                 </span>
             </span>
         </button>
