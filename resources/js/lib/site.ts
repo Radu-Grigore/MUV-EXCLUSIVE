@@ -136,27 +136,42 @@ export const classes: FitnessClass[] = [
   },
 ];
 
-export const values: { icon: IconName; title: string; text: string }[] = [
-  {
-    icon: "lotus",
-    title: "Boutique Atmosphere",
-    text: "Un spațiu intim și elegant, cu lumină caldă și grupe mici, unde fiecare detaliu e gândit pentru tine.",
-  },
-  {
-    icon: "heart",
-    title: "Women Only",
-    text: "Un loc doar al nostru, în care te simți în siguranță, confortabil și liberă să fii tu.",
-  },
-  {
-    icon: "people",
-    title: "Comunitate reală",
-    text: "Femei care se susțin, se motivează și cresc împreună — mai mult decât un simplu antrenament.",
-  },
-  {
-    icon: "leaf",
-    title: "Corp sănătos, minte liniștită",
-    text: "Echilibrul dintre mișcare, respirație și odihnă. Pentru cum arăți și, mai ales, pentru cum te simți.",
-  },
+export const pillars: { word: string; title: string; text: string; icon: IconName }[] = [
+    {
+        word: 'Move',
+        title: 'Clase pentru fiecare zi',
+        text: 'De la Khai Bo și Tabata la Pilates și Step — antrenamente variate, pentru orice nivel și orice stare.',
+        icon: 'bolt',
+    },
+    {
+        word: 'Feel',
+        title: 'Boutique atmosphere',
+        text: 'Lumină caldă, grupe mici și un spațiu elegant, în care fiecare detaliu e gândit pentru tine.',
+        icon: 'lotus',
+    },
+    {
+        word: 'Balance',
+        title: 'Corp sănătos, minte liniștită',
+        text: 'Mișcare, respirație și echilibru. Pentru cum arăți și, mai ales, pentru cum te simți.',
+        icon: 'leaf',
+    },
+    {
+        word: 'Belong',
+        title: 'Women only · Comunitate reală',
+        text: 'Un loc doar al nostru. Femei care se susțin, se motivează și cresc împreună.',
+        icon: 'people',
+    },
+];
+
+export const posters: { src: string; alt: string; width: number; height: number }[] = [
+    { src: '/images/campaign.webp', alt: 'Afiș MUV Exclusive — În curând în Ploiești', width: 1334, height: 750 },
+    { src: '/images/step.webp', alt: 'Afiș Step Aerobic', width: 209, height: 374 },
+    { src: '/images/classes-poster.webp', alt: 'Afiș cu toate clasele MUV Exclusive', width: 750, height: 750 },
+    { src: '/images/khaibo.webp', alt: 'Afiș Khai Bo', width: 209, height: 374 },
+    { src: '/images/logo-sign.webp', alt: 'Sigla MUV Exclusive iluminată', width: 750, height: 750 },
+    { src: '/images/tabata.webp', alt: 'Afiș Tabata', width: 209, height: 374 },
+    { src: '/images/athlete.webp', alt: 'Antrenament la MUV Exclusive', width: 380, height: 750 },
+    { src: '/images/pilates.webp', alt: 'Afiș Pilates', width: 209, height: 374 },
 ];
 
 export const kidsFeatures: { icon: IconName; title: string }[] = [

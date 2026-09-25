@@ -1,4 +1,5 @@
 @import 'tailwindcss';
+@import 'lenis/dist/lenis.css';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
@@ -12,39 +13,44 @@
   --color-gold-soft: #e6cfa6;
   --color-espresso: #2a201a;
   --color-cocoa: #4a3a2e;
-  --color-ink: #1c1511;
+  --color-ink: #16110e;
 
   --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
   --font-display: var(--font-cormorant), Georgia, serif;
   --font-script: var(--font-allura), cursive;
 
-  --animate-marquee: marquee 38s linear infinite;
-  --animate-spin-slow: spin 40s linear infinite;
-  --animate-float: float 7s ease-in-out infinite;
-  --animate-glow: glow 5s ease-in-out infinite;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-marquee-reverse: marquee 46s linear infinite reverse;
+  --animate-spin-slow: spin 30s linear infinite;
+  --animate-scroll-cue: scroll-cue 2.2s var(--ease-out-expo) infinite;
 
   @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-50%, 0, 0); }
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-12px); }
-  }
-  @keyframes glow {
-    0%, 100% { opacity: 0.55; }
-    50% { opacity: 1; }
+  @keyframes scroll-cue {
+    0% { transform: scaleY(0); transform-origin: top; }
+    45% { transform: scaleY(1); transform-origin: top; }
+    55% { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
   }
 }
 
 html {
+  scroll-padding-top: 72px;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html:not(.lenis) {
   scroll-behavior: smooth;
-  scroll-padding-top: 80px;
 }
 
 body {
   background: var(--color-cream);
   color: var(--color-espresso);
+  overflow-x: clip;
 }
 
 ::selection {
@@ -53,36 +59,34 @@ body {
 }
 
 .eyebrow {
-  font-size: 0.72rem;
-  letter-spacing: 0.38em;
+  font-size: 0.7rem;
+  letter-spacing: 0.34em;
   text-transform: uppercase;
   font-weight: 500;
 }
 
 .text-gold-gradient {
-  background: linear-gradient(120deg, #7a5b3e 0%, #c7a06a 45%, #8b6c4f 100%);
+  background: linear-gradient(115deg, #6f5238 0%, #c7a06a 42%, #e6cfa6 55%, #8b6c4f 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.grain::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.35;
-  mix-blend-mode: multiply;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .45 0 0 0 0 .35 0 0 0 .08 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+/* Masked line: children slide up from below the line box */
+.line-mask {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+  margin-bottom: -0.08em;
 }
 
-/* Scroll reveal */
+/* Cheap IntersectionObserver reveal for simple fade-ups */
 .reveal {
   opacity: 0;
-  transform: translateY(28px);
+  transform: translate3d(0, 32px, 0);
   transition:
-    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    opacity 1s var(--ease-out-expo),
+    transform 1s var(--ease-out-expo);
   transition-delay: var(--delay, 0ms);
 }
 .reveal.is-visible {
@@ -90,8 +94,21 @@ body {
   transform: none;
 }
 
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
