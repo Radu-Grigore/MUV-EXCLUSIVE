@@ -8,9 +8,6 @@ gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
 
 let lenis: Lenis | null = null;
 
-/** Header height (72px) plus breathing room. */
-const CONTENT_TOP = 104;
-
 export function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
@@ -41,29 +38,53 @@ export function initSmoothScroll() {
     gsap.ticker.lagSmoothing(0);
 }
 
-/**
- * Where a section should land: its first content sits CONTENT_TOP px below the viewport top,
- * whatever padding the section has. `data-scroll-offset` overrides this for special layouts.
- */
+/** Height of the fixed header; every section lands with its top edge right below it. */
+const HEADER_HEIGHT = 72;
+
+let navigating = false;
+
+/** True while (and right after) a menu link scrolls the page, so the header stays visible. */
+export function isNavigating() {
+    return navigating;
+}
+
 function targetY(el: HTMLElement) {
-    const top = el.getBoundingClientRect().top + window.scrollY;
-    const custom = el.dataset.scrollOffset;
-    if (custom !== undefined) return top + Number(custom);
-    const padding = parseFloat(getComputedStyle(el).paddingTop) || 0;
-    return top + Math.max(0, padding - CONTENT_TOP);
+    return Math.max(0, el.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT);
 }
 
 export function scrollToTarget(target: string | HTMLElement | number) {
-    let y: number;
-    if (typeof target === 'number') {
-        y = target;
+    const el = typeof target === 'number' ? null : typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target;
+    if (typeof target !== 'number' && !el) return;
+    const resolve = () => (el ? (el.id === 'top' ? 0 : targetY(el)) : (target as number));
+
+    navigating = true;
+    // Lazy content can shift the page while scrolling; land once more on the recomputed spot.
+    const settle = () => {
+        const y = resolve();
+        if (Math.abs(window.scrollY - y) > 1) {
+            if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
+            else window.scrollTo({ top: y, behavior: 'auto' });
+        }
+        requestAnimationFrame(() => (navigating = false));
+    };
+
+    if (lenis) {
+        lenis.scrollTo(resolve(), { duration: 1.2, force: true, onComplete: settle });
     } else {
-        const el = typeof target === 'string' ? document.querySelector<HTMLElement>(target) : target;
-        if (!el) return;
-        y = el.id === 'top' ? 0 : targetY(el);
+        const smooth = !prefersReducedMotion();
+        window.scrollTo({ top: resolve(), behavior: smooth ? 'smooth' : 'auto' });
+        if (!smooth) return settle();
+        let timer = 0;
+        const onScrollEnd = () => {
+            window.clearTimeout(timer);
+            timer = window.setTimeout(() => {
+                window.removeEventListener('scroll', onScrollEnd);
+                settle();
+            }, 140);
+        };
+        window.addEventListener('scroll', onScrollEnd, { passive: true });
+        onScrollEnd();
     }
-    if (lenis) lenis.scrollTo(y, { duration: 1.4 });
-    else window.scrollTo({ top: y, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
 }
 
 export function lockScroll(locked: boolean) {

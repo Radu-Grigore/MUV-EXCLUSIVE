@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { navLinks, site } from '@/lib/site';
-import { lockScroll, onScroll, scrollToTarget } from '@/lib/scroll';
+import { isNavigating, lockScroll, onScroll, scrollToTarget } from '@/lib/scroll';
 import { Icon } from './Icon';
 import { Logo } from './Logo';
 
@@ -14,7 +14,7 @@ export function Header() {
         () =>
             onScroll((y, direction) => {
                 setScrolled(y > 24);
-                setHidden(y > 240 && direction > 0);
+                setHidden(!isNavigating() && y > 240 && direction > 0);
                 const max = document.documentElement.scrollHeight - window.innerHeight;
                 if (progress.current) progress.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
             }),

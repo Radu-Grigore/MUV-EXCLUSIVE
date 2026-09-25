@@ -46,7 +46,7 @@ export function Opening() {
     );
 
     return (
-        <section ref={root} id="deschidere" className="relative overflow-hidden bg-ink py-28 text-cream sm:py-40">
+        <section ref={root} id="deschidere" className="relative overflow-hidden bg-ink py-24 text-cream sm:py-32">
             <div className="pointer-events-none absolute inset-0 opacity-70">
                 <ShaderClouds colors={MIST} speed={0.7} />
             </div>

@@ -35,7 +35,7 @@ export function Manifesto() {
     );
 
     return (
-        <section ref={root} id="despre" className="relative overflow-hidden py-28 sm:py-40">
+        <section ref={root} id="despre" className="relative overflow-hidden py-24 sm:py-32">
             <div className="mx-auto grid max-w-[1440px] gap-14 px-5 sm:px-8 lg:grid-cols-12 lg:px-12">
                 <div className="lg:col-span-3">
                     <p className="eyebrow flex items-center gap-3 text-bronze">

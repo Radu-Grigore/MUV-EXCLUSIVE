@@ -84,7 +84,7 @@ export function Kids() {
     };
 
     return (
-        <section ref={root} id="kids" data-scroll-offset="-84" className="px-3 py-3 sm:px-5 sm:py-5">
+        <section ref={root} id="kids" className="px-3 py-3 sm:px-5 sm:py-5">
             <div data-kids-frame className="relative isolate mx-auto max-w-[1600px] overflow-hidden rounded-[2rem] bg-[#f4efe2] sm:rounded-[3rem] lg:min-h-[min(860px,100svh)]">
                 {/* The room */}
                 <div className="absolute inset-x-0 top-0 -z-10 h-[360px] overflow-hidden sm:h-[440px] lg:inset-0 lg:h-auto">
