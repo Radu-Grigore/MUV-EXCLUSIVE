@@ -1,5 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
+import { asset } from '@/lib/site';
 import { gsap } from '@/lib/scroll';
 
 const text =
@@ -44,7 +45,7 @@ export function Manifesto() {
                     <div data-manifesto-img className="relative mt-10 hidden aspect-square w-full max-w-[260px] lg:block">
                         <div className="absolute -inset-3 rounded-full border border-gold/40" />
                         <img
-                            src="/images/logo-sign.webp"
+                            src={asset('/images/logo-sign.webp')}
                             alt="Sigla MUV Exclusive iluminată pe peretele studioului"
                             width={750}
                             height={750}
@@ -66,7 +67,7 @@ export function Manifesto() {
 
                     <div className="mt-14 flex items-center gap-6 lg:hidden">
                         <img
-                            src="/images/logo-sign.webp"
+                            src={asset('/images/logo-sign.webp')}
                             alt=""
                             width={750}
                             height={750}

@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import { site } from '@/lib/site';
+import { asset, site } from '@/lib/site';
 import { gsap, hasFinePointer, introDone, scrollToTarget } from '@/lib/scroll';
 import { Icon } from '../Icon';
 import { ShaderClouds } from '../ShaderClouds';
@@ -124,7 +124,7 @@ export function Hero() {
                         <div className="relative aspect-[38/62] overflow-hidden rounded-t-full rounded-b-[2rem] bg-sand shadow-[0_50px_90px_-45px_rgba(42,32,26,0.7)]">
                             <img
                                 data-hero-img
-                                src="/images/athlete.webp"
+                                src={asset('/images/athlete.webp')}
                                 alt="Femeie antrenându-se în studioul MUV Exclusive"
                                 width={760}
                                 height={1500}

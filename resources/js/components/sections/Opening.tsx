@@ -46,7 +46,7 @@ export function Opening() {
     );
 
     return (
-        <section ref={root} id="deschidere" data-scroll-edge className="relative overflow-hidden bg-ink py-20 text-cream sm:py-24">
+        <section ref={root} id="deschidere" data-scroll-edge className="relative overflow-hidden bg-ink py-20 text-cream sm:flex sm:min-h-[calc(100svh-72px)] sm:flex-col sm:justify-center sm:py-24">
             <div className="pointer-events-none absolute inset-0 opacity-70">
                 <ShaderClouds colors={MIST} speed={0.7} />
             </div>
@@ -62,7 +62,7 @@ export function Opening() {
                 <circle data-draw cx="300" cy="300" r="290" fill="none" stroke="#c7a06a" strokeWidth="1.2" />
                 <circle data-draw cx="300" cy="300" r="262" fill="none" stroke="#c7a06a" strokeOpacity="0.35" strokeWidth="0.8" strokeDasharray="2 8" />
             </svg>
-            <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
+            <div className="relative mx-auto w-full max-w-4xl px-5 text-center sm:px-8">
                 <p className="eyebrow text-gold">Deschidere oficială</p>
                 <h2 data-date className="mt-6 font-display text-[17vw] leading-none font-light whitespace-nowrap sm:text-8xl lg:text-9xl">
                     01<span className="text-gold">.</span>11<span className="text-gold">.</span>2026

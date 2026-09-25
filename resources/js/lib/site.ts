@@ -108,3 +108,11 @@ export const kidsFeatures: { icon: IconName; title: string }[] = [
   { icon: "play", title: "Desene animate pentru cei mici" },
   { icon: "heart", title: "Confort pentru toată familia" },
 ];
+
+/**
+ * URL of a file in public/, respecting the folder the site is deployed in
+ * (e.g. rbsolutions.ro/muv-exclusive). The build base is "<ASSET_URL>/build/".
+ */
+export function asset(path: string): string {
+    return import.meta.env.BASE_URL.replace(/build\/$/, '') + path.replace(/^\//, '');
+}

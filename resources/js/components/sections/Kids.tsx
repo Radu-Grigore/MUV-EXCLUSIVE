@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useRef, useState } from 'react';
-import { kidsFeatures, type GalleryItem } from '@/lib/site';
+import { asset, kidsFeatures, type GalleryItem } from '@/lib/site';
 import { gsap, hasFinePointer } from '@/lib/scroll';
 import { Icon } from '../Icon';
 import { KidsPlayground } from '../KidsPlayground';
@@ -10,7 +10,7 @@ const Lightbox = lazy(() => import('./Lightbox'));
 const colors = ['#6f7f4d', '#e0a93b', '#3f6fa3', '#c86b6b'];
 
 const poster: GalleryItem = {
-    src: '/images/kids-corner.webp',
+    src: asset('/images/kids-corner.webp'),
     title: 'Kids Corner la MUV Exclusive',
     caption: 'Pentru mai mult timp pentru tine.',
     width: 1145,
@@ -90,7 +90,7 @@ export function Kids() {
                 <div className="absolute inset-x-0 top-0 -z-10 h-[360px] overflow-hidden sm:h-[440px] lg:inset-0 lg:h-auto">
                     <img
                         data-kids-room
-                        src="/images/kids-room.webp"
+                        src={asset('/images/kids-room.webp')}
                         alt="Kids Corner la MUV Exclusive: fotolii puf colorate, măsuțe, televizor cu desene animate, cărți și jucării"
                         width={2290}
                         height={1400}

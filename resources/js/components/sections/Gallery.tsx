@@ -1,13 +1,13 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useRef, useState } from 'react';
-import { classes, site, type GalleryItem } from '@/lib/site';
+import { asset, classes, site, type GalleryItem } from '@/lib/site';
 import { gsap, hasFinePointer } from '@/lib/scroll';
 import { Icon } from '../Icon';
 
 const Lightbox = lazy(() => import('./Lightbox'));
 
 const poster: GalleryItem = {
-    src: '/images/classes-poster.webp',
+    src: asset('/images/classes-poster.webp'),
     title: 'Clasele MUV',
     caption: 'Toate clasele MUV Exclusive',
     width: 750,
