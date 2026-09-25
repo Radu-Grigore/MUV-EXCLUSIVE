@@ -1,13 +1,18 @@
-import { useEffect, useRef, useState } from 'react';
-import { gallery, site } from '@/lib/site';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { gallery, site, type GalleryItem } from '@/lib/site';
 import { Icon } from '../Icon';
 import { Reveal } from '../Reveal';
+
+// Motion is only needed once an image is enlarged, so the lightbox is its own chunk.
+const Lightbox = lazy(() => import('./Lightbox'));
 
 const AUTOPLAY_MS = 6000;
 
 export function Gallery() {
     const [index, setIndex] = useState(0);
     const [paused, setPaused] = useState(false);
+    const [zoomed, setZoomed] = useState<GalleryItem | null>(null);
+    const [lightboxUsed, setLightboxUsed] = useState(false);
     const [inView, setInView] = useState(false);
     const section = useRef<HTMLElement>(null);
     const thumbs = useRef<HTMLUListElement>(null);
@@ -65,8 +70,12 @@ export function Gallery() {
             >
                 {/* Stage */}
                 <div
-                    data-cursor="Următoarea"
-                    onClick={(e) => (e.target as HTMLElement).closest('button') || go(index + 1)}
+                    data-cursor="Mărește"
+                    onClick={(e) => {
+                        if ((e.target as HTMLElement).closest('button')) return;
+                        setLightboxUsed(true);
+                        setZoomed(active);
+                    }}
                     className="relative overflow-hidden rounded-[2rem] bg-espresso lg:col-span-8"
                     onMouseEnter={() => setPaused(true)}
                     onMouseLeave={() => setPaused(false)}
@@ -88,11 +97,12 @@ export function Gallery() {
                                 }`}
                             >
                                 {/* Soft colour wash from the image itself fills the letterbox */}
-                                <img src={g.src} alt="" width={g.width} height={g.height} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-125 object-cover opacity-40 blur-2xl" />
+                                <img src={g.src} onError={fallbackOnError(g)} alt="" width={g.width} height={g.height} loading="lazy" decoding="async" className="absolute inset-0 h-full w-full scale-125 object-cover opacity-40 blur-2xl" />
                                 <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/20 to-ink/30" />
                                 <div className="absolute inset-0 flex items-center justify-center p-6 pb-28 sm:p-10 sm:pb-32">
                                     <img
                                         src={g.src}
+                                        onError={fallbackOnError(g)}
                                         alt={g.title}
                                         width={g.width}
                                         height={g.height}
@@ -171,7 +181,7 @@ export function Gallery() {
                                         i === index ? 'ring-gold' : 'opacity-60 ring-transparent group-hover:opacity-100'
                                     }`}
                                 >
-                                    <img src={g.src} alt="" width={g.width} height={g.height} loading="lazy" decoding="async" className="h-full w-full object-cover" />
+                                    <img src={g.src} onError={fallbackOnError(g)} alt="" width={g.width} height={g.height} loading="lazy" decoding="async" className="h-full w-full object-cover" />
                                 </span>
                                 <span className="hidden min-w-0 flex-1 lg:block">
                                     <span className="flex items-baseline gap-3">
@@ -185,6 +195,22 @@ export function Gallery() {
                     ))}
                 </ul>
             </Reveal>
+            {lightboxUsed && (
+                <Suspense fallback={null}>
+                    <Lightbox item={zoomed} onClose={() => setZoomed(null)} />
+                </Suspense>
+            )}
         </section>
     );
+}
+
+/** Swap to the fallback image once if the preferred (high-resolution) file is missing. */
+export function fallbackOnError(g: GalleryItem) {
+    return (e: React.SyntheticEvent<HTMLImageElement>) => {
+        const img = e.currentTarget;
+        if (g.fallback && !img.dataset.fellBack) {
+            img.dataset.fellBack = '1';
+            img.src = g.fallback;
+        }
+    };
 }

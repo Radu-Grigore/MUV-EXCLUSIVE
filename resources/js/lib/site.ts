@@ -158,7 +158,7 @@ export const pillars: { word: string; title: string; text: string; icon: IconNam
     },
 ];
 
-export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number };
+export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number; fallback?: string };
 
 // Only images with enough resolution for large display. The single-class posters (Step, Khai Bo,
 // Tabata, Pilates) come back here once the original high-resolution files are available.
@@ -171,11 +171,12 @@ export const gallery: GalleryItem[] = [
         height: 750,
     },
     {
-        src: '/images/classes-poster.webp',
+        src: '/images/clase-afis.png',
+        fallback: '/images/classes-poster.webp',
         title: 'Clasele MUV',
         caption: 'Șapte experiențe, de la Khai Bo la antrenament personal.',
-        width: 750,
-        height: 750,
+        width: 1254,
+        height: 1254,
     },
     {
         src: '/images/athlete.webp',

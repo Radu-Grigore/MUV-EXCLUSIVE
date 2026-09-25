@@ -76,7 +76,8 @@ export function Hero() {
                     <div className="relative z-20 flex items-start justify-between gap-6 pt-6 lg:pt-10">
                         <div className="max-w-[20rem]">
                             <p data-hero-fade className="eyebrow flex items-center gap-3 text-bronze">
-                                <span className="h-px w-8 bg-gold" /> {site.city} · {site.openingLabel}
+                                <span className="h-px w-8 bg-gold" /> <span className="sm:hidden">Deschidere</span>
+                                <span className="hidden sm:inline">{site.city}</span> · {site.openingLabel}
                             </p>
                             <p data-hero-fade className="mt-5 hidden text-[0.95rem] leading-relaxed text-cocoa sm:block">
                                 Studio boutique de fitness și wellness, creat exclusiv pentru femei. More than a workout — a better you.
@@ -125,7 +126,7 @@ export function Hero() {
                             />
                             <span data-hero-cover className="absolute inset-0 origin-top scale-y-0 bg-cream" />
                         </div>
-                        {/* Rotating badge */}
+                        {/* Rotating opening-date badge */}
                         <div
                             data-hero-badge
                             className="absolute top-[14%] -left-12 z-20 grid h-28 w-28 place-items-center rounded-full bg-cream text-espresso shadow-[0_20px_40px_-20px_rgba(42,32,26,0.6)] sm:-left-16 sm:h-32 sm:w-32 lg:h-36 lg:w-36"
@@ -134,15 +135,14 @@ export function Hero() {
                                 <defs>
                                     <path id="badge-circle" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
                                 </defs>
-                                <text className="fill-current text-[8px] font-medium tracking-[0.3em] uppercase">
-                                    <textPath href="#badge-circle">MUV Exclusive · Ploiești · 2026 ·</textPath>
+                                <text className="fill-current text-[7.2px] font-medium tracking-[0.22em] uppercase">
+                                    <textPath href="#badge-circle">Deschidere oficială · Grand opening ·</textPath>
                                 </text>
                             </svg>
                             <span className="absolute inset-[22%] rounded-full border border-espresso/15" />
-                            <span className="relative text-center font-display text-[1.05rem] leading-[0.95] font-semibold tracking-wide sm:text-xl lg:text-[1.35rem]">
-                                WOMEN
-                                <br />
-                                ONLY
+                            <span className="relative text-center leading-none">
+                                <span className="block font-display text-[1.7rem] sm:text-[2rem] lg:text-[2.3rem]">01.11</span>
+                                <span className="mt-0.5 block text-[0.5rem] font-medium tracking-[0.3em] text-bronze">2026</span>
                             </span>
                         </div>
                         <p
