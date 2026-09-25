@@ -48,8 +48,14 @@ export function isNavigating() {
     return navigating;
 }
 
+/** Gap between the header and a section's first content after a menu jump. */
+const CONTENT_GAP = 32;
+
+/** Lands the section's first content CONTENT_GAP px below the header, whatever its top padding. */
 function targetY(el: HTMLElement) {
-    return Math.max(0, el.getBoundingClientRect().top + window.scrollY - HEADER_HEIGHT);
+    const top = el.getBoundingClientRect().top + window.scrollY;
+    const padding = parseFloat(getComputedStyle(el).paddingTop) || 0;
+    return Math.max(0, top + padding - HEADER_HEIGHT - CONTENT_GAP);
 }
 
 export function scrollToTarget(target: string | HTMLElement | number) {
@@ -65,7 +71,8 @@ export function scrollToTarget(target: string | HTMLElement | number) {
             if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
             else window.scrollTo({ top: y, behavior: 'auto' });
         }
-        requestAnimationFrame(() => (navigating = false));
+        // Keep the header pinned a moment longer so the settling scroll events can't hide it.
+        window.setTimeout(() => (navigating = false), 400);
     };
 
     if (lenis) {

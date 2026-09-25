@@ -55,7 +55,7 @@ export function Classes() {
     }, [active]);
 
     return (
-        <section ref={root} id="clase" className="relative bg-sand py-24 text-espresso sm:py-32">
+        <section ref={root} id="clase" className="relative bg-sand py-20 text-espresso sm:py-24">
             <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:px-12">
                 <div>
                     <p className="eyebrow flex items-center gap-3 text-bronze">
@@ -75,10 +75,10 @@ export function Classes() {
 
             <ul
                 ref={track}
-                className="no-scrollbar mx-auto mt-12 flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-8 lg:mt-16 lg:grid-cols-4 lg:px-12"
+                className="no-scrollbar mx-auto mt-12 flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-8 lg:mt-12 lg:flex lg:justify-center lg:px-12"
             >
                 {classes.map((c) => (
-                    <li key={c.id} data-poster-item className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none">
+                    <li key={c.id} data-poster-item className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none lg:w-[min(calc((100%_-_4.5rem)/4),calc((100svh_-_22rem)*0.559))] lg:shrink-0">
                         <PosterCard
                             c={c}
                             onOpen={() => {

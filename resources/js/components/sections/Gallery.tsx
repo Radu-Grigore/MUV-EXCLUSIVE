@@ -68,7 +68,7 @@ export function Gallery() {
     );
 
     return (
-        <section ref={root} id="galerie" className="relative overflow-hidden bg-espresso py-24 text-cream sm:py-32">
+        <section ref={root} id="galerie" className="relative overflow-hidden bg-espresso py-20 text-cream sm:py-24">
             <div
                 className="pointer-events-none absolute inset-0"
                 style={{ background: 'radial-gradient(45% 55% at 28% 50%, rgba(199,160,106,0.28) 0%, transparent 70%)' }}

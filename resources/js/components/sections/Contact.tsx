@@ -15,7 +15,7 @@ export function Contact() {
     ];
 
     return (
-        <section id="contact" className="py-24 sm:py-32">
+        <section id="contact" className="py-20 sm:py-24">
             <div className="mx-auto max-w-[1440px] px-5 sm:px-8 lg:px-12">
                 <Reveal className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                     <div>
