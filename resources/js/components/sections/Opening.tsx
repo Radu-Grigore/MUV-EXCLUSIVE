@@ -46,18 +46,18 @@ export function Opening() {
     );
 
     return (
-        <section ref={root} id="deschidere" className="relative overflow-hidden bg-ink py-20 text-cream sm:py-24">
+        <section ref={root} id="deschidere" data-scroll-edge className="relative overflow-hidden bg-ink py-20 text-cream sm:py-24">
             <div className="pointer-events-none absolute inset-0 opacity-70">
                 <ShaderClouds colors={MIST} speed={0.7} />
             </div>
             <div
                 data-ring
-                className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[140vw] max-w-[860px] -translate-x-1/2 -translate-y-1/2 rounded-full shadow-[0_0_120px_10px_rgba(199,160,106,0.22),inset_0_0_120px_10px_rgba(199,160,106,0.1)] sm:w-[90vw]"
+                className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[140vw] max-w-[860px] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[calc(100%-1rem)] sm:w-auto sm:max-w-none shadow-[0_0_120px_10px_rgba(199,160,106,0.22),inset_0_0_120px_10px_rgba(199,160,106,0.1)] sm:w-[90vw]"
             />
             <svg
                 aria-hidden="true"
                 viewBox="0 0 600 600"
-                className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[125vw] max-w-[760px] -translate-x-1/2 -translate-y-1/2 -rotate-90 sm:w-[80vw]"
+                className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[125vw] max-w-[760px] -translate-x-1/2 -translate-y-1/2 -rotate-90 sm:h-[calc(100%-3rem)] sm:max-h-[760px] sm:w-auto sm:max-w-none"
             >
                 <circle data-draw cx="300" cy="300" r="290" fill="none" stroke="#c7a06a" strokeWidth="1.2" />
                 <circle data-draw cx="300" cy="300" r="262" fill="none" stroke="#c7a06a" strokeOpacity="0.35" strokeWidth="0.8" strokeDasharray="2 8" />

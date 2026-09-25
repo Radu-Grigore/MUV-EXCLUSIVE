@@ -54,6 +54,8 @@ const CONTENT_GAP = 32;
 /** Lands the section's first content CONTENT_GAP px below the header, whatever its top padding. */
 function targetY(el: HTMLElement) {
     const top = el.getBoundingClientRect().top + window.scrollY;
+    // Full-bleed sections (data-scroll-edge) land with their own top edge under the header.
+    if (el.hasAttribute('data-scroll-edge')) return Math.max(0, top - HEADER_HEIGHT);
     const padding = parseFloat(getComputedStyle(el).paddingTop) || 0;
     return Math.max(0, top + padding - HEADER_HEIGHT - CONTENT_GAP);
 }
