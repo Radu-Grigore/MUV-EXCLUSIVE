@@ -62,16 +62,6 @@ export const classes: FitnessClass[] = [
     script: "Stronger, Faster, You",
   },
   {
-    id: "functional",
-    name: "Functional Training",
-    keywords: ["Forță", "Rezistență", "Rezultate"],
-    description:
-      "Mișcări naturale, cu greutăți și kettlebell, care îți construiesc forța de care ai nevoie în viața de zi cu zi — un corp puternic, stabil și echilibrat.",
-    benefits: ["Crește forța", "Îmbunătățește mobilitatea", "Stabilitate și control", "Rezultate vizibile"],
-    icon: "kettlebell",
-    accent: "#c46a5a",
-  },
-  {
     id: "step",
     name: "Step Aerobic",
     keywords: ["Ritm", "Cardio", "Bună dispoziție"],
@@ -86,16 +76,6 @@ export const classes: FitnessClass[] = [
     icon: "step",
     accent: "#8fa06a",
     script: "More than fitness",
-  },
-  {
-    id: "total-body",
-    name: "Total Body",
-    keywords: ["Tonus", "Definire", "O versiune mai bună a ta"],
-    description:
-      "Un antrenament complet care lucrează toate grupele musculare într-o singură oră, pentru tonus, definire și o siluetă armonioasă.",
-    benefits: ["Lucrează tot corpul", "Definește musculatura", "Crește metabolismul", "Postură mai bună"],
-    icon: "dumbbell",
-    accent: "#6f8fa8",
   },
   {
     id: "pilates",
@@ -118,18 +98,7 @@ export const classes: FitnessClass[] = [
     icon: "flame",
     accent: "#d0a04a",
     script: "Stronger, Faster, You",
-  },
-  {
-    id: "personal",
-    name: "Instructor Personal",
-    keywords: ["Plan personalizat", "Progres real", "Susținere continuă"],
-    description:
-      "Antrenamente one-to-one, construite în jurul obiectivelor tale. Un plan pe măsura ta, atenție la fiecare detaliu și susținere la fiecare pas.",
-    benefits: ["Plan 100% personalizat", "Tehnică corectă", "Progres monitorizat", "Motivație constantă"],
-    icon: "person",
-    accent: "#c98590",
-  },
-];
+  },];
 
 export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number; fallback?: string };
 

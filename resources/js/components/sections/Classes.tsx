@@ -1,12 +1,9 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { classes, site, type FitnessClass } from '@/lib/site';
+import { classes, type FitnessClass } from '@/lib/site';
 import { posterFor } from '@/lib/posters';
 import { gsap, lockScroll } from '@/lib/scroll';
 import { Icon } from '../Icon';
-import { NotchCard } from '../NotchCard';
-
-const SECTION_BG = '#ece1d4'; // bg-sand, painted into the card notches
 
 // Motion is only needed once a class is opened, so the dialog is split into its own chunk.
 const ClassDialogHost = lazy(() => import('./ClassDialog'));
@@ -18,40 +15,33 @@ export function Classes() {
     const [active, setActive] = useState<FitnessClass | null>(null);
     const [dialogUsed, setDialogUsed] = useState(false);
 
-    // Desktop: pin the section and translate the track horizontally with the scroll.
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
-            mm.add('(min-width: 1024px) and (prefers-reduced-motion: no-preference)', () => {
-                const el = track.current!;
-                const distance = () => el.scrollWidth - el.clientWidth;
-                gsap.to(el, {
-                    x: () => -distance(),
-                    ease: 'none',
-                    scrollTrigger: {
-                        trigger: '[data-classes-pin]',
-                        start: 'top top',
-                        end: () => `+=${distance()}`,
-                        pin: true,
-                        scrub: 0.8,
-                        invalidateOnRefresh: true,
-                        onUpdate: (self) => bar.current && (bar.current.style.transform = `scaleX(${self.progress})`),
-                    },
+            mm.add('(prefers-reduced-motion: no-preference)', () => {
+                gsap.from('[data-poster]', {
+                    y: 80,
+                    rotate: (i) => (i % 2 ? 4 : -4),
+                    autoAlpha: 0,
+                    duration: 1.2,
+                    stagger: 0.12,
+                    ease: 'expo.out',
+                    scrollTrigger: { trigger: track.current, start: 'top 85%', once: true },
                 });
             });
         },
         { scope: root },
     );
 
-    // Mobile: progress bar follows the native horizontal swipe.
+    // Phones: the progress bar follows the horizontal swipe.
     useEffect(() => {
         const el = track.current;
         if (!el) return;
         const onScroll = () => {
-            if (window.innerWidth >= 1024) return;
             const max = el.scrollWidth - el.clientWidth;
-            if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? el.scrollLeft / max : 0})`;
+            if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? el.scrollLeft / max : 1})`;
         };
+        onScroll();
         el.addEventListener('scroll', onScroll, { passive: true });
         return () => el.removeEventListener('scroll', onScroll);
     }, []);
@@ -65,73 +55,44 @@ export function Classes() {
     }, [active]);
 
     return (
-        <section ref={root} id="clase" className="relative bg-sand text-espresso">
-            <div data-classes-pin className="relative flex flex-col justify-center overflow-hidden py-24 lg:h-svh lg:min-h-[680px] lg:py-0">
-                <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:px-12">
-                    <div>
-                        <p className="eyebrow flex items-center gap-3 text-bronze">
-                            <span className="h-px w-8 bg-gold" /> Clasele noastre · 07
-                        </p>
-                        <h2 data-split className="mt-5 font-display text-5xl leading-[0.95] font-light sm:text-6xl lg:text-7xl">
-                            Găsește mișcarea
-                            <br />
-                            <em className="text-bronze">care ți se potrivește</em>
-                        </h2>
-                    </div>
-                    <p className="max-w-sm text-sm leading-relaxed text-cocoa">
-                        Șapte experiențe, un singur scop: să te simți puternică, liberă și bine în pielea ta.
-                        <span className="mt-2 block font-medium text-bronze lg:hidden">Glisează pentru toate clasele →</span>
+        <section ref={root} id="clase" className="relative bg-sand py-24 text-espresso sm:py-32">
+            <div className="mx-auto flex max-w-[1440px] flex-col justify-between gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:px-12">
+                <div>
+                    <p className="eyebrow flex items-center gap-3 text-bronze">
+                        <span className="h-px w-8 bg-gold" /> Clasele noastre
                     </p>
+                    <h2 data-split className="mt-5 font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl">
+                        Găsește mișcarea
+                        <br />
+                        <em className="text-bronze">care ți se potrivește</em>
+                    </h2>
                 </div>
+                <p className="max-w-sm text-sm leading-relaxed text-cocoa">
+                    Experiențe diferite, un singur scop: să te simți puternică, liberă și bine în pielea ta. Apasă pe o clasă pentru detalii.
+                    <span className="mt-2 block font-medium text-bronze sm:hidden">Glisează pentru toate clasele →</span>
+                </p>
+            </div>
 
-                <ul
-                    ref={track}
-                    className="no-scrollbar relative mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-2 sm:px-8 lg:mt-14 lg:snap-none lg:gap-6 lg:overflow-visible lg:px-12"
-                >
-                    {classes.map((c, i) => (
-                        <li key={c.id} className="w-[76vw] max-w-[340px] shrink-0 snap-center sm:snap-start lg:w-auto lg:max-w-none">
-                            <ClassCard
-                                c={c}
-                                index={i}
-                                onOpen={() => {
-                                    setDialogUsed(true);
-                                    setActive(c);
-                                }}
-                            />
-                        </li>
-                    ))}
-                    <li className="w-[76vw] max-w-[340px] shrink-0 snap-center sm:snap-start lg:w-auto lg:max-w-none">
-                        <NotchCard
-                            notchColor={SECTION_BG}
-                            className="flex aspect-[2/3] flex-col bg-espresso p-7 text-cream lg:h-[min(62svh,540px)]"
-                            badge={
-                                <a
-                                    href={site.whatsapp}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="Rezervă-ți locul pe WhatsApp"
-                                    className="grid h-full w-full place-items-center bg-gold text-ink transition-colors hover:bg-gold-soft"
-                                >
-                                    <Icon name="arrow-up-right" className="h-5 w-5" />
-                                </a>
-                            }
-                            badgeClassName="pointer-events-auto"
-                        >
-                            <p className="eyebrow flex items-center gap-2 text-gold-soft">
-                                <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Locuri limitate
-                            </p>
-                            <p className="mt-5 font-script text-6xl leading-[0.9] text-gold-soft">More than a workout</p>
-                            <p className="mt-auto max-w-[15rem] text-sm leading-relaxed text-cream/70">
-                                Grupe mici, instructori dedicați și un program gândit pentru ritmul tău. Rezervă-ți locul de pe acum.
-                            </p>
-                        </NotchCard>
+            <ul
+                ref={track}
+                className="no-scrollbar mx-auto mt-12 flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-8 lg:mt-16 lg:grid-cols-4 lg:px-12"
+            >
+                {classes.map((c) => (
+                    <li key={c.id} className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none">
+                        <PosterCard
+                            c={c}
+                            onOpen={() => {
+                                setDialogUsed(true);
+                                setActive(c);
+                            }}
+                        />
                     </li>
-                </ul>
+                ))}
+            </ul>
 
-                <div className="relative mx-auto mt-10 w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
-                    <div className="h-px w-full bg-espresso/10">
-                        <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-bronze" />
-                    </div>
+            <div className="mx-auto mt-6 max-w-[1440px] px-5 sm:hidden">
+                <div className="h-px w-full bg-espresso/10">
+                    <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-bronze" />
                 </div>
             </div>
 
@@ -144,57 +105,36 @@ export function Classes() {
     );
 }
 
-function ClassCard({ c, index, onOpen }: { c: FitnessClass; index: number; onOpen: () => void }) {
+/** The class poster shown whole, in its own portrait format. */
+function PosterCard({ c, onOpen }: { c: FitnessClass; onOpen: () => void }) {
     const poster = posterFor(c.id);
-    const badge = (
-        <span className="grid h-full w-full place-items-center text-espresso" style={{ background: poster ? '#f7f1ea' : `${c.accent}55` }}>
-            {String(index + 1).padStart(2, '0')}
-        </span>
-    );
-    const shared = {
-        as: 'button' as const,
-        onClick: onOpen,
-        ariaLabel: `${c.name} — vezi detalii`,
-        cursor: 'Detalii',
-        notchColor: SECTION_BG,
-        badge,
-    };
 
-    // With a poster, the card is the poster itself, shown whole in its portrait format.
-    if (poster) {
-        return (
-            <NotchCard
-                {...shared}
-                className="aspect-[2/3] overflow-hidden bg-espresso shadow-[0_30px_60px_-40px_rgba(42,32,26,0.7)] transition-transform duration-700 ease-out-expo hover:-translate-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze lg:h-[min(62svh,540px)]"
-            >
+    return (
+        <button
+            type="button"
+            data-poster
+            data-cursor="Detalii"
+            onClick={onOpen}
+            aria-label={`${c.name} — vezi detalii`}
+            className="group relative block w-full overflow-hidden rounded-[1.5rem] bg-espresso text-left shadow-[0_30px_60px_-35px_rgba(42,32,26,0.75)] transition-transform duration-700 ease-out-expo hover:-translate-y-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze"
+        >
+            {poster ? (
                 <img
                     src={poster}
                     alt={`Afiș ${c.name} — MUV Exclusive`}
                     loading="lazy"
                     decoding="async"
-                    className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
+                    className="block aspect-[209/374] w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
                 />
-            </NotchCard>
-        );
-    }
-
-    return (
-        <NotchCard
-            {...shared}
-            className="flex aspect-[2/3] flex-col bg-white/85 p-7 shadow-[0_30px_60px_-45px_rgba(42,32,26,0.55)] transition-[background-color,transform] duration-700 ease-out-expo hover:-translate-y-1.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze lg:h-[min(62svh,540px)]"
-        >
-            <p className="eyebrow flex items-center gap-2 text-[0.62rem] text-cocoa">
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: c.accent }} />
-                {c.keywords.slice(0, 2).join(' · ')}
-            </p>
-            <h3 className="mt-4 font-display text-[2.5rem] leading-[0.95] font-medium">{c.name}</h3>
-            <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-cocoa/80">{c.description}</p>
-
-            <span className="mt-auto flex items-end justify-between pr-20">
-                <span className="transition-transform duration-700 ease-out-expo group-hover:-rotate-6 group-hover:scale-110" style={{ color: c.accent }}>
-                    <Icon name={c.icon} className="h-20 w-20" strokeWidth={0.8} />
+            ) : (
+                <span className="flex aspect-[209/374] w-full items-end p-6 font-display text-4xl text-cream">{c.name}</span>
+            )}
+            <span className="absolute right-4 bottom-4 flex items-center gap-2 rounded-full bg-cream/95 py-2 pr-2 pl-4 text-[0.62rem] font-semibold tracking-[0.2em] text-espresso uppercase shadow-lg transition-transform duration-500 ease-out-expo group-hover:-translate-y-1">
+                Detalii
+                <span className="grid h-7 w-7 place-items-center rounded-full bg-espresso text-cream transition-transform duration-500 ease-out-expo group-hover:rotate-90">
+                    <Icon name="plus" className="h-3.5 w-3.5" />
                 </span>
             </span>
-        </NotchCard>
+        </button>
     );
 }
