@@ -129,7 +129,7 @@ export function Hero() {
                         {/* Rotating opening-date badge */}
                         <div
                             data-hero-badge
-                            className="absolute top-[14%] -left-12 z-20 grid h-28 w-28 place-items-center rounded-full bg-cream text-espresso shadow-[0_20px_40px_-20px_rgba(42,32,26,0.6)] sm:-left-16 sm:h-32 sm:w-32 lg:h-36 lg:w-36"
+                            className="absolute -top-10 -left-10 z-20 grid h-28 w-28 sm:top-[14%] place-items-center rounded-full bg-cream text-espresso shadow-[0_20px_40px_-20px_rgba(42,32,26,0.6)] sm:-left-16 sm:h-32 sm:w-32 lg:h-36 lg:w-36"
                         >
                             <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full animate-spin-slow text-bronze" aria-hidden="true">
                                 <defs>

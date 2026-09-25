@@ -39,8 +39,8 @@ export function Kids() {
                 );
                 gsap.fromTo(
                     '[data-kids-room]',
-                    { scale: 1.3 },
-                    { scale: 1.05, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true } },
+                    { scale: 1.12 },
+                    { scale: 1, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true } },
                 );
 
                 const enter = gsap.timeline({ scrollTrigger: { trigger: '[data-kids-card]', start: 'top 80%', once: true } });
@@ -92,8 +92,8 @@ export function Kids() {
                         data-kids-room
                         src="/images/kids-room.webp"
                         alt="Kids Corner la MUV Exclusive: fotolii puf colorate, măsuțe, televizor cu desene animate, cărți și jucării"
-                        width={1145}
-                        height={700}
+                        width={2290}
+                        height={1400}
                         loading="lazy"
                         decoding="async"
                         className="h-full w-full object-cover object-[50%_60%]"
@@ -138,7 +138,7 @@ export function Kids() {
                     </div>
 
                     {/* Poster */}
-                    <div data-kids-poster className="mx-auto w-[230px] self-center [perspective:1000px] sm:w-[260px] lg:mx-0 lg:mb-[-2rem] lg:w-[290px] lg:self-end">
+                    <div data-kids-poster className="hidden w-[290px] self-end [perspective:1000px] lg:mb-[-2rem] lg:block">
                         <button
                             ref={posterCard}
                             type="button"

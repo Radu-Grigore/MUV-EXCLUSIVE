@@ -11,7 +11,6 @@ import { Hero } from '@/components/sections/Hero';
 import { Kids } from '@/components/sections/Kids';
 import { Manifesto } from '@/components/sections/Manifesto';
 import { Opening } from '@/components/sections/Opening';
-import { Pillars } from '@/components/sections/Pillars';
 import { VelocityMarquee } from '@/components/VelocityMarquee';
 import { gsap, initSmoothScroll, ScrollTrigger, SplitText } from '@/lib/scroll';
 
@@ -55,7 +54,6 @@ export default function Home() {
                 <Hero />
                 <Manifesto />
                 <VelocityMarquee />
-                <Pillars />
                 <Classes />
                 <Kids />
                 <Gallery />

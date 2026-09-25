@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { classes, site, type FitnessClass } from '@/lib/site';
+import { posterFor } from '@/lib/posters';
 import { gsap, lockScroll } from '@/lib/scroll';
 import { Icon } from '../Icon';
 import { NotchCard } from '../NotchCard';
@@ -88,7 +89,7 @@ export function Classes() {
                     className="no-scrollbar relative mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-2 sm:px-8 lg:mt-14 lg:snap-none lg:gap-6 lg:overflow-visible lg:px-12"
                 >
                     {classes.map((c, i) => (
-                        <li key={c.id} className="w-[80vw] max-w-[360px] shrink-0 snap-center sm:snap-start lg:w-[27vw] lg:max-w-[400px]">
+                        <li key={c.id} className="w-[76vw] max-w-[340px] shrink-0 snap-center sm:snap-start lg:w-auto lg:max-w-none">
                             <ClassCard
                                 c={c}
                                 index={i}
@@ -99,10 +100,10 @@ export function Classes() {
                             />
                         </li>
                     ))}
-                    <li className="w-[80vw] max-w-[360px] shrink-0 snap-center sm:snap-start lg:w-[27vw] lg:max-w-[400px]">
+                    <li className="w-[76vw] max-w-[340px] shrink-0 snap-center sm:snap-start lg:w-auto lg:max-w-none">
                         <NotchCard
                             notchColor={SECTION_BG}
-                            className="flex h-[420px] flex-col bg-espresso p-7 text-cream lg:h-[min(58svh,480px)]"
+                            className="flex aspect-[2/3] flex-col bg-espresso p-7 text-cream lg:h-[min(62svh,540px)]"
                             badge={
                                 <a
                                     href={site.whatsapp}
@@ -144,29 +145,53 @@ export function Classes() {
 }
 
 function ClassCard({ c, index, onOpen }: { c: FitnessClass; index: number; onOpen: () => void }) {
+    const poster = posterFor(c.id);
+    const badge = (
+        <span className="grid h-full w-full place-items-center text-espresso" style={{ background: poster ? '#f7f1ea' : `${c.accent}55` }}>
+            {String(index + 1).padStart(2, '0')}
+        </span>
+    );
+    const shared = {
+        as: 'button' as const,
+        onClick: onOpen,
+        ariaLabel: `${c.name} — vezi detalii`,
+        cursor: 'Detalii',
+        notchColor: SECTION_BG,
+        badge,
+    };
+
+    // With a poster, the card is the poster itself, shown whole in its portrait format.
+    if (poster) {
+        return (
+            <NotchCard
+                {...shared}
+                className="aspect-[2/3] overflow-hidden bg-espresso shadow-[0_30px_60px_-40px_rgba(42,32,26,0.7)] transition-transform duration-700 ease-out-expo hover:-translate-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze lg:h-[min(62svh,540px)]"
+            >
+                <img
+                    src={poster}
+                    alt={`Afiș ${c.name} — MUV Exclusive`}
+                    loading="lazy"
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-cover object-top transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
+                />
+            </NotchCard>
+        );
+    }
+
     return (
         <NotchCard
-            as="button"
-            onClick={onOpen}
-            ariaLabel={`${c.name} — vezi detalii`}
-            cursor="Detalii"
-            notchColor={SECTION_BG}
-            className="flex h-[420px] flex-col bg-white/85 p-7 shadow-[0_30px_60px_-45px_rgba(42,32,26,0.55)] transition-[background-color,transform] duration-700 ease-out-expo hover:-translate-y-1.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze lg:h-[min(58svh,480px)]"
-            badge={
-                <span className="grid h-full w-full place-items-center text-espresso" style={{ background: `${c.accent}55` }}>
-                    {String(index + 1).padStart(2, '0')}
-                </span>
-            }
+            {...shared}
+            className="flex aspect-[2/3] flex-col bg-white/85 p-7 shadow-[0_30px_60px_-45px_rgba(42,32,26,0.55)] transition-[background-color,transform] duration-700 ease-out-expo hover:-translate-y-1.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze lg:h-[min(62svh,540px)]"
         >
             <p className="eyebrow flex items-center gap-2 text-[0.62rem] text-cocoa">
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: c.accent }} />
                 {c.keywords.slice(0, 2).join(' · ')}
             </p>
             <h3 className="mt-4 font-display text-[2.5rem] leading-[0.95] font-medium">{c.name}</h3>
-            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-cocoa/80">{c.description}</p>
+            <p className="mt-3 line-clamp-4 text-sm leading-relaxed text-cocoa/80">{c.description}</p>
 
             <span className="mt-auto flex items-end justify-between pr-20">
-                <span className="text-espresso/80 transition-transform duration-700 ease-out-expo group-hover:-rotate-6 group-hover:scale-110" style={{ color: c.accent }}>
+                <span className="transition-transform duration-700 ease-out-expo group-hover:-rotate-6 group-hover:scale-110" style={{ color: c.accent }}>
                     <Icon name={c.icon} className="h-20 w-20" strokeWidth={0.8} />
                 </span>
             </span>

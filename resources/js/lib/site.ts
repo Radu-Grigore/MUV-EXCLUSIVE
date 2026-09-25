@@ -131,33 +131,6 @@ export const classes: FitnessClass[] = [
   },
 ];
 
-export const pillars: { word: string; title: string; text: string; icon: IconName }[] = [
-    {
-        word: 'Move',
-        title: 'Clase pentru fiecare zi',
-        text: 'De la Khai Bo și Tabata la Pilates și Step — antrenamente variate, pentru orice nivel și orice stare.',
-        icon: 'bolt',
-    },
-    {
-        word: 'Feel',
-        title: 'Boutique atmosphere',
-        text: 'Lumină caldă, grupe mici și un spațiu elegant, în care fiecare detaliu e gândit pentru tine.',
-        icon: 'lotus',
-    },
-    {
-        word: 'Balance',
-        title: 'Corp sănătos, minte liniștită',
-        text: 'Mișcare, respirație și echilibru. Pentru cum arăți și, mai ales, pentru cum te simți.',
-        icon: 'leaf',
-    },
-    {
-        word: 'Belong',
-        title: 'Women only · Comunitate reală',
-        text: 'Un loc doar al nostru. Femei care se susțin, se motivează și cresc împreună.',
-        icon: 'people',
-    },
-];
-
 export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number; fallback?: string };
 
 // Only images with enough resolution for large display. The single-class posters (Step, Khai Bo,
