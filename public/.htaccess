@@ -29,7 +29,7 @@
     AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml application/javascript application/json image/svg+xml
 </IfModule>
 
-# Long cache for versioned build assets, images and fonts
+# Long cache for build assets (file names change on every build), images and fonts
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType text/css "access plus 1 year"
@@ -41,9 +41,6 @@
 </IfModule>
 
 <IfModule mod_headers.c>
-    <FilesMatch "^build/assets/">
-        Header set Cache-Control "public, max-age=31536000, immutable"
-    </FilesMatch>
     Header always set X-Content-Type-Options "nosniff"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
 </IfModule>
