@@ -11,7 +11,6 @@ const ClassDialogHost = lazy(() => import('./ClassDialog'));
 export function Classes() {
     const root = useRef<HTMLElement>(null);
     const track = useRef<HTMLUListElement>(null);
-    const bar = useRef<HTMLSpanElement>(null);
     const [active, setActive] = useState<FitnessClass | null>(null);
     const [dialogUsed, setDialogUsed] = useState(false);
 
@@ -32,19 +31,6 @@ export function Classes() {
         },
         { scope: root },
     );
-
-    // Phones: the progress bar follows the horizontal swipe.
-    useEffect(() => {
-        const el = track.current;
-        if (!el) return;
-        const onScroll = () => {
-            const max = el.scrollWidth - el.clientWidth;
-            if (bar.current) bar.current.style.transform = `scaleX(${max > 0 ? el.scrollLeft / max : 1})`;
-        };
-        onScroll();
-        el.addEventListener('scroll', onScroll, { passive: true });
-        return () => el.removeEventListener('scroll', onScroll);
-    }, []);
 
     useEffect(() => {
         lockScroll(!!active);
@@ -71,16 +57,15 @@ export function Classes() {
                 </h2>
                 <p className="mx-auto mt-4 max-w-xl text-sm leading-relaxed text-cocoa">
                     Experiențe diferite, un singur scop: să te simți puternică, liberă și bine în pielea ta. Apasă pe o clasă pentru detalii.
-                    <span className="mt-2 block font-medium text-bronze sm:hidden">Glisează pentru toate clasele →</span>
                 </p>
             </div>
 
             <ul
                 ref={track}
-                className="no-scrollbar mx-auto mt-10 flex max-w-[1440px] snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-4 sm:grid sm:grid-cols-2 sm:gap-6 sm:overflow-visible sm:px-8 lg:mt-8 lg:flex lg:min-h-0 lg:w-full lg:flex-1 lg:items-center lg:justify-center lg:px-12 lg:pb-0 lg:[container-type:size]"
+                className="mx-auto mt-8 grid max-w-[1440px] grid-cols-2 gap-x-3 gap-y-6 px-4 sm:mt-10 sm:gap-6 sm:px-8 lg:mt-8 lg:flex lg:min-h-0 lg:w-full lg:flex-1 lg:items-center lg:justify-center lg:px-12 lg:pb-0 lg:[container-type:size]"
             >
                 {classes.map((c) => (
-                    <li key={c.id} data-poster-item className="w-[74vw] max-w-[340px] shrink-0 snap-center sm:w-auto sm:max-w-none lg:w-[min(calc((100cqh_-_4rem)_*_0.7187),calc((100cqw_-_10.5rem)_/_4))] lg:max-w-none">
+                    <li key={c.id} data-poster-item className="min-w-0 lg:w-[min(calc((100cqh_-_4rem)_*_0.7187),calc((100cqw_-_10.5rem)_/_4))] lg:max-w-none">
                         <PosterCard
                             c={c}
                             onOpen={() => {
@@ -91,12 +76,6 @@ export function Classes() {
                     </li>
                 ))}
             </ul>
-
-            <div className="mx-auto mt-6 max-w-[1440px] px-5 sm:hidden">
-                <div className="h-px w-full bg-espresso/10">
-                    <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-bronze" />
-                </div>
-            </div>
 
             {dialogUsed && (
                 <Suspense fallback={null}>
@@ -119,19 +98,19 @@ function PosterCard({ c, onOpen }: { c: FitnessClass; onOpen: () => void }) {
             aria-label={`${c.name} — vezi detalii`}
             className="group flex w-full flex-col text-left focus-visible:outline-none"
         >
-            <span className="block overflow-hidden rounded-[1.25rem] bg-espresso shadow-[0_24px_50px_-30px_rgba(42,32,26,0.7)] transition-[transform,box-shadow] duration-700 ease-out-expo group-hover:-translate-y-2 group-hover:shadow-[0_40px_70px_-35px_rgba(42,32,26,0.8)] group-focus-visible:ring-2 group-focus-visible:ring-bronze">
+            <span className="block overflow-hidden rounded-2xl bg-espresso shadow sm:rounded-[1.25rem]-[0_24px_50px_-30px_rgba(42,32,26,0.7)] transition-[transform,box-shadow] duration-700 ease-out-expo group-hover:-translate-y-2 group-hover:shadow-[0_40px_70px_-35px_rgba(42,32,26,0.8)] group-focus-visible:ring-2 group-focus-visible:ring-bronze">
                 {poster ? (
                     <img src={poster} alt={`Afiș ${c.name} — MUV Exclusive`} loading="lazy" decoding="async" className="block aspect-[1063/1479] w-full object-cover" />
                 ) : (
                     <span className="flex aspect-[1063/1479] w-full items-end p-6 font-display text-4xl text-cream">{c.name}</span>
                 )}
             </span>
-            <span className="mt-3 flex shrink-0 items-center justify-between gap-3 px-1">
+            <span className="mt-2.5 flex shrink-0 items-center justify-between gap-2 px-0.5 sm:mt-3 sm:gap-3 sm:px-1">
                 <span className="min-w-0">
-                    <span className="block truncate font-display text-2xl leading-none">{c.name}</span>
-                    <span className="mt-1.5 block truncate text-[0.6rem] tracking-[0.2em] text-cocoa/70 uppercase">{c.keywords.join(' · ')}</span>
+                    <span className="block truncate font-display text-xl leading-none sm:text-2xl">{c.name}</span>
+                    <span className="mt-1.5 hidden truncate text-[0.6rem] tracking-[0.2em] text-cocoa/70 uppercase sm:block">{c.keywords.join(' · ')}</span>
                 </span>
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full border border-espresso/15 transition-colors duration-500 group-hover:border-espresso group-hover:bg-espresso group-hover:text-cream">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-espresso/15 sm:h-10 sm:w-10 transition-colors duration-500 group-hover:border-espresso group-hover:bg-espresso group-hover:text-cream">
                     <Icon name="plus" className="h-4 w-4" />
                 </span>
             </span>
