@@ -64,7 +64,7 @@ export function Footer() {
 
             <p
                 aria-hidden="true"
-                className="text-gold-gradient pointer-events-none -mb-[0.2em] text-center font-display text-[36vw] leading-[0.8] font-medium tracking-[-0.03em] opacity-90 select-none"
+                className="text-gold-gradient pointer-events-none pt-10 pb-[3vw] text-center font-display text-[30vw] leading-[0.8] font-medium tracking-[-0.03em] select-none"
             >
                 MUV
             </p>

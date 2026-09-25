@@ -163,15 +163,34 @@ export const pillars: { word: string; title: string; text: string; icon: IconNam
     },
 ];
 
-export const posters: { src: string; alt: string; width: number; height: number }[] = [
-    { src: '/images/campaign.webp', alt: 'Afiș MUV Exclusive — În curând în Ploiești', width: 1334, height: 750 },
-    { src: '/images/step.webp', alt: 'Afiș Step Aerobic', width: 209, height: 374 },
-    { src: '/images/classes-poster.webp', alt: 'Afiș cu toate clasele MUV Exclusive', width: 750, height: 750 },
-    { src: '/images/khaibo.webp', alt: 'Afiș Khai Bo', width: 209, height: 374 },
-    { src: '/images/logo-sign.webp', alt: 'Sigla MUV Exclusive iluminată', width: 750, height: 750 },
-    { src: '/images/tabata.webp', alt: 'Afiș Tabata', width: 209, height: 374 },
-    { src: '/images/athlete.webp', alt: 'Antrenament la MUV Exclusive', width: 380, height: 750 },
-    { src: '/images/pilates.webp', alt: 'Afiș Pilates', width: 209, height: 374 },
+export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number };
+
+export const gallery: GalleryItem[] = [
+    {
+        src: '/images/campaign.webp',
+        title: 'Campania de lansare',
+        caption: 'În curând în Ploiești — zona Albert, MRS Village.',
+        width: 1334,
+        height: 750,
+    },
+    {
+        src: '/images/classes-poster.webp',
+        title: 'Clasele MUV',
+        caption: 'Șapte experiențe, de la Khai Bo la antrenament personal.',
+        width: 750,
+        height: 750,
+    },
+    { src: '/images/step.webp', title: 'Step Aerobic', caption: 'Ritm, cardio și bună dispoziție. More than fitness.', width: 209, height: 374 },
+    { src: '/images/khaibo.webp', title: 'Khai Bo', caption: 'Energie, disciplină și încredere. Stronger, faster, you.', width: 209, height: 374 },
+    { src: '/images/tabata.webp', title: 'Tabata', caption: 'Intervale intense pentru rezultate rapide.', width: 209, height: 374 },
+    { src: '/images/pilates.webp', title: 'Pilates', caption: 'Postură, flexibilitate și echilibru. Stronger you.', width: 209, height: 374 },
+    {
+        src: '/images/logo-sign.webp',
+        title: 'Identitatea MUV',
+        caption: 'Sigla noastră, în lumina caldă a studioului.',
+        width: 750,
+        height: 750,
+    },
 ];
 
 export const kidsFeatures: { icon: IconName; title: string }[] = [

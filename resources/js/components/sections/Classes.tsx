@@ -3,6 +3,9 @@ import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { classes, site, type FitnessClass } from '@/lib/site';
 import { gsap, lockScroll } from '@/lib/scroll';
 import { Icon } from '../Icon';
+import { NotchCard } from '../NotchCard';
+
+const SECTION_BG = '#ece1d4'; // bg-sand, painted into the card notches
 
 // Motion is only needed once a class is opened, so the dialog is split into its own chunk.
 const ClassDialogHost = lazy(() => import('./ClassDialog'));
@@ -61,26 +64,22 @@ export function Classes() {
     }, [active]);
 
     return (
-        <section ref={root} id="clase" className="relative bg-ink text-cream">
+        <section ref={root} id="clase" className="relative bg-sand text-espresso">
             <div data-classes-pin className="relative flex flex-col justify-center overflow-hidden py-24 lg:h-svh lg:min-h-[680px] lg:py-0">
-                <div
-                    className="pointer-events-none absolute inset-0"
-                    style={{ background: 'radial-gradient(50% 60% at 15% 10%, rgba(199,160,106,0.18) 0%, transparent 70%)' }}
-                />
                 <div className="relative mx-auto flex w-full max-w-[1440px] flex-col justify-between gap-6 px-5 sm:px-8 lg:flex-row lg:items-end lg:px-12">
                     <div>
-                        <p className="eyebrow flex items-center gap-3 text-gold">
+                        <p className="eyebrow flex items-center gap-3 text-bronze">
                             <span className="h-px w-8 bg-gold" /> Clasele noastre · 07
                         </p>
                         <h2 className="mt-5 font-display text-5xl leading-[0.95] font-light sm:text-6xl lg:text-7xl">
                             Găsește mișcarea
                             <br />
-                            <em className="text-gold-soft">care ți se potrivește</em>
+                            <em className="text-bronze">care ți se potrivește</em>
                         </h2>
                     </div>
-                    <p className="max-w-sm text-sm leading-relaxed text-cream/60">
+                    <p className="max-w-sm text-sm leading-relaxed text-cocoa">
                         Șapte experiențe, un singur scop: să te simți puternică, liberă și bine în pielea ta.
-                        <span className="mt-2 block text-gold-soft/80 lg:hidden">Glisează pentru toate clasele →</span>
+                        <span className="mt-2 block font-medium text-bronze lg:hidden">Glisează pentru toate clasele →</span>
                     </p>
                 </div>
 
@@ -89,7 +88,7 @@ export function Classes() {
                     className="no-scrollbar relative mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-2 sm:px-8 lg:mt-14 lg:snap-none lg:gap-6 lg:overflow-visible lg:px-12"
                 >
                     {classes.map((c, i) => (
-                        <li key={c.id} className="w-[78vw] max-w-[340px] shrink-0 snap-center sm:snap-start lg:w-[25vw] lg:max-w-[380px]">
+                        <li key={c.id} className="w-[80vw] max-w-[360px] shrink-0 snap-center sm:snap-start lg:w-[27vw] lg:max-w-[400px]">
                             <ClassCard
                                 c={c}
                                 index={i}
@@ -100,30 +99,37 @@ export function Classes() {
                             />
                         </li>
                     ))}
-                    <li className="w-[78vw] max-w-[340px] shrink-0 snap-center sm:snap-start lg:w-[25vw] lg:max-w-[380px]">
-                        <div className="flex h-[440px] flex-col justify-between rounded-[1.75rem] border border-gold/30 bg-gradient-to-br from-gold/25 via-gold/5 to-transparent p-7 lg:h-[min(56svh,500px)]">
-                            <p className="font-script text-6xl leading-[0.9] text-gold-soft">More than a workout</p>
-                            <div>
-                                <p className="text-sm leading-relaxed text-cream/70">Grupe mici, instructori dedicați și un program gândit pentru ritmul tău.</p>
+                    <li className="w-[80vw] max-w-[360px] shrink-0 snap-center sm:snap-start lg:w-[27vw] lg:max-w-[400px]">
+                        <NotchCard
+                            notchColor={SECTION_BG}
+                            className="flex h-[420px] flex-col bg-espresso p-7 text-cream lg:h-[min(58svh,480px)]"
+                            badge={
                                 <a
                                     href={site.whatsapp}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="group mt-6 inline-flex items-center gap-2 rounded-full bg-cream py-3 pr-3 pl-6 text-[0.64rem] font-semibold tracking-[0.22em] text-espresso uppercase transition-colors hover:bg-gold-soft"
+                                    aria-label="Rezervă-ți locul pe WhatsApp"
+                                    className="grid h-full w-full place-items-center bg-gold text-ink transition-colors hover:bg-gold-soft"
                                 >
-                                    Rezervă-ți locul
-                                    <span className="grid h-7 w-7 place-items-center rounded-full bg-espresso text-cream transition-transform duration-500 ease-out-expo group-hover:rotate-[-45deg]">
-                                        <Icon name="arrow" className="h-3.5 w-3.5" />
-                                    </span>
+                                    <Icon name="arrow-up-right" className="h-5 w-5" />
                                 </a>
-                            </div>
-                        </div>
+                            }
+                            badgeClassName="pointer-events-auto"
+                        >
+                            <p className="eyebrow flex items-center gap-2 text-gold-soft">
+                                <span className="h-1.5 w-1.5 rounded-full bg-gold" /> Locuri limitate
+                            </p>
+                            <p className="mt-5 font-script text-6xl leading-[0.9] text-gold-soft">More than a workout</p>
+                            <p className="mt-auto max-w-[15rem] text-sm leading-relaxed text-cream/70">
+                                Grupe mici, instructori dedicați și un program gândit pentru ritmul tău. Rezervă-ți locul de pe acum.
+                            </p>
+                        </NotchCard>
                     </li>
                 </ul>
 
                 <div className="relative mx-auto mt-10 w-full max-w-[1440px] px-5 sm:px-8 lg:px-12">
-                    <div className="h-px w-full bg-cream/10">
-                        <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-gold" />
+                    <div className="h-px w-full bg-espresso/10">
+                        <span ref={bar} className="block h-px w-full origin-left scale-x-0 bg-bronze" />
                     </div>
                 </div>
             </div>
@@ -139,37 +145,30 @@ export function Classes() {
 
 function ClassCard({ c, index, onOpen }: { c: FitnessClass; index: number; onOpen: () => void }) {
     return (
-        <button
-            type="button"
+        <NotchCard
+            as="button"
             onClick={onOpen}
-            className="group relative flex h-[440px] w-full flex-col overflow-hidden rounded-[1.75rem] border border-white/10 p-7 text-left transition-[border-color,transform] duration-700 ease-out-expo hover:-translate-y-2 hover:border-white/25 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold lg:h-[min(56svh,500px)]"
-            style={{
-                background: `radial-gradient(90% 60% at 50% 38%, ${c.accent}40 0%, transparent 70%), linear-gradient(180deg, #221a15 0%, #16110e 100%)`,
-            }}
+            ariaLabel={`${c.name} — vezi detalii`}
+            notchColor={SECTION_BG}
+            className="flex h-[420px] flex-col bg-white/85 p-7 shadow-[0_30px_60px_-45px_rgba(42,32,26,0.55)] transition-[background-color,transform] duration-700 ease-out-expo hover:-translate-y-1.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-bronze lg:h-[min(58svh,480px)]"
+            badge={
+                <span className="grid h-full w-full place-items-center text-espresso" style={{ background: `${c.accent}55` }}>
+                    {String(index + 1).padStart(2, '0')}
+                </span>
+            }
         >
-            <span className="absolute inset-x-8 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${c.accent}, transparent)` }} />
-            <div className="flex items-start justify-between">
-                <span className="font-display text-2xl text-cream/40">0{index + 1}</span>
-                <span
-                    className="grid h-10 w-10 place-items-center rounded-full border border-white/15 text-cream/80 transition-all duration-500 ease-out-expo group-hover:rotate-90 group-hover:border-transparent group-hover:bg-cream group-hover:text-espresso"
-                >
-                    <Icon name="plus" className="h-4 w-4" />
-                </span>
-            </div>
+            <p className="eyebrow flex items-center gap-2 text-[0.62rem] text-cocoa">
+                <span className="h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: c.accent }} />
+                {c.keywords.slice(0, 2).join(' · ')}
+            </p>
+            <h3 className="mt-4 font-display text-[2.5rem] leading-[0.95] font-medium">{c.name}</h3>
+            <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-cocoa/80">{c.description}</p>
 
-            <div className="relative flex flex-1 items-center justify-center">
-                <span className="absolute h-40 w-40 rounded-full opacity-40 transition-transform duration-700 ease-out-expo group-hover:scale-125" style={{ background: `radial-gradient(circle, ${c.accent}66 0%, transparent 70%)` }} />
-                <span style={{ color: c.accent }} className="relative transition-transform duration-700 ease-out-expo group-hover:scale-110 group-hover:-rotate-6">
-                    <Icon name={c.icon} className="h-24 w-24" strokeWidth={0.9} />
+            <span className="mt-auto flex items-end justify-between pr-20">
+                <span className="text-espresso/80 transition-transform duration-700 ease-out-expo group-hover:-rotate-6 group-hover:scale-110" style={{ color: c.accent }}>
+                    <Icon name={c.icon} className="h-20 w-20" strokeWidth={0.8} />
                 </span>
-            </div>
-
-            <div>
-                <h3 className="font-display text-[2.1rem] leading-none font-medium">{c.name}</h3>
-                <p className="mt-3 text-[0.6rem] tracking-[0.24em] uppercase" style={{ color: c.accent }}>
-                    {c.keywords.join(' · ')}
-                </p>
-            </div>
-        </button>
+            </span>
+        </NotchCard>
     );
 }
