@@ -25,7 +25,9 @@ const satoshi = existsSync(`${satoshiDir}/Satoshi-Variable.woff2`)
       ]
     : [];
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+    // Relative base: built files find each other wherever the site is deployed (root or a subfolder).
+    base: command === 'build' ? './' : undefined,
     plugins: [
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.tsx'],
@@ -50,4 +52,4 @@ export default defineConfig({
             ignored: ['**/storage/framework/views/**'],
         },
     },
-});
+}));

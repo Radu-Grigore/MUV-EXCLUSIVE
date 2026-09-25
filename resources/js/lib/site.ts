@@ -110,9 +110,11 @@ export const kidsFeatures: { icon: IconName; title: string }[] = [
 ];
 
 /**
- * URL of a file in public/, respecting the folder the site is deployed in
- * (e.g. rbsolutions.ro/muv-exclusive). The build base is "<ASSET_URL>/build/".
+ * URL of a file in public/, wherever the site is deployed (e.g. rbsolutions.ro/muv-exclusive).
+ * In production this code runs from <site>/build/assets/, so the site root is two folders up.
  */
+const publicRoot = import.meta.env.DEV ? '/' : new URL('../../', import.meta.url).href;
+
 export function asset(path: string): string {
-    return import.meta.env.BASE_URL.replace(/build\/$/, '') + path.replace(/^\//, '');
+    return publicRoot + path.replace(/^\//, '');
 }

@@ -19,7 +19,8 @@
         <link rel="preconnect" href="https://api.fontshare.com" crossorigin>
         <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
         <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@300,400,500,700&display=swap">
-        @fonts
+        {{-- The inlined font CSS uses paths relative to build/assets; anchor them so they work in any folder. --}}
+        {!! str_replace('url("./', 'url("'.asset('build/assets').'/', (string) \Illuminate\Support\Facades\Vite::fonts()) !!}
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx'])
         @inertiaHead
