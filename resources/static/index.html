@@ -23,5 +23,15 @@
     </head>
     <body class="min-h-screen font-sans antialiased">
         <div id="app"></div>
+        <noscript><p style="padding:2rem;text-align:center;font-family:sans-serif">Activează JavaScript pentru a vedea site-ul MUV Exclusive.</p></noscript>
+        <script>
+            // If the app fails to start, show the error instead of an empty page.
+            window.addEventListener('error', function (e) {
+                var app = document.getElementById('app');
+                if (app && !app.firstChild) {
+                    app.innerHTML = '<p style="padding:2rem;font-family:sans-serif;color:#2a201a">Site-ul nu a putut porni: ' + String(e.message || e.error).replace(/</g, '&lt;') + '</p>';
+                }
+            });
+        </script>
     </body>
 </html>

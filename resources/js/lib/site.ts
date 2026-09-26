@@ -112,9 +112,13 @@ export const kidsFeatures: { icon: IconName; title: string }[] = [
 /**
  * URL of a file in public/, wherever the site is deployed (e.g. rbsolutions.ro/muv-exclusive).
  */
-// Laravel build: JS in public/build/assets (site root two folders up); the static build sets
-// VITE_PUBLIC_ROOT because its JS sits in dist/assets.
-const publicRoot = import.meta.env.DEV ? '/' : new URL(import.meta.env.VITE_PUBLIC_ROOT ?? '../../', import.meta.url).href;
+// Laravel build: JS in public/build/assets (site root two folders up). The static build inlines
+// its JS into index.html, so it sets VITE_PUBLIC_ROOT to '' and paths stay relative to the page.
+const publicRoot = import.meta.env.DEV
+    ? '/'
+    : import.meta.env.VITE_PUBLIC_ROOT !== undefined
+      ? import.meta.env.VITE_PUBLIC_ROOT
+      : new URL('../../', import.meta.url).href;
 
 export function asset(path: string): string {
     return publicRoot + path.replace(/^\//, '');
