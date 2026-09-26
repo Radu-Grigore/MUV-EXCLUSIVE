@@ -1,0 +1,6 @@
+/* Font variables that Laravel's @fonts directive provides in the Laravel build. */
+:root {
+  --font-dmsans: 'DM Sans Variable';
+  --font-instrument: 'Instrument Serif';
+  --font-allura: 'Allura';
+}
