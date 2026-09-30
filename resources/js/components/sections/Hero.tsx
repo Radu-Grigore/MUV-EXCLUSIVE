@@ -76,8 +76,8 @@ export function Hero() {
                     {/* Top row */}
                     <div className="relative z-20 flex items-start justify-between gap-4 pt-6 sm:gap-6 lg:pt-10">
                         <div className="min-w-0 max-w-[20rem]">
-                            <p data-hero-fade className="eyebrow hidden items-center gap-3 text-bronze sm:flex">
-                                <span className="h-px w-8 bg-gold" /> {site.city} · {site.openingLabel}
+                            <p data-hero-fade className="eyebrow hidden items-center gap-3 whitespace-nowrap text-bronze sm:flex">
+                                <span className="h-px w-8 shrink-0 bg-gold" /> Deschidere oficială · {site.openingLabel}
                             </p>
                             <p data-hero-fade className="eyebrow flex items-start gap-3 text-bronze sm:hidden">
                                 <span className="mt-[0.45em] h-px w-6 bg-gold" />
