@@ -2,7 +2,7 @@ import { Check } from 'lucide-react';
 import { AnimatePresence, motion, useDragControls, type Variants } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { appStoreForDevice, classes, site, type FitnessClass } from '@/lib/site';
+import { appLaunchForDevice, classes, site, type FitnessClass } from '@/lib/site';
 import { lockScroll, scrollToTarget } from '@/lib/scroll';
 import { Icon } from '../Icon';
 
@@ -43,7 +43,7 @@ function ClassPanel({ c, onClose, onChange }: { c: FitnessClass; onClose: () => 
     const index = classes.findIndex((x) => x.id === c.id);
     const prev = classes[(index - 1 + classes.length) % classes.length];
     const next = classes[(index + 1) % classes.length];
-    const store = appStoreForDevice();
+    const store = appLaunchForDevice();
     const message = encodeURIComponent(`Bună! Aș dori mai multe detalii despre clasa ${c.name} la MUV Exclusive.`);
 
     const hidden = phone ? { y: '100%' } : { x: '100%' };
@@ -176,8 +176,6 @@ function ClassPanel({ c, onClose, onChange }: { c: FitnessClass; onClose: () => 
                     <div className="flex gap-3">
                         <a
                             href={store ?? '#rezervari'}
-                            target={store ? '_blank' : undefined}
-                            rel={store ? 'noopener noreferrer' : undefined}
                             onClick={(e) => {
                                 if (store) return;
                                 // No phone store to open: close the panel and show the booking steps instead.

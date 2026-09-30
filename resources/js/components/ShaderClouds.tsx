@@ -48,8 +48,13 @@ export function ShaderClouds({ colors, className = '', scale = 0.45, speed = 1 }
 
     useEffect(() => {
         const el = canvas.current;
-        const gl = el?.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
-        if (!el || !gl) return;
+        if (!el) return;
+        return init(el);
+    }, [colors, scale, speed]);
+
+    function init(el: HTMLCanvasElement): (() => void) | undefined {
+        const gl = el.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
+        if (!gl) return;
 
         const compile = (type: number, src: string) => {
             const s = gl.createShader(type)!;
@@ -61,7 +66,7 @@ export function ShaderClouds({ colors, className = '', scale = 0.45, speed = 1 }
         gl.attachShader(prog, compile(gl.VERTEX_SHADER, vertex));
         gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, fragment));
         gl.linkProgram(prog);
-        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+        if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return undefined;
         gl.useProgram(prog);
 
         gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
@@ -132,7 +137,7 @@ export function ShaderClouds({ colors, className = '', scale = 0.45, speed = 1 }
             window.removeEventListener('resize', play);
             gl.getExtension('WEBGL_lose_context')?.loseContext();
         };
-    }, [colors, scale, speed]);
+    }
 
     return (
         <canvas

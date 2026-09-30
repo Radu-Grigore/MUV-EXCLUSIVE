@@ -24,7 +24,8 @@ export function initSmoothScroll() {
     // In-page links (#despre, #clase…) all go through scrollToTarget so they land consistently.
     document.addEventListener('click', (e) => {
         if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey) return;
-        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]');
+        // "#/..." links are page routes in the static build, not sections.
+        const a = (e.target as HTMLElement).closest<HTMLAnchorElement>('a[href^="#"]:not([href^="#/"])');
         const hash = a?.getAttribute('href');
         if (!hash || hash === '#') return;
         e.preventDefault();

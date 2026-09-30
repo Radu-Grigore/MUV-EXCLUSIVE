@@ -26,25 +26,26 @@ export function Preloader() {
             }
             lockScroll(true);
             const counter = { v: 0 };
-            const fonts = document.fonts?.ready ?? Promise.resolve();
+            // Wait briefly for the display font, but never let a slow font hold the page back.
+            const fonts = Promise.race([document.fonts?.ready ?? Promise.resolve(), new Promise((r) => setTimeout(r, 400))]);
 
             const tl = gsap.timeline({ paused: true });
-            tl.from('[data-pre-letter]', { yPercent: 110, stagger: 0.07, duration: 0.9, ease: 'expo.out' })
+            tl.from('[data-pre-letter]', { yPercent: 110, stagger: 0.05, duration: 0.6, ease: 'expo.out' })
                 .to(counter, {
                     v: 100,
-                    duration: 1,
+                    duration: 0.7,
                     ease: 'power2.inOut',
                     onUpdate: () => count.current && (count.current.textContent = String(Math.round(counter.v)).padStart(3, '0')),
                 }, 0)
-                .to('[data-pre-bar]', { scaleX: 1, duration: 1, ease: 'power2.inOut' }, 0)
-                .to('[data-pre-letter]', { yPercent: -110, stagger: 0.05, duration: 0.6, ease: 'expo.in' }, 1.05)
-                .to('[data-pre-meta]', { autoAlpha: 0, duration: 0.3 }, 1.05)
+                .to('[data-pre-bar]', { scaleX: 1, duration: 0.7, ease: 'power2.inOut' }, 0)
+                .to('[data-pre-letter]', { yPercent: -110, stagger: 0.04, duration: 0.45, ease: 'expo.in' }, 0.72)
+                .to('[data-pre-meta]', { autoAlpha: 0, duration: 0.25 }, 0.72)
                 .add(() => {
                     lockScroll(false);
                     finishIntro();
-                }, 1.45)
-                .to(root.current, { yPercent: -100, duration: 1, ease: 'expo.inOut' }, 1.35)
-                .to('[data-pre-curve]', { scaleY: 0, duration: 1, ease: 'expo.inOut' }, 1.35)
+                }, 0.95)
+                .to(root.current, { yPercent: -100, duration: 0.85, ease: 'expo.inOut' }, 0.9)
+                .to('[data-pre-curve]', { scaleY: 0, duration: 0.85, ease: 'expo.inOut' }, 0.9)
                 .add(() => {
                     try {
                         sessionStorage.setItem(SEEN_KEY, '1');

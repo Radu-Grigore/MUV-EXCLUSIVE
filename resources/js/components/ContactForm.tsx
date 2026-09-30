@@ -1,21 +1,18 @@
 import { useState } from 'react';
+import { pageHref } from '@/lib/routes';
 import { site } from '@/lib/site';
 import { Icon } from './Icon';
-
-const interests = ['Clase', 'Abonament', 'Personal Training', 'Kids Corner'];
 
 // No backend yet: the form composes a WhatsApp message to the studio.
 export function ContactForm() {
     const [name, setName] = useState('');
     const [phone, setPhone] = useState('');
-    const [interest, setInterest] = useState('');
     const [message, setMessage] = useState('');
 
     function onSubmit(e: React.FormEvent) {
         e.preventDefault();
         const lines = [
             `Bună! Sunt ${name.trim()} și aș dori să aflu mai multe despre MUV Exclusive.`,
-            interest && `Mă interesează: ${interest}.`,
             phone.trim() && `Telefon: ${phone.trim()}`,
             message.trim(),
         ].filter(Boolean);
@@ -45,31 +42,13 @@ export function ContactForm() {
                     />
                 </label>
             </div>
-            <fieldset className="grid gap-2 sm:gap-3">
-                <legend className="eyebrow mb-1.5 text-gold-soft sm:mb-2">Te interesează</legend>
-                <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                    {interests.map((opt) => (
-                        <button
-                            key={opt}
-                            type="button"
-                            onClick={() => setInterest((v) => (v === opt ? '' : opt))}
-                            aria-pressed={interest === opt}
-                            className={`rounded-full border px-3 py-1.5 text-xs transition-colors sm:px-4 sm:py-2 ${
-                                interest === opt ? 'border-gold bg-gold text-ink' : 'border-cream/15 text-cream/75 hover:border-cream/40'
-                            }`}
-                        >
-                            {opt}
-                        </button>
-                    ))}
-                </div>
-            </fieldset>
             <label className="grid min-w-0 gap-1.5 sm:gap-2">
                 <span className="eyebrow text-gold-soft">Mesaj</span>
                 <textarea
                     rows={3}
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    className={`${field} h-[4.25rem] resize-none sm:h-auto`}
+                    className={`${field} h-24 resize-none short:h-[4.25rem] sm:h-auto`}
                     placeholder="Spune-ne cu ce te putem ajuta"
                 />
             </label>
@@ -79,6 +58,12 @@ export function ContactForm() {
             >
                 <Icon name="whatsapp" className="h-4 w-4" /> Trimite pe WhatsApp
             </button>
+            <p className="text-center text-[0.68rem] leading-snug text-cream/55 sm:text-xs">
+                Mesajul se trimite prin WhatsApp; datele tale sunt folosite doar ca să-ți răspundem.{' '}
+                <a href={pageHref('politica-de-confidentialitate')} className="text-gold-soft underline underline-offset-2">
+                    Politica de confidențialitate
+                </a>
+            </p>
             <p className="hidden text-center text-xs text-cream/50 sm:block">
                 Sau sună-ne direct la{' '}
                 <a href={site.phoneHref} className="font-semibold text-gold-soft underline-offset-4 hover:underline">

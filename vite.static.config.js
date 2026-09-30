@@ -14,7 +14,7 @@ function finishStaticSite() {
     return {
         name: 'muv-finish-static-site',
         closeBundle() {
-            for (const item of ['images', 'favicon.ico', 'robots.txt']) {
+            for (const item of ['images', 'favicon.svg', 'robots.txt']) {
                 const from = resolve(import.meta.dirname, 'public', item);
                 if (existsSync(from)) cpSync(from, resolve(outDir, item), { recursive: true });
             }
@@ -52,6 +52,7 @@ export default defineConfig({
     publicDir: false,
     define: {
         'import.meta.env.VITE_PUBLIC_ROOT': JSON.stringify(''),
+        'import.meta.env.VITE_STATIC': JSON.stringify('true'),
     },
     plugins: [react(), tailwindcss(), finishStaticSite()],
     resolve: {

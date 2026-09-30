@@ -1,57 +1,47 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { classes, type FitnessClass } from '@/lib/site';
+import { classes, type FitnessClass, type GalleryItem } from '@/lib/site';
 import { posterFor } from '@/lib/posters';
 import { gsap, lockScroll } from '@/lib/scroll';
+import { bookingLinkProps } from '../BookingLink';
 import { Icon } from '../Icon';
 
-// Motion is only needed once a class is opened, so the dialog is split into its own chunk.
+// Motion is only needed once a class or a poster is opened, so both overlays are split into their own chunks.
 const ClassDialogHost = lazy(() => import('./ClassDialog'));
+const Lightbox = lazy(() => import('./Lightbox'));
 
+const pad = (n: number) => String(n).padStart(2, '0');
+
+function posterItem(c: FitnessClass): GalleryItem | null {
+    const src = posterFor(c.id);
+    return src ? { src, title: `Afiș ${c.name} — MUV Exclusive`, caption: c.name, width: 1060, height: 1484 } : null;
+}
+
+/**
+ * The classes. Desktop: one large poster next to its readable description, with the other posters as thumbnails.
+ * Phone: a swipeable row of posters with the active class underneath. Tapping a poster opens it full screen.
+ */
 export function Classes() {
     const root = useRef<HTMLElement>(null);
     const track = useRef<HTMLUListElement>(null);
-    const [active, setActive] = useState<FitnessClass | null>(null);
+    const [index, setIndex] = useState(0);
+    const [details, setDetails] = useState<FitnessClass | null>(null);
     const [dialogUsed, setDialogUsed] = useState(false);
-    const bar = useRef<HTMLSpanElement>(null);
-
-    function updateProgress() {
-        const el = track.current;
-        if (!el || !bar.current) return;
-        const max = el.scrollWidth - el.clientWidth;
-        const visible = el.clientWidth / el.scrollWidth;
-        bar.current.style.transform = `scaleX(${max > 0 ? visible + (1 - visible) * (el.scrollLeft / max) : 1})`;
-    }
-
-    /** Moves the row by one poster (wrapping around at the ends). */
-    function step(dir: number) {
-        const el = track.current;
-        const first = el?.querySelector('li');
-        if (!el || !first) return;
-        const gap = parseFloat(getComputedStyle(el).columnGap) || 0;
-        const max = el.scrollWidth - el.clientWidth;
-        const next = el.scrollLeft + dir * (first.getBoundingClientRect().width + gap);
-        el.scrollTo({ left: next > max + 4 ? 0 : next < -4 ? max : next, behavior: 'smooth' });
-    }
-
-    useEffect(() => {
-        updateProgress();
-        window.addEventListener('resize', updateProgress);
-        return () => window.removeEventListener('resize', updateProgress);
-    }, []);
+    const [zoomed, setZoomed] = useState<GalleryItem | null>(null);
+    const [zoomUsed, setZoomUsed] = useState(false);
+    const c = classes[index];
 
     useGSAP(
         () => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
-                // Animates the <li> wrappers; the cards themselves keep their CSS hover transition.
-                gsap.from('[data-poster-item]', {
+                gsap.from('[data-classes-in]', {
                     y: 60,
                     autoAlpha: 0,
                     duration: 1.2,
                     stagger: 0.12,
                     ease: 'expo.out',
-                    scrollTrigger: { trigger: track.current, start: 'top 85%', once: true },
+                    scrollTrigger: { trigger: root.current, start: 'top 70%', once: true },
                 });
             });
         },
@@ -59,118 +49,248 @@ export function Classes() {
     );
 
     useEffect(() => {
-        lockScroll(!!active);
-        if (!active) return;
-        const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setActive(null);
+        lockScroll(!!details);
+        if (!details) return;
+        const onKey = (e: KeyboardEvent) => e.key === 'Escape' && setDetails(null);
         window.addEventListener('keydown', onKey);
         return () => window.removeEventListener('keydown', onKey);
-    }, [active]);
+    }, [details]);
+
+    /** Phone row: the poster closest to the middle is the active one. */
+    function onTrackScroll() {
+        const el = track.current;
+        if (!el) return;
+        const middle = el.scrollLeft + el.clientWidth / 2;
+        let best = 0;
+        let bestDistance = Infinity;
+        Array.from(el.children).forEach((child, i) => {
+            const li = child as HTMLElement;
+            const distance = Math.abs(li.offsetLeft + li.offsetWidth / 2 - middle);
+            if (distance < bestDistance) {
+                bestDistance = distance;
+                best = i;
+            }
+        });
+        setIndex(best);
+    }
+
+    function go(i: number) {
+        const next = (i + classes.length) % classes.length;
+        setIndex(next);
+        const el = track.current;
+        const li = el?.children[next] as HTMLElement | undefined;
+        if (el && li && el.offsetParent !== null) el.scrollTo({ left: li.offsetLeft - (el.clientWidth - li.offsetWidth) / 2, behavior: 'smooth' });
+    }
+
+    function zoom(item: FitnessClass) {
+        const poster = posterItem(item);
+        if (!poster) return;
+        setZoomUsed(true);
+        setZoomed(poster);
+    }
+
+    function openDetails(item: FitnessClass) {
+        setDialogUsed(true);
+        setDetails(item);
+    }
 
     return (
         <section
             ref={root}
             id="clase"
             data-snap
-            className="phone-screen relative overflow-hidden bg-sand py-6 text-espresso sm:py-24 lg:flex lg:h-[calc(100svh-72px)] lg:min-h-[600px] lg:flex-col lg:py-10"
+            className="phone-screen relative overflow-hidden bg-sand py-5 text-espresso sm:py-16 lg:flex lg:h-[calc(100svh-72px)] lg:min-h-[640px] lg:flex-col lg:py-10 low:py-8"
         >
-            {/* Desktop: the section fills the screen under the header and the posters take whatever height is left. */}
-            <div className="mx-auto max-w-[1440px] px-5 text-center sm:px-8 lg:shrink-0 lg:px-12">
-                <p className="eyebrow inline-flex items-center gap-3 text-bronze">
-                    <span className="h-px w-8 bg-gold" /> Clasele noastre <span className="h-px w-8 bg-gold" />
-                </p>
-                <h2 data-split className="mt-3 font-display text-[2.1rem] leading-[0.95] sm:mt-4 sm:text-6xl lg:text-[clamp(2.75rem,6svh,4.5rem)]">
-                    Găsește mișcarea <em className="text-bronze">care ți se potrivește</em>
-                </h2>
-                <p className="mx-auto mt-2 max-w-xl text-sm leading-relaxed text-cocoa sm:mt-4">
-                    <span className="hidden sm:inline">Experiențe diferite, un singur scop: să te simți puternică, liberă și bine în pielea ta. </span>
-                    <span className="sm:hidden">Glisează și apasă pe o clasă pentru detalii.</span>
-                    <span className="hidden sm:inline">Apasă pe o clasă pentru detalii.</span>
-                </p>
-            </div>
+            <div className="mx-auto flex w-full max-w-[1440px] flex-col lg:min-h-0 lg:flex-1 lg:px-12">
+                {/* Heading */}
+                <div className="px-5 text-center sm:px-8 lg:flex lg:shrink-0 lg:items-end lg:justify-between lg:gap-10 lg:px-0 lg:text-left">
+                    <div>
+                        <p className="eyebrow inline-flex items-center gap-3 text-bronze">
+                            <span className="h-px w-8 bg-gold" /> Clasele noastre <span className="h-px w-8 bg-gold lg:hidden" />
+                        </p>
+                        <h2 data-split className="mt-2 font-display text-[2.1rem] leading-[0.95] short:text-[1.8rem] sm:mt-4 sm:text-6xl lg:text-[clamp(2.75rem,6svh,4.25rem)]">
+                            Găsește mișcarea <em className="text-bronze">care ți se potrivește</em>
+                        </h2>
+                    </div>
+                    <p className="mt-2 text-[0.8rem] text-cocoa short:hidden sm:text-sm lg:mt-0 lg:max-w-xs lg:text-right">
+                        <span className="lg:hidden">Glisează printre afișe și apasă pe unul ca să-l vezi mărit.</span>
+                        <span className="hidden lg:inline">Alege o clasă din listă. Apasă pe afiș ca să-l vezi pe tot ecranul.</span>
+                    </p>
+                </div>
 
-            {/* Seven posters: a swipeable, snapping row. Desktop sizes the posters by the height left under the heading. */}
-            <div className="mt-5 sm:mt-10 lg:mt-8 lg:min-h-0 lg:flex-1 lg:[container-type:size]">
-                <ul
-                    ref={track}
-                    onScroll={updateProgress}
-                    className="no-scrollbar flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[max(1.25rem,calc(50vw_-_var(--card)_/_2))] pb-1 [--card:min(64vw,calc((100svh_-_24rem)_*_0.7143))] sm:gap-5 sm:px-8 sm:[--card:min(42vw,340px)] lg:h-full lg:scroll-px-12 lg:px-12 lg:[--card:min(calc((100cqh_-_4.5rem)_*_0.7143),calc((100cqw_-_10.5rem)_/_4.25))]"
-                >
-                    {classes.map((c) => (
-                        <li key={c.id} data-poster-item className="w-[var(--card)] shrink-0 snap-center sm:snap-start">
-                            <PosterCard
-                                c={c}
-                                onOpen={() => {
-                                    setDialogUsed(true);
-                                    setActive(c);
-                                }}
-                            />
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                {/* Phone + tablet: swipeable posters */}
+                <div className="lg:hidden">
+                    <ul
+                        ref={track}
+                        onScroll={onTrackScroll}
+                        data-classes-in
+                        className="no-scrollbar relative mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[calc(50vw_-_var(--card)_/_2)] py-2 [--card:min(74vw,calc((100svh_-_22.5rem)_*_0.714))] short:mt-3 short:[--card:min(68vw,calc((100svh_-_20rem)_*_0.714))] sm:mt-10 sm:gap-5 sm:[--card:min(56vw,calc((100svh_-_22rem)_*_0.714))]"
+                    >
+                        {classes.map((item, i) => (
+                            <li key={item.id} className="w-[var(--card)] shrink-0 snap-center">
+                                <button
+                                    type="button"
+                                    onClick={() => (i === index ? zoom(item) : go(i))}
+                                    aria-label={`Afișul ${item.name} — vezi-l mărit`}
+                                    className={`relative block w-full overflow-hidden rounded-[1.1rem] bg-ink shadow-[0_24px_40px_-24px_rgba(42,32,26,0.8)] transition-[transform,opacity] duration-500 ease-out-expo ${
+                                        i === index ? 'scale-100 opacity-100' : 'scale-[0.92] opacity-55'
+                                    }`}
+                                >
+                                    <PosterImage c={item} className="aspect-[1060/1484] w-full object-contain" />
+                                    {i === index && (
+                                        <span className="absolute right-2.5 bottom-2.5 grid h-9 w-9 place-items-center rounded-full bg-cream/90 text-espresso shadow">
+                                            <Icon name="zoom" className="h-4 w-4" />
+                                        </span>
+                                    )}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
 
-            <div className="mx-auto mt-3 flex w-full max-w-[1440px] items-center gap-4 px-5 sm:mt-6 sm:px-8 sm:pr-24 lg:mt-5 lg:shrink-0 lg:pl-12">
-                <span className="text-[0.62rem] tracking-[0.2em] text-cocoa/70 uppercase tabular-nums">
-                    {String(classes.length).padStart(2, '0')} clase
-                </span>
-                <span className="relative h-px flex-1 overflow-hidden bg-espresso/10">
-                    <span ref={bar} className="absolute inset-y-0 left-0 w-full origin-left bg-bronze" style={{ transform: 'scaleX(0.15)' }} />
-                </span>
-                <div className="flex gap-2">
-                    {[
-                        { dir: -1, label: 'Clasele anterioare' },
-                        { dir: 1, label: 'Următoarele clase' },
-                    ].map(({ dir, label }) => (
+                    <div data-classes-in className="mx-auto mt-3 flex max-w-xl items-center gap-3 px-5 short:mt-2 sm:mt-6 sm:px-8">
+                        <div key={c.id} className="min-w-0 flex-1 animate-fade-up">
+                            <p className="text-[0.58rem] tracking-[0.2em] text-cocoa/70 uppercase">
+                                {pad(index + 1)} / {pad(classes.length)}
+                            </p>
+                            <h3 className="mt-1 truncate font-display text-[1.9rem] leading-none short:text-[1.6rem]">{c.name}</h3>
+                            <p className="mt-1 truncate text-[0.62rem] tracking-[0.16em] text-bronze uppercase">{c.keywords.join(' · ')}</p>
+                        </div>
                         <button
-                            key={dir}
                             type="button"
-                            onClick={() => step(dir)}
-                            aria-label={label}
-                            className="grid h-10 w-10 place-items-center rounded-full border border-espresso/15 transition-colors hover:border-espresso hover:bg-espresso hover:text-cream sm:h-12 sm:w-12"
+                            onClick={() => openDetails(c)}
+                            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-espresso py-2 pr-2 pl-4 text-[0.6rem] font-semibold tracking-[0.2em] text-cream uppercase"
                         >
-                            <Icon name="arrow" className={`h-4 w-4 ${dir < 0 ? 'rotate-180' : ''}`} />
+                            Detalii
+                            <span className="grid h-7 w-7 place-items-center rounded-full bg-cream text-espresso">
+                                <Icon name="plus" className="h-3.5 w-3.5" />
+                            </span>
                         </button>
-                    ))}
+                    </div>
+
+                    <div className="mt-3 flex justify-center gap-1.5 short:mt-2" aria-hidden="true">
+                        {classes.map((item, i) => (
+                            <span key={item.id} className={`h-1.5 rounded-full transition-all duration-500 ${i === index ? 'w-6 bg-bronze' : 'w-1.5 bg-espresso/20'}`} />
+                        ))}
+                    </div>
+                </div>
+
+                {/* Desktop: the active poster, large, next to its readable details */}
+                <div className="mt-8 hidden min-h-0 flex-1 grid-cols-12 gap-12 lg:grid low:mt-6 xl:gap-16">
+                    <div data-classes-in className="col-span-5 flex min-h-0 items-center justify-center">
+                        <button
+                            type="button"
+                            data-cursor="Mărește"
+                            onClick={() => zoom(c)}
+                            aria-label={`Afișul ${c.name} — vezi-l pe tot ecranul`}
+                            className="group relative h-full max-h-full overflow-hidden rounded-[1.6rem] bg-ink shadow-[0_50px_90px_-45px_rgba(42,32,26,0.85)]"
+                        >
+                            <PosterImage key={c.id} c={c} className="aspect-[1060/1484] h-full w-auto max-w-full animate-poster-in object-contain" />
+                            <span className="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-cream/90 px-4 py-2 text-[0.6rem] font-semibold tracking-[0.2em] text-espresso uppercase opacity-0 shadow transition-opacity duration-300 group-hover:opacity-100">
+                                <Icon name="zoom" className="h-4 w-4" /> Mărește
+                            </span>
+                        </button>
+                    </div>
+
+                    <div data-classes-in className="col-span-7 flex min-h-0 flex-col">
+                        <div key={c.id} className="flex flex-1 animate-fade-up flex-col justify-center">
+                            <p className="eyebrow text-bronze">
+                                Clasa {pad(index + 1)} / {pad(classes.length)}
+                            </p>
+                            <h3 className="mt-3 font-display text-[clamp(3rem,8svh,5.5rem)] leading-[0.95] low:mt-2">{c.name}</h3>
+                            <ul className="mt-4 flex flex-wrap gap-2 low:mt-3">
+                                {c.keywords.map((k) => (
+                                    <li key={k} className="rounded-full border border-bronze/25 bg-cream/70 px-3.5 py-1.5 text-xs font-medium text-cocoa">
+                                        {k}
+                                    </li>
+                                ))}
+                            </ul>
+                            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cocoa low:mt-4 low:text-base lower:line-clamp-3">{c.description}</p>
+                            <ul className="mt-6 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-3 low:mt-4 low:gap-y-2">
+                                {c.benefits.map((b) => (
+                                    <li key={b} className="flex items-start gap-3 text-[0.95rem] low:text-sm">
+                                        <span className="mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full bg-espresso text-gold-soft">
+                                            <Icon name="check" className="h-3.5 w-3.5" strokeWidth={2.2} />
+                                        </span>
+                                        {b}
+                                    </li>
+                                ))}
+                            </ul>
+                            <div className="mt-8 flex flex-wrap items-center gap-3 low:mt-5">
+                                <a
+                                    {...bookingLinkProps()}
+                                    className="group inline-flex items-center gap-3 rounded-full bg-espresso py-2 pr-2 pl-6 text-[0.64rem] font-semibold tracking-[0.2em] text-cream uppercase transition-colors hover:bg-bronze"
+                                >
+                                    Rezervă în aplicație
+                                    <span className="grid h-9 w-9 place-items-center rounded-full bg-cream text-espresso transition-transform duration-500 ease-out-expo group-hover:rotate-[-45deg]">
+                                        <Icon name="arrow" className="h-4 w-4" />
+                                    </span>
+                                </a>
+                                <button
+                                    type="button"
+                                    onClick={() => zoom(c)}
+                                    className="inline-flex items-center gap-2 rounded-full border border-espresso/20 px-5 py-3.5 text-[0.64rem] font-semibold tracking-[0.2em] uppercase transition-colors hover:border-espresso"
+                                >
+                                    <Icon name="zoom" className="h-4 w-4" /> Vezi afișul mărit
+                                </button>
+                                <div className="ml-auto flex gap-2">
+                                    {[
+                                        { dir: -1, label: 'Clasa anterioară' },
+                                        { dir: 1, label: 'Clasa următoare' },
+                                    ].map(({ dir, label }) => (
+                                        <button
+                                            key={dir}
+                                            type="button"
+                                            onClick={() => go(index + dir)}
+                                            aria-label={label}
+                                            className="grid h-12 w-12 place-items-center rounded-full border border-espresso/15 transition-colors hover:border-espresso hover:bg-espresso hover:text-cream"
+                                        >
+                                            <Icon name="arrow" className={`h-4 w-4 ${dir < 0 ? 'rotate-180' : ''}`} />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Every class as a thumbnail */}
+                        <ul className="mt-6 grid shrink-0 gap-2.5 low:mt-4" style={{ gridTemplateColumns: `repeat(${classes.length}, minmax(0, 1fr))` }}>
+                            {classes.map((item, i) => (
+                                <li key={item.id}>
+                                    <button
+                                        type="button"
+                                        onClick={() => go(i)}
+                                        aria-label={item.name}
+                                        aria-pressed={i === index}
+                                        className={`group block w-full text-left transition-[transform,opacity] duration-500 ease-out-expo ${i === index ? '-translate-y-1.5' : 'opacity-60 hover:opacity-100'}`}
+                                    >
+                                        <span className={`block overflow-hidden rounded-lg bg-ink ring-offset-2 ring-offset-sand ${i === index ? 'ring-2 ring-bronze' : ''}`}>
+                                            <PosterImage c={item} className="aspect-[1060/1484] w-full object-cover object-top" />
+                                        </span>
+                                        <span className="mt-1.5 block truncate text-[0.62rem] font-medium tracking-[0.08em] text-cocoa uppercase">{item.name}</span>
+                                    </button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
             </div>
 
             {dialogUsed && (
                 <Suspense fallback={null}>
-                    <ClassDialogHost active={active} onClose={() => setActive(null)} onChange={setActive} />
+                    <ClassDialogHost active={details} onClose={() => setDetails(null)} onChange={setDetails} />
+                </Suspense>
+            )}
+            {zoomUsed && (
+                <Suspense fallback={null}>
+                    <Lightbox item={zoomed} onClose={() => setZoomed(null)} />
                 </Suspense>
             )}
         </section>
     );
 }
 
-/** The class poster shown whole, in its own portrait format, with its name underneath. */
-function PosterCard({ c, onOpen }: { c: FitnessClass; onOpen: () => void }) {
-    const poster = posterFor(c.id);
-
-    return (
-        <button
-            type="button"
-            data-cursor="Detalii"
-            onClick={onOpen}
-            aria-label={`${c.name} — vezi detalii`}
-            className="group flex w-full flex-col text-left focus-visible:outline-none"
-        >
-            <span className="block overflow-hidden rounded-2xl bg-espresso shadow sm:rounded-[1.25rem]-[0_24px_50px_-30px_rgba(42,32,26,0.7)] transition-[transform,box-shadow] duration-700 ease-out-expo group-hover:-translate-y-2 group-hover:shadow-[0_40px_70px_-35px_rgba(42,32,26,0.8)] group-focus-visible:ring-2 group-focus-visible:ring-bronze">
-                {poster ? (
-                    <img src={poster} alt={`Afiș ${c.name} — MUV Exclusive`} loading="lazy" decoding="async" className="block aspect-[1063/1479] w-full object-cover" />
-                ) : (
-                    <span className="flex aspect-[1063/1479] w-full items-end p-6 font-display text-4xl text-cream">{c.name}</span>
-                )}
-            </span>
-            <span className="mt-2.5 flex shrink-0 items-center justify-between gap-2 px-0.5 sm:mt-3 sm:gap-3 sm:px-1">
-                <span className="min-w-0">
-                    <span className="block truncate font-display text-xl leading-none max-[400px]:text-lg sm:text-2xl">{c.name}</span>
-                    <span className="mt-1.5 hidden truncate text-[0.6rem] tracking-[0.2em] text-cocoa/70 uppercase sm:block">{c.keywords.join(' · ')}</span>
-                </span>
-                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-espresso/15 max-[400px]:hidden sm:h-10 sm:w-10 transition-colors duration-500 group-hover:border-espresso group-hover:bg-espresso group-hover:text-cream">
-                    <Icon name="plus" className="h-4 w-4" />
-                </span>
-            </span>
-        </button>
-    );
+/** A class poster exactly as supplied (never cropped in the large views), or its name when there is no poster. */
+function PosterImage({ c, className }: { c: FitnessClass; className: string }) {
+    const src = posterFor(c.id);
+    if (!src) return <span className={`flex items-end p-6 font-display text-4xl text-cream ${className}`}>{c.name}</span>;
+    return <img src={src} alt={`Afiș ${c.name} — MUV Exclusive`} width={1060} height={1484} loading="lazy" decoding="async" className={`block ${className}`} />;
 }

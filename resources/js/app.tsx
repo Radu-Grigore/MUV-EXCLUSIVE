@@ -1,14 +1,6 @@
-import { createInertiaApp } from '@inertiajs/react';
-import type { ComponentType } from 'react';
 import { createRoot } from 'react-dom/client';
+import { loadSatoshi } from './lib/fonts';
+import Root from './pages/Root';
 
-createInertiaApp({
-    resolve: (name) => {
-        const pages = import.meta.glob<{ default: ComponentType }>('./pages/**/*.tsx', { eager: true });
-        return pages[`./pages/${name}.tsx`];
-    },
-    setup({ el, App, props }) {
-        createRoot(el).render(<App {...props} />);
-    },
-    progress: false,
-});
+loadSatoshi();
+createRoot(document.getElementById('app')!).render(<Root />);

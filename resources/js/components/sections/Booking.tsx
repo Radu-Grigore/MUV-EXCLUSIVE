@@ -85,7 +85,7 @@ export function Booking() {
                     <p className="eyebrow flex items-center gap-3 text-bronze">
                         <span className="h-px w-8 bg-gold" /> Rezervări
                     </p>
-                    <h2 data-split className="mt-2 font-display text-[2.1rem] leading-[0.95] short:text-[1.8rem] sm:mt-5 sm:text-7xl low:text-6xl">
+                    <h2 data-split className="mt-2 font-display text-[2.1rem] leading-[0.95] short:text-[1.8rem] tiny:text-[1.65rem] sm:mt-5 sm:text-7xl low:text-6xl">
                         Rezervă-ți clasa <em className="text-bronze">din aplicație</em>
                     </h2>
                     <p className="mt-2 max-w-xl text-[0.8rem] leading-snug text-cocoa short:hidden sm:mt-6 sm:text-base sm:leading-relaxed low:mt-4">
@@ -95,8 +95,8 @@ export function Booking() {
                         <span className="hidden sm:inline">, oricând și de oriunde</span>.
                     </p>
 
-                    <p className="eyebrow mt-3 text-[0.6rem] text-bronze sm:mt-10 low:mt-6">Cum te înscrii</p>
-                    <ol data-steps className="mt-2 grid gap-1.5 sm:mt-4 sm:gap-3">
+                    <p className="eyebrow mt-3 text-[0.6rem] text-bronze tiny:hidden sm:mt-10 low:mt-6">Cum te înscrii</p>
+                    <ol data-steps className="mt-2 grid gap-1.5 tiny:mt-3 tiny:gap-1 sm:mt-4 sm:gap-3">
                         {steps.map((text, i) => (
                             <li key={i} data-step className="flex items-start gap-3 sm:gap-4">
                                 <span className="grid h-6 w-6 shrink-0 place-items-center rounded-full bg-espresso font-display text-sm leading-none text-gold-soft sm:h-9 sm:w-9 sm:text-lg">
@@ -149,6 +149,7 @@ export function Booking() {
                                     src={asset('/images/smartgym-qr.svg')}
                                     alt="Cod QR pentru descărcarea aplicației SmartGym"
                                     width={144}
+                                    loading="lazy"
                                     height={144}
                                     className="h-28 w-28 rounded-xl bg-white p-1 lg:h-36 lg:w-36"
                                 />

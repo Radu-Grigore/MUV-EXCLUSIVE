@@ -1,5 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { useEffect } from 'react';
+import { CookieBanner } from '@/components/CookieBanner';
 import { Cursor } from '@/components/Cursor';
 import { Header } from '@/components/Header';
 import { Preloader } from '@/components/Preloader';
@@ -13,11 +14,17 @@ import { Kids } from '@/components/sections/Kids';
 import { Manifesto } from '@/components/sections/Manifesto';
 import { Opening } from '@/components/sections/Opening';
 import { Pricing } from '@/components/sections/Pricing';
-import { gsap, initSmoothScroll, ScrollTrigger, SplitText } from '@/lib/scroll';
+import { gsap, initSmoothScroll, introDone, scrollToTarget, ScrollTrigger, SplitText } from '@/lib/scroll';
 
 export default function Home() {
     useEffect(() => {
+        // The HTML ships a static first frame of the intro; the app has taken over now.
+        document.getElementById('boot')?.remove();
+        document.title = 'MUV Exclusive — Boutique Fitness Studio Women Only | Ploiești';
         initSmoothScroll();
+        // Arriving from another page with a section in the address (…/#clase): go there once the intro is done.
+        const hash = window.location.hash;
+        if (/^#[a-z][\w-]*$/i.test(hash) && document.querySelector(hash)) introDone.then(() => setTimeout(() => scrollToTarget(hash), 150));
         // Fonts and lazy images change section heights; re-measure pinned/scrubbed sections once settled.
         document.fonts?.ready.then(() => ScrollTrigger.refresh());
         window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
@@ -62,8 +69,9 @@ export default function Home() {
                 <Opening />
                 <Contact />
             </main>
-            <Footer />
+            <Footer onHome />
             <FloatingActions />
+            <CookieBanner />
         </>
     );
 }

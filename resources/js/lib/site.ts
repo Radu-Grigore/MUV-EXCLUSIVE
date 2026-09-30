@@ -4,7 +4,9 @@ export const site = {
   phone: "0726 697 749",
   phoneHref: "tel:+40726697749",
   whatsapp: "https://wa.me/40726697749",
-  facebook: "https://www.facebook.com/Muvexclusive",
+  facebook: "https://www.facebook.com/share/1HgyDhRNjD/?mibextid=wwXIfr",
+  email: "Muvexclusive@yahoo.com",
+  phoneIntl: "+40 726 697 749",
   instagram: "https://www.instagram.com/muvexclusive2026",
   instagramHandle: "@muvexclusive2026",
   address: "Cartier Albert, MRS Village, clădirea M, parter, Aleea Smaraldului nr. 11",
@@ -16,6 +18,14 @@ export const site = {
   openingLabel: "01.11.2026",
 };
 
+/** The company that runs the studio (shown in the footer and the legal pages). */
+export const company = {
+  name: "SC AMD Energy Studio SRL",
+  cui: "RO55562057",
+  regCom: "J2026053696003",
+  seat: "Ploiești, str. Cameliei nr. 18, bl. 25, sc. A, ap. 7",
+};
+
 /** Class bookings go through the SmartGym member app. */
 export const smartgym = {
   gymCode: "3490",
@@ -23,7 +33,19 @@ export const smartgym = {
   googlePlay: "https://play.google.com/store/apps/details?id=com.gymapp.ro",
   // The link behind the QR code on the SmartGym flyer; it sends each phone to its own store.
   qr: "https://smartgym.ro/app",
+  androidPackage: "com.gymapp.ro",
 };
+
+/**
+ * Where a "book" button goes on this device. Android opens the SmartGym app when it is installed and
+ * falls back to Google Play otherwise; iPhone opens the App Store page (which shows "Open" when the app
+ * is installed). Null on computers.
+ */
+export function appLaunchForDevice(): string | null {
+  const store = appStoreForDevice();
+  if (store !== smartgym.googlePlay) return store;
+  return `intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${smartgym.androidPackage};S.browser_fallback_url=${encodeURIComponent(smartgym.googlePlay)};end`;
+}
 
 /** The store page for this device: App Store on iPhone/iPad, Google Play on Android, null elsewhere. */
 export function appStoreForDevice(): string | null {
@@ -34,51 +56,54 @@ export function appStoreForDevice(): string | null {
   return null;
 }
 
-export type Plan = {
+/** Unlimited memberships: the same plan for one or three months. */
+export type Membership = {
   id: string;
   name: string;
   tagline: string;
-  prices: { amount: number; period: string }[];
+  month: number;
+  quarter: number;
   perks: string[];
-  note?: string;
   featured?: boolean;
 };
 
-export const plans: Plan[] = [
-  {
-    id: "day-pass",
-    name: "Day Pass",
-    tagline: "Pentru o zi",
-    prices: [{ amount: 49, period: "o zi" }],
-    perks: ["Acces la clase o zi", "Ideal ca să ne cunoști"],
-  },
+export const memberships: Membership[] = [
   {
     id: "unlimited",
     name: "Unlimited",
     tagline: "Clase nelimitate",
-    prices: [
-      { amount: 349, period: "1 lună" },
-      { amount: 899, period: "3 luni" },
+    month: 349,
+    quarter: 899,
+    perks: [
+      "Acces nelimitat la toate clasele de grup",
+      "Body Sculpt, Aero Dance, Functional Shape, Tabata, Pilates, Step, Khai Bo",
+      "Rezervări rapide în aplicația SmartGym",
     ],
-    perks: ["Acces nelimitat la clase", "Rezervări în aplicația SmartGym"],
   },
   {
     id: "unlimited-kids",
     name: "Unlimited + Kids Corner",
     tagline: "Pentru mămici",
-    prices: [
-      { amount: 399, period: "1 lună" },
-      { amount: 999, period: "3 luni" },
+    month: 399,
+    quarter: 999,
+    perks: [
+      "Tot ce include abonamentul Unlimited",
+      "Acces la Kids Corner pentru cei mici",
+      "Te antrenezi liniștită cât cei mici se joacă",
     ],
-    perks: ["Acces nelimitat la clase", "Acces la Kids Corner pentru cei mici"],
     featured: true,
   },
+];
+
+/** One-off options shown next to the memberships. */
+export const extraPlans = [
+  { id: "day-pass", name: "Day Pass", tagline: "Acces pentru o zi", price: 49, period: "o zi", note: "Perfect ca să încerci oricare dintre clase." },
   {
     id: "personal-training",
     name: "Personal Training",
     tagline: "Antrenament 1 la 1",
-    prices: [{ amount: 249, period: "abonament" }],
-    perks: ["Program adaptat obiectivelor tale"],
+    price: 249,
+    period: "abonament",
     note: "Antrenorul se achită separat, în funcție de numărul de ore.",
   },
 ];
@@ -128,15 +153,75 @@ export type FitnessClass = {
 
 export const classes: FitnessClass[] = [
   {
-    id: "khai-bo",
-    name: "Khai Bo",
-    keywords: ["Energie", "Disciplină", "Încredere"],
+    id: "personal-training",
+    name: "Personal Training",
+    keywords: ["Antrenament 1 la 1", "Personalizat", "Rezultate"],
     description:
-      "Un antrenament intens și dinamic, care combină tehnici din kickboxing, aerobic și exerciții funcționale, pentru un corp mai puternic, mai tonifiat și o stare de bine garantată.",
-    benefits: ["Arde calorii", "Tonifiază tot corpul", "Crește rezistența", "Eliberează stresul"],
-    icon: "fist",
-    accent: "#c9a25e",
+      "Antrenamente personalizate, adaptate obiectivelor tale, pentru rezultate vizibile, o formă fizică mai bună și mai multă încredere în tine.",
+    benefits: ["Crește forța", "Îmbunătățește condiția fizică", "Corectează postura", "Rezultate personalizate"],
+    icon: "person",
+    accent: "#b98d5f",
     script: "Stronger, Faster, You",
+  },
+  {
+    id: "body-sculpt",
+    name: "Body Sculpt",
+    keywords: ["Tonifiere", "Greutăți", "Rezultate vizibile"],
+    description:
+      "Un antrenament complet care tonifică și modelează întregul corp, folosind greutăți și exerciții eficiente pentru rezultate vizibile.",
+    benefits: [
+      "Îmbunătățește rezistența cardiovasculară",
+      "Ajută la arderea caloriilor",
+      "Tonifică și modelează mușchii întregului corp",
+      "Îți oferă energie și stare de bine",
+    ],
+    icon: "kettlebell",
+    accent: "#c9a36a",
+    script: "More than fitness",
+  },
+  {
+    id: "aero-dance",
+    name: "Aero Dance",
+    keywords: ["Dans", "Ritm", "Energie"],
+    description:
+      "Un antrenament energic, pe ritm de muzică, care combină pași de aerobic și mișcări de dans, pentru arderea caloriilor, îmbunătățirea coordonării și o stare de bine la fiecare clasă.",
+    benefits: ["Arde calorii", "Îmbunătățește coordonarea", "Crește energia", "Îți dă o stare de bine"],
+    icon: "bolt",
+    accent: "#d98a8a",
+    script: "Stronger, Faster, You",
+  },
+  {
+    id: "functional-shape",
+    name: "Functional Shape",
+    keywords: ["Forță", "Tonus", "Mobilitate"],
+    description:
+      "Un antrenament complet, care combină exercițiile funcționale cu forța, pentru un corp mai puternic, mai tonifiat și o formă fizică echilibrată.",
+    benefits: ["Tonifiază și modelează musculatura", "Crește condiția fizică", "Arde calorii", "Îmbunătățește mobilitatea și postura"],
+    icon: "dumbbell",
+    accent: "#e39a55",
+    script: "Stronger, Faster, You",
+  },
+  {
+    id: "tabata",
+    name: "Tabata",
+    keywords: ["Ardere grăsimi", "Cardio intens", "Rezultate rapide"],
+    description:
+      "Un antrenament intens, pe intervale, care îmbină exerciții cardio și de forță, pentru arderea rapidă a caloriilor, creșterea rezistenței și un corp mai tonifiat.",
+    benefits: ["Arde calorii", "Crește rezistența", "Îmbunătățește condiția fizică", "Tonifiază tot corpul"],
+    icon: "flame",
+    accent: "#d0a04a",
+    script: "Stronger, Faster, You",
+  },
+  {
+    id: "pilates",
+    name: "Pilates Clasic",
+    keywords: ["Postură", "Flexibilitate", "Echilibru"],
+    description:
+      "O combinație perfectă între mișcare, respirație și concentrare, care te ajută să îți întărești corpul, să îți îmbunătățești postura și să îți găsești echilibrul, atât fizic, cât și mental.",
+    benefits: ["Postură corectă", "Corp mai puternic", "Echilibru mental", "Mai multă energie"],
+    icon: "lotus",
+    accent: "#9a7bb0",
+    script: "Stronger You",
   },
   {
     id: "step",
@@ -155,58 +240,14 @@ export const classes: FitnessClass[] = [
     script: "More than fitness",
   },
   {
-    id: "pilates",
-    name: "Pilates Clasic",
-    keywords: ["Postură", "Flexibilitate", "Echilibru"],
+    id: "khai-bo",
+    name: "Khai Bo",
+    keywords: ["Energie", "Disciplină", "Încredere"],
     description:
-      "O combinație perfectă între mișcare, respirație și concentrare, care te ajută să îți întărești corpul, să îți îmbunătățești postura și să îți găsești echilibrul, atât fizic, cât și mental.",
-    benefits: ["Postură corectă", "Corp mai puternic", "Echilibru mental", "Mai multă energie"],
-    icon: "lotus",
-    accent: "#9a7bb0",
-    script: "Stronger You",
-  },
-  {
-    id: "tabata",
-    name: "Tabata",
-    keywords: ["Ardere grăsimi", "Cardio intens", "Rezultate rapide"],
-    description:
-      "Un antrenament intens, pe intervale, care îmbină exerciții cardio și de forță, pentru arderea rapidă a caloriilor, creșterea rezistenței și un corp mai tonifiat.",
-    benefits: ["Arde calorii", "Crește rezistența", "Îmbunătățește condiția fizică", "Tonifiază tot corpul"],
-    icon: "flame",
-    accent: "#d0a04a",
-    script: "Stronger, Faster, You",
-  },
-  {
-    id: "functional-shape",
-    name: "Functional Shape",
-    keywords: ["Forță", "Tonus", "Mobilitate"],
-    description:
-      "Un antrenament complet, care combină exercițiile funcționale cu forța, pentru un corp mai puternic, mai tonifiat și o formă fizică echilibrată.",
-    benefits: ["Tonifiază și modelează musculatura", "Crește condiția fizică", "Arde calorii", "Îmbunătățește mobilitatea și postura"],
-    icon: "dumbbell",
-    accent: "#e39a55",
-    script: "Stronger, Faster, You",
-  },
-  {
-    id: "aero-dance",
-    name: "Aero Dance",
-    keywords: ["Dans", "Ritm", "Energie"],
-    description:
-      "Un antrenament energic, pe ritm de muzică, care combină pași de aerobic și mișcări de dans, pentru arderea caloriilor, îmbunătățirea coordonării și o stare de bine la fiecare clasă.",
-    benefits: ["Arde calorii", "Îmbunătățește coordonarea", "Crește energia", "Îți dă o stare de bine"],
-    icon: "bolt",
-    accent: "#d98a8a",
-    script: "Stronger, Faster, You",
-  },
-  {
-    id: "personal-training",
-    name: "Personal Training",
-    keywords: ["Antrenament 1 la 1", "Personalizat", "Rezultate"],
-    description:
-      "Antrenamente personalizate, adaptate obiectivelor tale, pentru rezultate vizibile, o formă fizică mai bună și mai multă încredere în tine.",
-    benefits: ["Crește forța", "Îmbunătățește condiția fizică", "Corectează postura", "Rezultate personalizate"],
-    icon: "person",
-    accent: "#b98d5f",
+      "Un antrenament intens și dinamic, care combină tehnici din kickboxing, aerobic și exerciții funcționale, pentru un corp mai puternic, mai tonifiat și o stare de bine garantată.",
+    benefits: ["Arde calorii", "Tonifiază tot corpul", "Crește rezistența", "Eliberează stresul"],
+    icon: "fist",
+    accent: "#c9a25e",
     script: "Stronger, Faster, You",
   },
 ];

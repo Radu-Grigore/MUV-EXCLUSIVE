@@ -4,6 +4,8 @@ import {
     ArrowUpRight,
     Check,
     Copy,
+    Mail,
+    Maximize2,
     Smartphone,
     Clock,
     Dumbbell,
@@ -52,6 +54,8 @@ const lucide: Record<string, LucideIcon> = {
     copy: Copy,
     check: Check,
     smartphone: Smartphone,
+    zoom: Maximize2,
+    mail: Mail,
 };
 
 // Brand marks are not part of Lucide.
@@ -87,7 +91,7 @@ const brands = {
     ),
 };
 
-export type AnyIcon = IconName | keyof typeof brands | 'phone' | 'pin' | 'close' | 'arrow' | 'arrow-up-right' | 'clock' | 'plus' | 'copy' | 'check' | 'smartphone';
+export type AnyIcon = IconName | keyof typeof brands | 'phone' | 'pin' | 'close' | 'arrow' | 'arrow-up-right' | 'clock' | 'plus' | 'copy' | 'check' | 'smartphone' | 'zoom' | 'mail';
 
 export function Icon({ name, className = 'h-6 w-6', strokeWidth = 1.5 }: { name: AnyIcon; className?: string; strokeWidth?: number }) {
     const L = lucide[name];

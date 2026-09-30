@@ -9,6 +9,9 @@ import '@fontsource/allura/index.css';
 import '../css/app.css';
 import '../css/static-fonts.css';
 import { createRoot } from 'react-dom/client';
-import Home from './pages/Home';
+import { loadSatoshi } from './lib/fonts';
+import Root from './pages/Root';
 
-createRoot(document.getElementById('app')!).render(<Home />);
+loadSatoshi();
+
+createRoot(document.getElementById('app')!).render(<Root />);
