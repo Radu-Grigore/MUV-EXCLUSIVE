@@ -254,7 +254,7 @@ export const kidsFeatures: { icon: IconName; title: string }[] = [
 ];
 
 /**
- * URL of a file in public/, wherever the site is deployed (e.g. rbsolutions.ro/muv-exclusive).
+ * URL of a file in public/, wherever the site is deployed (https://muvexclusive.ro, or a subfolder for previews).
  */
 // Laravel build: JS in public/build/assets (site root two folders up). The static build inlines
 // its JS into index.html, so it sets VITE_PUBLIC_ROOT to '' and paths stay relative to the page.
