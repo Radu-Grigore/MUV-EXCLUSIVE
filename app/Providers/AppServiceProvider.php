@@ -24,5 +24,11 @@ class AppServiceProvider extends ServiceProvider
         if (str_starts_with((string) config('app.url'), 'https://')) {
             URL::forceScheme('https');
         }
+
+        // In production every generated URL (canonical, og:url, assets) uses the site's own address,
+        // whatever host name the request came in on.
+        if ($this->app->isProduction()) {
+            URL::forceRootUrl((string) config('app.url'));
+        }
     }
 }
