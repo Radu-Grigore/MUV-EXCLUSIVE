@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { classes, site } from '@/lib/site';
+import { site } from '@/lib/site';
 import { Icon } from './Icon';
+
+const interests = ['Clase', 'Abonament', 'Personal Training', 'Kids Corner'];
 
 // No backend yet: the form composes a WhatsApp message to the studio.
 export function ContactForm() {
@@ -46,7 +48,7 @@ export function ContactForm() {
             <fieldset className="grid gap-2 sm:gap-3">
                 <legend className="eyebrow mb-1.5 text-gold-soft sm:mb-2">Te interesează</legend>
                 <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                    {[...classes.map((c) => c.name), 'Abonament', 'Kids Corner'].map((opt) => (
+                    {interests.map((opt) => (
                         <button
                             key={opt}
                             type="button"

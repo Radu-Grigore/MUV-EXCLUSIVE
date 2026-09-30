@@ -2,7 +2,8 @@ import { Check } from 'lucide-react';
 import { AnimatePresence, motion, useDragControls, type Variants } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { classes, site, type FitnessClass } from '@/lib/site';
+import { appStoreForDevice, classes, site, type FitnessClass } from '@/lib/site';
+import { lockScroll, scrollToTarget } from '@/lib/scroll';
 import { Icon } from '../Icon';
 
 type Props = { active: FitnessClass | null; onClose: () => void; onChange: (c: FitnessClass) => void };
@@ -42,6 +43,7 @@ function ClassPanel({ c, onClose, onChange }: { c: FitnessClass; onClose: () => 
     const index = classes.findIndex((x) => x.id === c.id);
     const prev = classes[(index - 1 + classes.length) % classes.length];
     const next = classes[(index + 1) % classes.length];
+    const store = appStoreForDevice();
     const message = encodeURIComponent(`Bună! Aș dori mai multe detalii despre clasa ${c.name} la MUV Exclusive.`);
 
     const hidden = phone ? { y: '100%' } : { x: '100%' };
@@ -173,19 +175,30 @@ function ClassPanel({ c, onClose, onChange }: { c: FitnessClass; onClose: () => 
                 <div className="shrink-0 border-t border-espresso/10 bg-cream/95 px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur sm:px-10">
                     <div className="flex gap-3">
                         <a
+                            href={store ?? '#rezervari'}
+                            target={store ? '_blank' : undefined}
+                            rel={store ? 'noopener noreferrer' : undefined}
+                            onClick={(e) => {
+                                if (store) return;
+                                // No phone store to open: close the panel and show the booking steps instead.
+                                e.preventDefault();
+                                e.stopPropagation();
+                                onClose();
+                                lockScroll(false);
+                                requestAnimationFrame(() => scrollToTarget('#rezervari'));
+                            }}
+                            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-espresso px-6 py-4 text-[0.66rem] font-semibold tracking-[0.2em] text-cream uppercase transition-colors hover:bg-bronze"
+                        >
+                            <Icon name="smartphone" className="h-4 w-4" /> Rezervă în aplicație
+                        </a>
+                        <a
                             href={`${site.whatsapp}?text=${message}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-espresso px-6 py-4 text-[0.66rem] font-semibold tracking-[0.2em] text-cream uppercase transition-colors hover:bg-bronze"
-                        >
-                            <Icon name="whatsapp" className="h-4 w-4" /> Rezervă pe WhatsApp
-                        </a>
-                        <a
-                            href={site.phoneHref}
-                            aria-label={`Sună la ${site.phone}`}
+                            aria-label="Întreabă-ne pe WhatsApp"
                             className="grid h-[52px] w-[52px] shrink-0 place-items-center rounded-full border border-espresso/15 transition-colors hover:border-espresso"
                         >
-                            <Icon name="phone" className="h-5 w-5" />
+                            <Icon name="whatsapp" className="h-5 w-5" />
                         </a>
                     </div>
                 </div>

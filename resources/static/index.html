@@ -6,7 +6,7 @@
         <meta name="theme-color" content="#f7f1ea">
 
         <title>MUV Exclusive — Boutique Fitness Studio Women Only | Ploiești</title>
-        <meta name="description" content="Studio boutique de fitness și wellness exclusiv pentru femei, în Ploiești, cartier Albert, MRS Village. Khai Bo, Pilates, Tabata și Step Aerobic. Deschidere oficială 01.11.2026.">
+        <meta name="description" content="Studio boutique de fitness și wellness exclusiv pentru femei, în Ploiești, cartier Albert, MRS Village, clădirea M, Aleea Smaraldului nr. 11. Khai Bo, Step Aerobic, Pilates, Tabata, Functional Shape, Aero Dance și Personal Training. Rezervări prin aplicația SmartGym. Deschidere oficială 01.11.2026.">
 
         <meta property="og:type" content="website">
         <meta property="og:locale" content="ro_RO">

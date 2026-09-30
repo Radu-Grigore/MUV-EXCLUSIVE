@@ -123,7 +123,9 @@ export function Header() {
                     </a>
                     <div className="flex items-center justify-between text-xs text-cream/60">
                         <span>
-                            {site.address}, {site.city}
+                            {site.addressShort}
+                            <br />
+                            {site.street}, {site.city}
                         </span>
                         <span className="flex gap-4 text-gold-soft">
                             <a href={site.facebook} tabIndex={open ? 0 : -1} target="_blank" rel="noopener noreferrer" aria-label="Facebook">

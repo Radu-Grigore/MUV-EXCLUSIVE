@@ -7,18 +7,95 @@ export const site = {
   facebook: "https://www.facebook.com/Muvexclusive",
   instagram: "https://www.instagram.com/muvexclusive2026",
   instagramHandle: "@muvexclusive2026",
-  address: "Cartier Albert, în incinta MRS Village",
+  address: "Cartier Albert, MRS Village, clădirea M, parter, Aleea Smaraldului nr. 11",
+  addressShort: "MRS Village, clădirea M, parter",
+  street: "Aleea Smaraldului nr. 11",
   city: "Ploiești",
-  mapsQuery: "MRS Village Ploiești",
+  mapsQuery: "Aleea Smaraldului 11, MRS Village, Ploiești",
   openingDate: "2026-11-01T09:00:00+02:00",
   openingLabel: "01.11.2026",
 };
+
+/** Class bookings go through the SmartGym member app. */
+export const smartgym = {
+  gymCode: "3490",
+  appStore: "https://apps.apple.com/ro/app/smartgym-romania/id6760034259",
+  googlePlay: "https://play.google.com/store/apps/details?id=com.gymapp.ro",
+  // The link behind the QR code on the SmartGym flyer; it sends each phone to its own store.
+  qr: "https://smartgym.ro/app",
+};
+
+/** The store page for this device: App Store on iPhone/iPad, Google Play on Android, null elsewhere. */
+export function appStoreForDevice(): string | null {
+  if (typeof navigator === "undefined") return null;
+  const ua = navigator.userAgent;
+  if (/iPhone|iPad|iPod/i.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1)) return smartgym.appStore;
+  if (/Android/i.test(ua)) return smartgym.googlePlay;
+  return null;
+}
+
+export type Plan = {
+  id: string;
+  name: string;
+  tagline: string;
+  prices: { amount: number; period: string }[];
+  perks: string[];
+  note?: string;
+  featured?: boolean;
+};
+
+export const plans: Plan[] = [
+  {
+    id: "day-pass",
+    name: "Day Pass",
+    tagline: "Pentru o zi",
+    prices: [{ amount: 49, period: "o zi" }],
+    perks: ["Acces la clase o zi", "Ideal ca să ne cunoști"],
+  },
+  {
+    id: "unlimited",
+    name: "Unlimited",
+    tagline: "Clase nelimitate",
+    prices: [
+      { amount: 349, period: "1 lună" },
+      { amount: 899, period: "3 luni" },
+    ],
+    perks: ["Acces nelimitat la clase", "Rezervări în aplicația SmartGym"],
+  },
+  {
+    id: "unlimited-kids",
+    name: "Unlimited + Kids Corner",
+    tagline: "Pentru mămici",
+    prices: [
+      { amount: 399, period: "1 lună" },
+      { amount: 999, period: "3 luni" },
+    ],
+    perks: ["Acces nelimitat la clase", "Acces la Kids Corner pentru cei mici"],
+    featured: true,
+  },
+  {
+    id: "personal-training",
+    name: "Personal Training",
+    tagline: "Antrenament 1 la 1",
+    prices: [{ amount: 249, period: "abonament" }],
+    perks: ["Program adaptat obiectivelor tale"],
+    note: "Antrenorul se achită separat, în funcție de numărul de ore.",
+  },
+];
+
+/** The opening day: demo classes booked through the app. */
+export const openingDay = [
+  { value: 5, label: "ore demo" },
+  { value: 5, label: "clase de aerobic diferite" },
+  { value: 90, label: "locuri disponibile" },
+];
 
 export const navLinks = [
   { href: "#despre", label: "Despre" },
   { href: "#clase", label: "Clase" },
   { href: "#kids", label: "Kids Corner" },
-  { href: "#deschidere", label: "Deschidere" },
+  { href: "#abonamente", label: "Abonamente" },
+  { href: "#rezervari", label: "Rezervări" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -98,7 +175,41 @@ export const classes: FitnessClass[] = [
     icon: "flame",
     accent: "#d0a04a",
     script: "Stronger, Faster, You",
-  },];
+  },
+  {
+    id: "functional-shape",
+    name: "Functional Shape",
+    keywords: ["Forță", "Tonus", "Mobilitate"],
+    description:
+      "Un antrenament complet, care combină exercițiile funcționale cu forța, pentru un corp mai puternic, mai tonifiat și o formă fizică echilibrată.",
+    benefits: ["Tonifiază și modelează musculatura", "Crește condiția fizică", "Arde calorii", "Îmbunătățește mobilitatea și postura"],
+    icon: "dumbbell",
+    accent: "#e39a55",
+    script: "Stronger, Faster, You",
+  },
+  {
+    id: "aero-dance",
+    name: "Aero Dance",
+    keywords: ["Dans", "Ritm", "Energie"],
+    description:
+      "Un antrenament energic, pe ritm de muzică, care combină pași de aerobic și mișcări de dans, pentru arderea caloriilor, îmbunătățirea coordonării și o stare de bine la fiecare clasă.",
+    benefits: ["Arde calorii", "Îmbunătățește coordonarea", "Crește energia", "Îți dă o stare de bine"],
+    icon: "bolt",
+    accent: "#d98a8a",
+    script: "Stronger, Faster, You",
+  },
+  {
+    id: "personal-training",
+    name: "Personal Training",
+    keywords: ["Antrenament 1 la 1", "Personalizat", "Rezultate"],
+    description:
+      "Antrenamente personalizate, adaptate obiectivelor tale, pentru rezultate vizibile, o formă fizică mai bună și mai multă încredere în tine.",
+    benefits: ["Crește forța", "Îmbunătățește condiția fizică", "Corectează postura", "Rezultate personalizate"],
+    icon: "person",
+    accent: "#b98d5f",
+    script: "Stronger, Faster, You",
+  },
+];
 
 export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number };
 

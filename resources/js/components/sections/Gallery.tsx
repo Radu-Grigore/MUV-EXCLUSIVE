@@ -89,7 +89,7 @@ export function Gallery() {
                     >
                         <img
                             src={poster.src}
-                            alt="Afiș cu clasele MUV Exclusive: Khai Bo, Step Aerobic, Pilates, Tabata și altele"
+                            alt="Afiș cu clasele MUV Exclusive"
                             width={poster.width}
                             height={poster.height}
                             loading="lazy"
@@ -103,25 +103,25 @@ export function Gallery() {
                     <p className="eyebrow flex items-center gap-3 text-gold">
                         <span className="h-px w-8 bg-gold" /> Pregătim ceva frumos
                     </p>
-                    <h2 data-split className="mt-3 font-display text-[2.6rem] leading-[0.95] sm:mt-5 sm:text-7xl">
+                    <h2 data-split className="mt-3 font-display text-[2.6rem] leading-[0.95] sm:mt-5 sm:text-7xl low:text-6xl">
                         Clasele <em className="text-gold-soft">MUV</em>
                     </h2>
-                    <p className="mt-6 hidden max-w-md leading-relaxed text-cream/70 sm:block">
+                    <p className="mt-6 hidden max-w-md leading-relaxed text-cream/70 sm:block low:hidden">
                         Energie, forță, echilibru și ritm — fiecare clasă are povestea ei. Alege-o pe cea care ți se potrivește azi.
                     </p>
 
-                    <ul data-showcase-list className="mt-4 border-t border-cream/10 sm:mt-10">
+                    <ul data-showcase-list className="mt-4 grid grid-cols-2 gap-x-4 sm:mt-10 low:mt-5 sm:block sm:border-t sm:border-cream/10">
                         {classes.map((c, i) => (
                             <li key={c.id} data-showcase-row>
                                 <a
                                     href="#clase"
-                                    className="group flex items-center gap-4 border-b border-cream/10 py-2.5 transition-colors hover:text-gold-soft sm:gap-5 sm:py-4"
+                                    className="group flex items-center gap-2 border-b border-cream/10 py-2.5 transition-colors hover:text-gold-soft sm:gap-5 sm:py-3.5 low:py-2"
                                 >
-                                    <span className="w-6 text-[0.62rem] tracking-[0.2em] text-cream/40">{String(i + 1).padStart(2, '0')}</span>
-                                    <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: c.accent }} />
-                                    <span className="flex-1 font-display text-2xl leading-none sm:text-3xl">{c.name}</span>
+                                    <span className="w-5 shrink-0 text-[0.58rem] tracking-[0.1em] text-cream/40 sm:w-6 sm:text-[0.62rem] sm:tracking-[0.2em]">{String(i + 1).padStart(2, '0')}</span>
+                                    <span className="hidden h-2 w-2 shrink-0 rounded-full sm:block" style={{ background: c.accent }} />
+                                    <span className="min-w-0 flex-1 truncate font-display text-lg leading-none sm:text-3xl low:text-2xl">{c.name}</span>
                                     <span className="hidden text-[0.6rem] tracking-[0.2em] text-cream/45 uppercase sm:block">{c.keywords[0]}</span>
-                                    <Icon name="arrow-up-right" className="h-4 w-4 opacity-40 transition-all duration-500 group-hover:rotate-45 group-hover:opacity-100" />
+                                    <Icon name="arrow-up-right" className="hidden h-4 w-4 opacity-40 transition-all duration-500 group-hover:rotate-45 group-hover:opacity-100 sm:block" />
                                 </a>
                             </li>
                         ))}
@@ -131,7 +131,7 @@ export function Gallery() {
                         href={site.instagram}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="group mt-4 inline-flex items-center gap-3 rounded-full border border-cream/20 py-1.5 pr-1.5 pl-4 sm:mt-10 sm:py-2 sm:pr-2 sm:pl-5 text-[0.64rem] font-semibold tracking-[0.22em] uppercase transition-colors hover:border-cream"
+                        className="group mt-4 inline-flex items-center gap-3 rounded-full border border-cream/20 py-1.5 pr-1.5 pl-4 sm:mt-10 low:mt-5 sm:py-2 sm:pr-2 sm:pl-5 text-[0.64rem] font-semibold tracking-[0.22em] uppercase transition-colors hover:border-cream"
                     >
                         <Icon name="instagram" className="h-4 w-4" /> {site.instagramHandle}
                         <span className="grid h-8 w-8 place-items-center rounded-full bg-cream text-espresso transition-transform duration-500 ease-out-expo group-hover:rotate-45">

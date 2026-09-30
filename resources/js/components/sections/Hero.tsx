@@ -2,6 +2,7 @@ import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { asset, site } from '@/lib/site';
 import { gsap, hasFinePointer, introDone, scrollToTarget } from '@/lib/scroll';
+import { bookingLinkProps } from '../BookingLink';
 import { Icon } from '../Icon';
 import { ShaderClouds } from '../ShaderClouds';
 
@@ -91,11 +92,7 @@ export function Hero() {
                             </p>
                             <div data-hero-fade className="mt-6 hidden gap-3 sm:flex">
                                 <a
-                                    href="#contact"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        scrollToTarget('#contact');
-                                    }}
+                                    {...bookingLinkProps()}
                                     data-magnetic
                                     className="group inline-flex items-center gap-2 rounded-full bg-espresso py-3.5 pr-3.5 pl-6 text-[0.66rem] font-semibold tracking-[0.22em] text-cream uppercase transition-colors hover:bg-bronze"
                                 >
@@ -119,9 +116,9 @@ export function Hero() {
                     {/* Arch image */}
                     <div
                         data-hero-frame
-                        className="absolute top-[22%] left-1/2 z-10 w-[58vw] max-w-[300px] -translate-x-1/2 sm:top-[16%] sm:max-w-[340px] lg:top-[12%] lg:right-[16%] lg:left-auto lg:w-[24vw] lg:max-w-[380px] lg:translate-x-0"
+                        className="absolute top-[max(7.5rem,19%)] bottom-[calc(9.5rem+15vw)] left-1/2 z-10 -translate-x-1/2 sm:top-[16%] sm:bottom-auto sm:w-[58vw] sm:max-w-[340px] lg:top-[12%] lg:right-[16%] lg:left-auto lg:w-[24vw] lg:max-w-[380px] lg:translate-x-0"
                     >
-                        <div className="relative aspect-[38/62] overflow-hidden rounded-t-full rounded-b-[2rem] bg-sand shadow-[0_50px_90px_-45px_rgba(42,32,26,0.7)]">
+                        <div className="relative aspect-[38/62] h-full max-w-[66vw] overflow-hidden rounded-t-full rounded-b-[2rem] bg-sand sm:h-auto sm:max-w-none shadow-[0_50px_90px_-45px_rgba(42,32,26,0.7)]">
                             <img
                                 data-hero-img
                                 src={asset('/images/athlete.webp')}
@@ -169,11 +166,7 @@ export function Hero() {
                     {/* Bottom bar */}
                     <div className="absolute inset-x-5 bottom-5 z-30 flex items-center justify-between gap-3 sm:hidden">
                         <a
-                            href="#contact"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                scrollToTarget('#contact');
-                            }}
+                            {...bookingLinkProps()}
                             className="flex-1 rounded-full bg-espresso py-4 text-center text-[0.66rem] font-semibold tracking-[0.22em] text-cream uppercase"
                         >
                             Rezervă-ți locul

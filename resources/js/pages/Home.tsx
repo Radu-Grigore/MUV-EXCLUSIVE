@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { Cursor } from '@/components/Cursor';
 import { Header } from '@/components/Header';
 import { Preloader } from '@/components/Preloader';
+import { Booking } from '@/components/sections/Booking';
 import { Classes } from '@/components/sections/Classes';
 import { Contact } from '@/components/sections/Contact';
 import { FloatingActions, Footer } from '@/components/sections/Footer';
@@ -11,6 +12,7 @@ import { Hero } from '@/components/sections/Hero';
 import { Kids } from '@/components/sections/Kids';
 import { Manifesto } from '@/components/sections/Manifesto';
 import { Opening } from '@/components/sections/Opening';
+import { Pricing } from '@/components/sections/Pricing';
 import { gsap, initSmoothScroll, ScrollTrigger, SplitText } from '@/lib/scroll';
 
 export default function Home() {
@@ -54,7 +56,9 @@ export default function Home() {
                 <Manifesto />
                 <Classes />
                 <Kids />
+                <Pricing />
                 <Gallery />
+                <Booking />
                 <Opening />
                 <Contact />
             </main>

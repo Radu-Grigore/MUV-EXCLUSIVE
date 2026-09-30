@@ -30,7 +30,9 @@ export function Footer() {
                 </nav>
                 <div className="space-y-3 text-sm md:col-span-4">
                     <p>
-                        {site.address}, {site.city}
+                        Cartier Albert, {site.addressShort}
+                        <br />
+                        {site.street}, {site.city}
                     </p>
                     <p>
                         <a href={site.phoneHref} className="transition-colors hover:text-gold-soft">
