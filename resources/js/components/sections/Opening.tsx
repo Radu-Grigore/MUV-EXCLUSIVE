@@ -68,21 +68,23 @@ export function Opening() {
             <div className="pointer-events-none absolute inset-0 opacity-70">
                 <ShaderClouds colors={MIST} speed={0.7} />
             </div>
-            <div
-                data-ring
-                className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[140vw] max-w-[860px] lg:left-[31%] -translate-x-1/2 -translate-y-1/2 rounded-full sm:h-[calc(100%-1rem)] sm:w-auto sm:max-w-none shadow-[0_0_120px_10px_rgba(199,160,106,0.22),inset_0_0_120px_10px_rgba(199,160,106,0.1)] sm:w-[90vw]"
-            />
-            <svg
-                aria-hidden="true"
-                viewBox="0 0 600 600"
-                className="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[125vw] max-w-[760px] lg:left-[31%] -translate-x-1/2 -translate-y-1/2 -rotate-90 sm:h-[calc(100%-3rem)] sm:max-h-[760px] sm:w-auto sm:max-w-none"
-            >
-                <circle data-draw cx="300" cy="300" r="290" fill="none" stroke="#c7a06a" strokeWidth="1.2" />
-                <circle data-draw cx="300" cy="300" r="262" fill="none" stroke="#c7a06a" strokeOpacity="0.35" strokeWidth="0.8" strokeDasharray="2 8" />
-            </svg>
             <div className="relative mx-auto grid w-full max-w-[1440px] items-center gap-6 px-5 text-center short:gap-4 sm:gap-12 sm:px-8 lg:grid-cols-12 lg:gap-16 lg:px-12">
                 {/* The date and the countdown */}
-                <div className="lg:col-span-7">
+                <div className="relative isolate lg:col-span-7">
+                    {/* The rings are centred on this column (the date and the countdown), whatever the screen width. */}
+                    <div
+                        data-ring
+                        aria-hidden="true"
+                        className="pointer-events-none absolute top-1/2 left-1/2 -z-10 aspect-square w-[140vw] max-w-[860px] -translate-x-1/2 -translate-y-1/2 rounded-full shadow-[0_0_120px_10px_rgba(199,160,106,0.22),inset_0_0_120px_10px_rgba(199,160,106,0.1)] sm:w-[44rem] lg:w-[46rem] low:w-[40rem]"
+                    />
+                    <svg
+                        aria-hidden="true"
+                        viewBox="0 0 600 600"
+                        className="pointer-events-none absolute top-1/2 left-1/2 -z-10 aspect-square w-[125vw] max-w-[760px] -translate-x-1/2 -translate-y-1/2 -rotate-90 sm:w-[40rem] lg:w-[42rem] low:w-[36rem]"
+                    >
+                        <circle data-draw cx="300" cy="300" r="290" fill="none" stroke="#c7a06a" strokeWidth="1.2" />
+                        <circle data-draw cx="300" cy="300" r="262" fill="none" stroke="#c7a06a" strokeOpacity="0.35" strokeWidth="0.8" strokeDasharray="2 8" />
+                    </svg>
                     <p className="eyebrow text-gold">Deschidere oficială</p>
                     <h2
                         data-date
@@ -92,7 +94,7 @@ export function Opening() {
                     </h2>
                     <p className="mt-2 font-script text-4xl text-gold-soft tiny:hidden sm:mt-4 sm:text-6xl low:mt-3">Te așteptăm!</p>
 
-                    <div className="mx-auto mt-6 max-w-2xl short:mt-4 sm:mt-10 low:mt-8">
+                    <div className="mx-auto mt-6 max-w-2xl short:mt-4 sm:mt-10 lg:max-w-[31rem] low:mt-8 low:max-w-[28rem]">
                         <Countdown />
                     </div>
                 </div>
