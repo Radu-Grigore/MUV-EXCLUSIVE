@@ -5,16 +5,29 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#f7f1ea">
 
-        <title>{{ isset($title) ? $title.' — MUV Exclusive' : 'MUV Exclusive — Boutique Fitness Studio Women Only | Ploiești' }}</title>
-        <meta name="description" content="Studio boutique de fitness și wellness exclusiv pentru femei, în Ploiești, cartier Albert, MRS Village, clădirea M, Aleea Smaraldului nr. 11. Personal Training, Body Sculpt, Aero Dance, Functional Shape, Tabata, Pilates, Step Aerobic și Khai Bo. Rezervări prin aplicația SmartGym. Deschidere oficială 01.11.2026.">
+        @php
+            $pageTitle = isset($title) ? $title.' — MUV Exclusive' : 'MUV Exclusive — Sală de fitness pentru femei în Ploiești | Boutique Fitness Studio';
+            $pageDescription = $description ?? 'Studio boutique de fitness și wellness exclusiv pentru femei în Ploiești, cartier Albert, MRS Village, clădirea M, Aleea Smaraldului nr. 11. Personal Training, Body Sculpt, Aero Dance, Functional Shape, Tabata, Pilates, Step Aerobic și Khai Bo. Rezervări prin aplicația SmartGym. Deschidere oficială 01.11.2026.';
+        @endphp
+        <title>{{ $pageTitle }}</title>
+        <meta name="description" content="{{ $pageDescription }}">
+        <meta name="robots" content="index, follow, max-image-preview:large">
 
         <meta property="og:type" content="website">
+        <meta property="og:site_name" content="MUV Exclusive">
         <meta property="og:locale" content="ro_RO">
-        <meta property="og:title" content="MUV Exclusive — Women Only Fitness Studio">
-        <meta property="og:description" content="More than a workout. A better you. Deschidere oficială 01.11.2026, Ploiești.">
+        <meta property="og:title" content="{{ $pageTitle }}">
+        <meta property="og:description" content="{{ $pageDescription }}">
         <meta property="og:url" content="{{ url()->current() }}">
-        <link rel="canonical" href="{{ url()->current() }}">
         <meta property="og:image" content="{{ asset('images/campaign.webp') }}">
+        <meta property="og:image:width" content="1334">
+        <meta property="og:image:height" content="750">
+        <meta property="og:image:alt" content="MUV Exclusive — Boutique Fitness Studio, Women Only, Ploiești">
+        <meta name="twitter:card" content="summary_large_image">
+        <link rel="canonical" href="{{ url()->current() }}">
+        @if (($page ?? 'home') === 'home')
+            @include('partials.structured-data')
+        @endif
 
         <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
         {{-- The hero photo is the largest element on screen: fetch it straight away. --}}
@@ -31,7 +44,10 @@
         @endif
     </head>
     <body class="min-h-screen font-sans antialiased">
-        <div id="app" data-page="{{ $page ?? 'home' }}" data-base="{{ url('/') }}"></div>
+        <div id="app" data-page="{{ $page ?? 'home' }}" data-base="{{ url('/') }}">
+            {{-- Plain HTML version of the page for search engines and browsers without JavaScript; the app replaces it. --}}
+            @include('partials.seo-content', ['page' => $page ?? 'home', 'title' => $title ?? null, 'description' => $pageDescription])
+        </div>
         @if (($page ?? 'home') === 'home')
         {{-- First frame of the intro, painted straight from the HTML while the JavaScript loads. --}}
         <div id="boot" class="fixed inset-0 z-[100] flex flex-col bg-espresso text-cream" aria-hidden="true">

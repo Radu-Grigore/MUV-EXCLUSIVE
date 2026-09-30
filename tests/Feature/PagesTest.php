@@ -32,4 +32,19 @@ class PagesTest extends TestCase
         $this->get('/')->assertOk()->assertCookieMissing('laravel_session')->assertCookieMissing('XSRF-TOKEN');
         $this->get('/politica-de-cookies')->assertOk()->assertCookieMissing('laravel_session')->assertCookieMissing('XSRF-TOKEN');
     }
+
+    public function test_the_home_page_is_ready_for_search_engines(): void
+    {
+        $response = $this->get('/')->assertOk();
+
+        $response->assertSee('<meta name="robots" content="index, follow', false)
+            ->assertSee('<link rel="canonical"', false)
+            ->assertSee('application/ld+json', false)
+            ->assertSee('<h1>MUV Exclusive', false);
+
+        preg_match('#<script type="application/ld\+json">(.*?)</script>#s', $response->getContent(), $m);
+        $data = json_decode($m[1], true);
+        $this->assertSame('ExerciseGym', $data['@type']);
+        $this->assertSame('Ploiești', $data['address']['addressLocality']);
+    }
 }

@@ -12,11 +12,11 @@ Route::withoutMiddleware([StartSession::class, ShareErrorsFromSession::class, Pr
 
     // Legal pages (their text lives in resources/js/lib/legal.ts).
     foreach ([
-        'termeni-si-conditii' => 'Termeni și condiții',
-        'politica-de-confidentialitate' => 'Politica de confidențialitate',
-        'politica-de-cookies' => 'Politica de cookies',
-        'politica-de-anulare-si-rambursare' => 'Politica de anulare și rambursare',
-    ] as $slug => $title) {
-        Route::view($slug, 'app', ['page' => $slug, 'title' => $title]);
+        'termeni-si-conditii' => ['Termeni și condiții', 'Termenii și condițiile de utilizare a site-ului și a serviciilor sălii MUV Exclusive din Ploiești: abonamente, rezervări prin SmartGym, regulament.'],
+        'politica-de-confidentialitate' => ['Politica de confidențialitate', 'Cum prelucrează MUV Exclusive (SC AMD Energy Studio SRL) datele personale și ce drepturi aveți conform GDPR.'],
+        'politica-de-cookies' => ['Politica de cookies', 'Ce cookie-uri folosește site-ul MUV Exclusive și cum vă puteți da sau retrage acordul.'],
+        'politica-de-anulare-si-rambursare' => ['Politica de anulare și rambursare', 'Dreptul de retragere, rambursarea abonamentelor și anularea claselor la MUV Exclusive.'],
+    ] as $slug => [$title, $description]) {
+        Route::view($slug, 'app', ['page' => $slug, 'title' => $title, 'description' => $description]);
     }
 });

@@ -20,7 +20,7 @@ export default function Home() {
     useEffect(() => {
         // The HTML ships a static first frame of the intro; the app has taken over now.
         document.getElementById('boot')?.remove();
-        document.title = 'MUV Exclusive — Boutique Fitness Studio Women Only | Ploiești';
+        document.title = 'MUV Exclusive — Sală de fitness pentru femei în Ploiești | Boutique Fitness Studio';
         initSmoothScroll();
         // Arriving from another page with a section in the address (…/#clase): go there once the intro is done.
         const hash = window.location.hash;
