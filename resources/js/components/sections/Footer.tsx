@@ -115,7 +115,7 @@ export function Footer({ onHome }: { onHome: boolean }) {
 
             <p
                 aria-hidden="true"
-                className="text-gold-gradient pointer-events-none pt-4 pb-[3vw] text-center font-display text-[30vw] leading-[0.8] font-medium tracking-[-0.03em] select-none lg:text-[min(26vw,24rem)]"
+                className="text-gold-gradient pointer-events-none pt-2 pb-8 text-center font-display text-[18vw] leading-[0.8] font-medium tracking-[-0.03em] select-none sm:text-[12vw] lg:pb-10 lg:text-[min(9vw,8rem)]"
             >
                 MUV
             </p>
