@@ -138,8 +138,9 @@ export function Pricing() {
                             </span>
                             <span className="mt-2 flex items-baseline gap-1 lg:mt-0">
                                 <NumberFlow value={shown ? x.price : 0} className="font-display text-[2.3rem] leading-none tabular-nums short:text-[2rem] sm:text-5xl low:text-[2.75rem]" />
-                                <span className="text-xs font-medium text-cocoa sm:text-sm">lei</span>
-                                <span className="ml-1 text-[0.55rem] tracking-[0.14em] text-cocoa/70 uppercase sm:text-[0.62rem]">/ {x.period}</span>
+                                <span className="text-xs font-medium whitespace-nowrap text-cocoa sm:text-sm">
+                                    lei <span className="font-normal text-cocoa/70">/ {x.period}</span>
+                                </span>
                             </span>
                             {x.note && <span className="mt-1.5 block text-[0.6rem] leading-snug text-cocoa/80 italic sm:text-xs lg:mt-2 lg:basis-full">* {x.note}</span>}
                         </a>
@@ -194,9 +195,8 @@ function MembershipCard({ m, term, shown }: { m: Membership; term: Term; shown: 
                         value={shown ? price : 0}
                         className={`font-display text-[3.1rem] leading-[0.85] tracking-[-0.02em] tabular-nums short:text-[2.6rem] sm:text-[7rem] low:text-[6rem] lower:text-[4.75rem] ${dark ? 'text-gold-soft' : ''}`}
                     />
-                    <span className={`text-sm font-medium sm:text-xl ${dark ? 'text-cream/80' : 'text-cocoa'}`}>lei</span>
-                    <span className={`ml-0.5 text-[0.58rem] tracking-[0.14em] whitespace-nowrap uppercase sm:text-[0.72rem] ${dark ? 'text-cream/60' : 'text-cocoa/70'}`}>
-                        / {term === 'quarter' ? '3 luni' : 'lună'}
+                    <span className={`text-sm font-medium whitespace-nowrap sm:text-xl ${dark ? 'text-cream/80' : 'text-cocoa'}`}>
+                        lei <span className={`font-normal ${dark ? 'text-cream/55' : 'text-cocoa/70'}`}>/ {term === 'quarter' ? '3 luni' : 'lună'}</span>
                     </span>
                 </div>
                 <p className={`mt-2 text-[0.66rem] leading-snug sm:mt-3 sm:text-sm ${dark ? 'text-cream/75' : 'text-cocoa'}`}>
