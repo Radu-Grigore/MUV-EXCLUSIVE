@@ -1,7 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useRef, useState } from 'react';
 import { asset, kidsFeatures, type GalleryItem } from '@/lib/site';
-import { gsap, hasFinePointer } from '@/lib/scroll';
+import { gsap, hasFinePointer, whenNear } from '@/lib/scroll';
 import { Icon } from '../Icon';
 import { KidsPlayground } from '../KidsPlayground';
 
@@ -24,7 +24,9 @@ export function Kids() {
     const [lightboxUsed, setLightboxUsed] = useState(false);
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 // The room opens up from a smaller rounded window as the section scrolls in.
@@ -74,7 +76,7 @@ export function Kids() {
                     };
                 }
             });
-        },
+        })),
         { scope: root },
     );
 

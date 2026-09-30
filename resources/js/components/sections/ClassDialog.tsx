@@ -2,7 +2,8 @@ import { Check } from 'lucide-react';
 import { AnimatePresence, motion, useDragControls, type Variants } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { appLaunchForDevice, classes, site, type FitnessClass } from '@/lib/site';
+import { classes, site, type FitnessClass } from '@/lib/site';
+import { bookingLinkProps } from '../BookingLink';
 import { lockScroll, scrollToTarget } from '@/lib/scroll';
 import { Icon } from '../Icon';
 
@@ -43,7 +44,7 @@ function ClassPanel({ c, onClose, onChange }: { c: FitnessClass; onClose: () => 
     const index = classes.findIndex((x) => x.id === c.id);
     const prev = classes[(index - 1 + classes.length) % classes.length];
     const next = classes[(index + 1) % classes.length];
-    const store = appLaunchForDevice();
+    const book = bookingLinkProps();
     const message = encodeURIComponent(`Bună! Aș dori mai multe detalii despre clasa ${c.name} la MUV Exclusive.`);
 
     const hidden = phone ? { y: '100%' } : { x: '100%' };
@@ -175,10 +176,11 @@ function ClassPanel({ c, onClose, onChange }: { c: FitnessClass; onClose: () => 
                 <div className="shrink-0 border-t border-espresso/10 bg-cream/95 px-6 py-4 pb-[max(1rem,env(safe-area-inset-bottom))] backdrop-blur sm:px-10">
                     <div className="flex gap-3">
                         <a
-                            href={store ?? '#rezervari'}
+                            {...book}
                             onClick={(e) => {
-                                if (store) return;
-                                // No phone store to open: close the panel and show the booking steps instead.
+                                if (book.onClick) return book.onClick(e);
+                                if (book.target) return;
+                                // Computer: close the panel and show the booking steps instead.
                                 e.preventDefault();
                                 e.stopPropagation();
                                 onClose();

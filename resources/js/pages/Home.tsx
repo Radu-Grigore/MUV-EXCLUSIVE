@@ -14,7 +14,7 @@ import { Kids } from '@/components/sections/Kids';
 import { Manifesto } from '@/components/sections/Manifesto';
 import { Opening } from '@/components/sections/Opening';
 import { Pricing } from '@/components/sections/Pricing';
-import { gsap, initSmoothScroll, introDone, scrollToTarget, ScrollTrigger, SplitText } from '@/lib/scroll';
+import { gsap, initSmoothScroll, introDone, scrollToTarget, ScrollTrigger, SplitText, whenNear } from '@/lib/scroll';
 
 export default function Home() {
     useEffect(() => {
@@ -31,10 +31,10 @@ export default function Home() {
     }, []);
 
     // Section headings marked with data-split rise line by line from under a mask.
-    useGSAP(() => {
-        const mm = gsap.matchMedia();
-        mm.add('all', () => {
-            gsap.utils.toArray<HTMLElement>('[data-split]').forEach((el) => {
+    // Each heading is split once it is about a screen away, not all at start-up.
+    useGSAP((_, contextSafe) => {
+        const offs = gsap.utils.toArray<HTMLElement>('[data-split]').map((el) =>
+            whenNear(el, contextSafe!(() => {
                 SplitText.create(el, {
                     type: 'lines',
                     mask: 'lines',
@@ -48,8 +48,9 @@ export default function Home() {
                             scrollTrigger: { trigger: el, start: 'top 88%', once: true },
                         }),
                 });
-            });
-        });
+            })),
+        );
+        return () => offs.forEach((off) => off());
     });
 
     return (

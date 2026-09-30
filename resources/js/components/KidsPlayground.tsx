@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import { gsap, hasFinePointer, prefersReducedMotion, ScrollTrigger } from '@/lib/scroll';
+import { gsap, hasFinePointer, prefersReducedMotion, ScrollTrigger, whenNear } from '@/lib/scroll';
 
 const palette = ['#e9b949', '#5b8fc7', '#c86b6b', '#6f7f4d', '#7ec8e3', '#f28c5b'];
 
@@ -33,7 +33,9 @@ export function KidsPlayground() {
     const root = useRef<HTMLDivElement>(null);
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             if (prefersReducedMotion()) return;
             const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
             const loops: gsap.core.Animation[] = [];
@@ -86,6 +88,8 @@ export function KidsPlayground() {
             // Rainbow draws itself in whenever the section comes back into view.
             const rainbow = gsap.fromTo('[data-rainbow] path', { drawSVG: '0%' }, { drawSVG: '100%', duration: 1.6, stagger: 0.2, ease: 'power2.inOut', paused: true });
 
+            // The loops only run while the section is on screen (the trigger resumes them).
+            loops.forEach((l) => l.pause());
             ScrollTrigger.create({
                 trigger: root.current,
                 start: 'top bottom',
@@ -137,7 +141,7 @@ export function KidsPlayground() {
                 section.removeEventListener('pointermove', onMove);
                 section.removeEventListener('click', onClick);
             };
-        },
+        })),
         { scope: root },
     );
 

@@ -2,7 +2,7 @@ import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { openingDay, site, smartgym } from '@/lib/site';
 import { bookingLinkProps } from '../BookingLink';
-import { gsap } from '@/lib/scroll';
+import { gsap, whenNear } from '@/lib/scroll';
 import { Countdown } from '../Countdown';
 import { Icon } from '../Icon';
 import { ShaderClouds } from '../ShaderClouds';
@@ -13,7 +13,9 @@ export function Opening() {
     const root = useRef<HTMLElement>(null);
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 gsap.fromTo(
@@ -57,7 +59,7 @@ export function Opening() {
                     { scale: 1, opacity: 1, ease: 'none', scrollTrigger: { trigger: root.current, start: 'top 80%', end: 'center center', scrub: true } },
                 );
             });
-        },
+        })),
         { scope: root },
     );
 

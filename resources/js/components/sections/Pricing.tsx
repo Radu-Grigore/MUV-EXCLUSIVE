@@ -2,7 +2,7 @@ import { useGSAP } from '@gsap/react';
 import NumberFlow from '@number-flow/react';
 import { useRef, useState } from 'react';
 import { extraPlans, memberships, site, type Membership } from '@/lib/site';
-import { gsap, ScrollTrigger } from '@/lib/scroll';
+import { gsap, ScrollTrigger, whenNear } from '@/lib/scroll';
 import { Icon } from '../Icon';
 
 type Term = 'month' | 'quarter';
@@ -19,7 +19,9 @@ export function Pricing() {
     const maxSaving = Math.max(...memberships.map((m) => m.month * 3 - m.quarter));
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 gsap.from('[data-plan]', {
@@ -41,7 +43,7 @@ export function Pricing() {
                 // Prices count up from zero as the cards arrive.
                 ScrollTrigger.create({ trigger: '[data-plans]', start: 'top 80%', once: true, onEnter: () => setShown(true) });
             });
-        },
+        })),
         { scope: root },
     );
 
@@ -193,10 +195,10 @@ function MembershipCard({ m, term, shown }: { m: Membership; term: Term; shown: 
                         className={`font-display text-[3.1rem] leading-[0.85] tracking-[-0.02em] tabular-nums short:text-[2.6rem] sm:text-[7rem] low:text-[6rem] lower:text-[4.75rem] ${dark ? 'text-gold-soft' : ''}`}
                     />
                     <span className={`text-sm font-medium sm:text-xl ${dark ? 'text-cream/80' : 'text-cocoa'}`}>lei</span>
+                    <span className={`ml-0.5 text-[0.58rem] tracking-[0.14em] whitespace-nowrap uppercase sm:text-[0.72rem] ${dark ? 'text-cream/60' : 'text-cocoa/70'}`}>
+                        / {term === 'quarter' ? '3 luni' : 'lună'}
+                    </span>
                 </div>
-                <p className={`mt-1.5 text-[0.58rem] tracking-[0.16em] uppercase sm:mt-2 sm:text-[0.7rem] ${dark ? 'text-cream/60' : 'text-cocoa/70'}`}>
-                    {term === 'quarter' ? '/ 3 luni' : '/ lună'}
-                </p>
                 <p className={`mt-2 text-[0.66rem] leading-snug sm:mt-3 sm:text-sm ${dark ? 'text-cream/75' : 'text-cocoa'}`}>
                     {term === 'quarter' ? (
                         <>

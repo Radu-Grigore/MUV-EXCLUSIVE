@@ -1,7 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useRef, useState } from 'react';
 import { asset, classes, site, type GalleryItem } from '@/lib/site';
-import { gsap, hasFinePointer } from '@/lib/scroll';
+import { gsap, hasFinePointer, whenNear } from '@/lib/scroll';
 import { Icon } from '../Icon';
 
 const Lightbox = lazy(() => import('./Lightbox'));
@@ -22,7 +22,9 @@ export function Gallery() {
     const [lightboxUsed, setLightboxUsed] = useState(false);
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 gsap.from('[data-showcase-poster]', {
@@ -63,7 +65,7 @@ export function Gallery() {
                     };
                 }
             });
-        },
+        })),
         { scope: root },
     );
 

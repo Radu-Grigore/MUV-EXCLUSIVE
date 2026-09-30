@@ -9,15 +9,24 @@ export function Header() {
     const [open, setOpen] = useState(false);
     const progress = useRef<HTMLSpanElement>(null);
 
-    useEffect(
-        () =>
-            onScroll((y) => {
-                setScrolled(y > 24);
-                const max = document.documentElement.scrollHeight - window.innerHeight;
-                if (progress.current) progress.current.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
-            }),
-        [],
-    );
+    useEffect(() => {
+        // The page height is measured only when it changes, not on every scroll event (that would force a layout each time).
+        let max = 1;
+        const measure = () => (max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight));
+        const ro = new ResizeObserver(measure);
+        ro.observe(document.body);
+        window.addEventListener('resize', measure);
+        measure();
+        const off = onScroll((y) => {
+            setScrolled(y > 24);
+            if (progress.current) progress.current.style.transform = `scaleX(${Math.min(1, y / max)})`;
+        });
+        return () => {
+            off();
+            ro.disconnect();
+            window.removeEventListener('resize', measure);
+        };
+    }, []);
 
     useEffect(() => {
         lockScroll(open);

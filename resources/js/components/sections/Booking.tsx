@@ -1,8 +1,9 @@
 import { useGSAP } from '@gsap/react';
 import NumberFlow from '@number-flow/react';
 import { useEffect, useRef, useState } from 'react';
-import { asset, site, smartgym } from '@/lib/site';
-import { gsap, ScrollTrigger } from '@/lib/scroll';
+import { appStoreForDevice, asset, site, smartgym } from '@/lib/site';
+import { gsap, ScrollTrigger, whenNear } from '@/lib/scroll';
+import { openAndroidApp } from '../BookingLink';
 import { Icon } from '../Icon';
 
 const steps = [
@@ -23,7 +24,9 @@ export function Booking() {
     const [copied, setCopied] = useState(false);
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 gsap.from('[data-step]', {
@@ -44,7 +47,7 @@ export function Booking() {
                 // The gym code counts up to 3490 when the card comes into view.
                 ScrollTrigger.create({ trigger: '[data-app-card]', start: 'top 80%', once: true, onEnter: () => setCode(Number(smartgym.gymCode)) });
             });
-        },
+        })),
         { scope: root },
     );
 
@@ -63,6 +66,8 @@ export function Booking() {
         }
     }
 
+    // On Android the Google Play button first tries to open the installed app.
+    const android = appStoreForDevice() === smartgym.googlePlay;
     const stores = [
         { href: smartgym.appStore, icon: 'apple' as const, small: 'Descarcă din', label: 'App Store' },
         { href: smartgym.googlePlay, icon: 'googleplay' as const, small: 'Disponibil pe', label: 'Google Play' },
@@ -163,6 +168,7 @@ export function Booking() {
                                     key={s.label}
                                     href={s.href}
                                     target="_blank"
+                                    onClick={android && s.href === smartgym.googlePlay ? openAndroidApp : undefined}
                                     rel="noopener noreferrer"
                                     className="group flex items-center justify-center gap-2.5 rounded-xl bg-cream px-3 py-2 text-espresso sm:rounded-2xl transition-colors hover:bg-gold-soft sm:justify-start sm:gap-3 sm:px-5 sm:py-3.5"
                                 >

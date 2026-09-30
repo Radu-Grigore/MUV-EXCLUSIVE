@@ -13,12 +13,23 @@ export function Footer({ onHome }: { onHome: boolean }) {
         { href: site.instagram, label: 'Instagram', icon: 'instagram' as const },
         { href: site.whatsapp, label: 'WhatsApp', icon: 'whatsapp' as const },
     ];
+    const details = [
+        { label: 'Firma', value: company.name },
+        { label: 'CUI', value: company.cui },
+        { label: 'Nr. Reg. Com.', value: company.regCom },
+        { label: 'Sediu social', value: company.seat },
+        { label: 'Adresa sălii', value: site.address },
+        { label: 'Telefon', value: site.phoneIntl, href: site.phoneHref },
+        { label: 'Email', value: site.email, href: `mailto:${site.email}` },
+    ];
 
     return (
-        <footer className="relative z-0 overflow-hidden bg-espresso pt-16 text-cream/70 sm:pt-20 lg:sticky lg:bottom-0 lg:-mt-12 lg:pt-32">
+        <footer className="relative z-0 overflow-hidden bg-espresso pt-16 text-cream/70 sm:pt-20 lg:-mt-12 lg:pt-32">
+            {/* Brand, navigation, legal */}
             <div className="mx-auto grid max-w-[1440px] gap-10 px-5 sm:px-8 md:grid-cols-12 lg:gap-12 lg:px-12">
-                <div className="md:col-span-4">
-                    <p className="font-script text-4xl text-gold-soft sm:text-5xl">Move · Feel · Balance · Belong</p>
+                <div className="md:col-span-5">
+                    <p className="font-display text-3xl text-cream sm:text-4xl">MUV Exclusive</p>
+                    <p className="mt-1 font-script text-3xl text-gold-soft sm:text-4xl">Move · Feel · Balance · Belong</p>
                     <p className="mt-4 max-w-sm text-sm leading-relaxed">
                         Boutique fitness &amp; wellness studio, exclusiv pentru femei. More than a workout — a better you.
                     </p>
@@ -59,30 +70,9 @@ export function Footer({ onHome }: { onHome: boolean }) {
                     </ul>
                 </nav>
 
-                <address className="text-sm leading-relaxed not-italic md:col-span-5">
-                    <p className="font-display text-2xl text-cream">Muv Exclusive</p>
-                    <p className="mt-2">{company.name}</p>
-                    <p>
-                        CUI {company.cui} | Nr. Reg. Com. {company.regCom}
-                    </p>
-                    <p>Sediu social: {company.seat}</p>
-                    <p>Adresa sălii: {site.address}</p>
-                    <p className="mt-2">
-                        Telefon:{' '}
-                        <a href={site.phoneHref} className="font-semibold text-gold-soft hover:underline">
-                            {site.phoneIntl}
-                        </a>{' '}
-                        | Email:{' '}
-                        <a href={`mailto:${site.email}`} className="font-semibold text-gold-soft hover:underline">
-                            {site.email}
-                        </a>
-                    </p>
-                </address>
-            </div>
-
-            <div className="mx-auto mt-12 max-w-[1440px] border-t border-cream/10 px-5 pt-8 sm:px-8 lg:px-12">
-                <nav aria-label="Informații legale">
-                    <ul className="flex flex-wrap gap-x-5 gap-y-1 text-[0.8rem]">
+                <div className="md:col-span-4">
+                    <p className="eyebrow text-gold-soft">Informații legale</p>
+                    <ul className="mt-4 space-y-0.5 text-sm">
                         {legalDocs.map((d) => (
                             <li key={d.slug}>
                                 <a href={pageHref(d.slug)} className="inline-block py-1.5 transition-colors hover:text-gold-soft">
@@ -96,18 +86,36 @@ export function Footer({ onHome }: { onHome: boolean }) {
                             </button>
                         </li>
                     </ul>
-                </nav>
-                <AnpcSalBadge className="mt-5" />
+                    <AnpcSalBadge className="mt-5" />
+                </div>
             </div>
 
-            <div className="mx-auto mt-8 flex max-w-[1440px] flex-col items-center justify-between gap-2 border-t border-cream/10 px-5 py-6 text-[0.62rem] tracking-[0.2em] uppercase sm:flex-row sm:px-8 lg:px-12">
-                <span>© {new Date().getFullYear()} Muv Exclusive · {company.name}</span>
+            {/* Company details, under the ANPC pictogram */}
+            <div className="mx-auto mt-12 max-w-[1440px] px-5 sm:px-8 lg:px-12">
+                <address className="grid gap-x-8 gap-y-4 rounded-[1.5rem] border border-cream/10 bg-white/[0.03] p-5 not-italic sm:grid-cols-2 sm:p-7 lg:grid-cols-4">
+                    {details.map((d) => (
+                        <div key={d.label} className={d.label === 'Adresa sălii' || d.label === 'Sediu social' ? 'sm:col-span-2' : ''}>
+                            <p className="text-[0.6rem] font-medium tracking-[0.24em] text-gold-soft/80 uppercase">{d.label}</p>
+                            {d.href ? (
+                                <a href={d.href} className="mt-1 inline-block text-sm font-semibold text-cream transition-colors hover:text-gold-soft">
+                                    {d.value}
+                                </a>
+                            ) : (
+                                <p className="mt-1 text-sm leading-snug text-cream/90">{d.value}</p>
+                            )}
+                        </div>
+                    ))}
+                </address>
+            </div>
+
+            <div className="mx-auto mt-10 flex max-w-[1440px] flex-col items-center justify-between gap-2 border-t border-cream/10 px-5 py-6 text-center text-[0.62rem] tracking-[0.2em] uppercase sm:flex-row sm:px-8 sm:text-left lg:px-12">
+                <span>© {new Date().getFullYear()} MUV Exclusive. Toate drepturile rezervate.</span>
                 <span>Deschidere oficială {site.openingLabel}</span>
             </div>
 
             <p
                 aria-hidden="true"
-                className="text-gold-gradient pointer-events-none pt-6 pb-[3vw] text-center font-display text-[30vw] leading-[0.8] font-medium tracking-[-0.03em] select-none lg:text-[min(26vw,24rem)]"
+                className="text-gold-gradient pointer-events-none pt-4 pb-[3vw] text-center font-display text-[30vw] leading-[0.8] font-medium tracking-[-0.03em] select-none lg:text-[min(26vw,24rem)]"
             >
                 MUV
             </p>
@@ -126,15 +134,6 @@ export function FloatingActions() {
                 visible ? 'translate-y-0 opacity-100' : 'pointer-events-none translate-y-6 opacity-0'
             }`}
         >
-            <a
-                href={site.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="MUV Exclusive pe Facebook"
-                className="grid h-12 w-12 place-items-center rounded-full bg-[#1877f2] text-white shadow-[0_14px_30px_-10px_rgba(24,119,242,0.7)] transition-transform hover:scale-105"
-            >
-                <Icon name="facebook" className="h-6 w-6" />
-            </a>
             <a
                 href={site.whatsapp}
                 target="_blank"

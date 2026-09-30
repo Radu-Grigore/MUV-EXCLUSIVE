@@ -1,5 +1,5 @@
 import NumberFlow from '@number-flow/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { site } from '@/lib/site';
 
 type Parts = { days: number; hours: number; minutes: number; seconds: number };
@@ -26,9 +26,22 @@ export function Countdown() {
     const target = new Date(site.openingDate).getTime();
     const [parts, setParts] = useState<Parts | null>(() => diff(target));
 
+    const box = useRef<HTMLDivElement>(null);
+
+    // Ticks only while on screen (no work, and no animated re-layout, for a countdown nobody is looking at).
     useEffect(() => {
-        const id = setInterval(() => setParts(diff(target)), 1000);
-        return () => clearInterval(id);
+        let id = 0;
+        const io = new IntersectionObserver(([e]) => {
+            clearInterval(id);
+            if (!e.isIntersecting) return;
+            setParts(diff(target));
+            id = window.setInterval(() => setParts(diff(target)), 1000);
+        });
+        if (box.current) io.observe(box.current);
+        return () => {
+            clearInterval(id);
+            io.disconnect();
+        };
     }, [target]);
 
     if (!parts) {
@@ -36,7 +49,7 @@ export function Countdown() {
     }
 
     return (
-        <div className="grid grid-cols-4 gap-2 sm:gap-4" role="timer" aria-label="Timp rămas până la deschidere">
+        <div ref={box} className="grid grid-cols-4 gap-2 sm:gap-4" role="timer" aria-label="Timp rămas până la deschidere">
             {labels.map(([key, label]) => (
                 <div key={key} className="flex flex-col items-center rounded-2xl border border-gold/20 bg-white/[0.04] px-1 py-3 short:py-2 sm:px-4 sm:py-6 low:py-3">
                     <NumberFlow

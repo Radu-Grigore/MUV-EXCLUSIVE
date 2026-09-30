@@ -36,16 +36,8 @@ export const smartgym = {
   androidPackage: "com.gymapp.ro",
 };
 
-/**
- * Where a "book" button goes on this device. Android opens the SmartGym app when it is installed and
- * falls back to Google Play otherwise; iPhone opens the App Store page (which shows "Open" when the app
- * is installed). Null on computers.
- */
-export function appLaunchForDevice(): string | null {
-  const store = appStoreForDevice();
-  if (store !== smartgym.googlePlay) return store;
-  return `intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${smartgym.androidPackage};S.browser_fallback_url=${encodeURIComponent(smartgym.googlePlay)};end`;
-}
+/** Android link that launches the SmartGym app (Chrome falls back to Google Play when it is not installed). */
+export const androidAppIntent = `intent://#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;package=${smartgym.androidPackage};S.browser_fallback_url=${encodeURIComponent(smartgym.googlePlay)};end`;
 
 /** The store page for this device: App Store on iPhone/iPad, Google Play on Android, null elsewhere. */
 export function appStoreForDevice(): string | null {

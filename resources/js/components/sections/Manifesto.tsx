@@ -1,7 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { asset } from '@/lib/site';
-import { gsap } from '@/lib/scroll';
+import { gsap, whenNear } from '@/lib/scroll';
 import { VelocityMarquee } from '../VelocityMarquee';
 
 const text =
@@ -13,7 +13,9 @@ export function Manifesto() {
     const root = useRef<HTMLElement>(null);
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 gsap.fromTo(
@@ -32,7 +34,7 @@ export function Manifesto() {
                     scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true },
                 });
             });
-        },
+        })),
         { scope: root },
     );
 

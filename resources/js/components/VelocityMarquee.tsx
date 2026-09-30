@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import { gsap, ScrollTrigger } from '@/lib/scroll';
+import { gsap, ScrollTrigger, whenNear } from '@/lib/scroll';
 
 const words = ['Move', 'Feel', 'Balance', 'Belong', 'Women only', 'A better you'];
 
@@ -13,7 +13,9 @@ export function VelocityMarquee({ className = '' }: { className?: string }) {
     const track = useRef<HTMLDivElement>(null);
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 let x = 0;
@@ -49,7 +51,7 @@ export function VelocityMarquee({ className = '' }: { className?: string }) {
                     st.kill();
                 };
             });
-        },
+        })),
         { scope: root },
     );
 

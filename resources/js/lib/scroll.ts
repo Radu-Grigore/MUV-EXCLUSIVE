@@ -114,6 +114,28 @@ export function onScroll(callback: (y: number, direction: number) => void) {
     return () => window.removeEventListener('scroll', handler);
 }
 
+/**
+ * Runs an animation set-up once `el` is about a screen away from the viewport (and its clean-up on unmount).
+ * Sections below the fold then cost nothing at start-up; by the time they scroll in, their animations are ready.
+ */
+export function whenNear(el: Element | null | undefined, setup: () => void | (() => void), margin = '100% 0px'): () => void {
+    if (!el) return () => {};
+    let cleanup: void | (() => void);
+    const io = new IntersectionObserver(
+        (entries) => {
+            if (!entries.some((e) => e.isIntersecting)) return;
+            io.disconnect();
+            cleanup = setup();
+        },
+        { rootMargin: margin },
+    );
+    io.observe(el);
+    return () => {
+        io.disconnect();
+        if (typeof cleanup === 'function') cleanup();
+    };
+}
+
 export function hasFinePointer() {
     return window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 }

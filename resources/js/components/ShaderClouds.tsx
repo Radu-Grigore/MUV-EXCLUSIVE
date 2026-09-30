@@ -91,7 +91,11 @@ export function ShaderClouds({ colors, className = '', scale = 0.45, speed = 1 }
             }
         };
 
-        const still = prefersReducedMotion();
+        // Without a graphics card (software WebGL: SwiftShader, llvmpipe…) the shader would run on the CPU every
+        // frame and make the whole page stutter, so there the clouds are drawn once and stay still.
+        const info = gl.getExtension('WEBGL_debug_renderer_info');
+        const renderer = String(gl.getParameter(info ? info.UNMASKED_RENDERER_WEBGL : gl.RENDERER));
+        const still = prefersReducedMotion() || /swiftshader|llvmpipe|softpipe|software|basic render/i.test(renderer);
         let visible = true;
         let raf = 0;
         let shown = false;

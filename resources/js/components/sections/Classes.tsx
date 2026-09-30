@@ -2,7 +2,7 @@ import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { classes, type FitnessClass, type GalleryItem } from '@/lib/site';
 import { posterFor } from '@/lib/posters';
-import { gsap, lockScroll } from '@/lib/scroll';
+import { gsap, lockScroll, whenNear } from '@/lib/scroll';
 import { bookingLinkProps } from '../BookingLink';
 import { Icon } from '../Icon';
 
@@ -32,7 +32,9 @@ export function Classes() {
     const c = classes[index];
 
     useGSAP(
-        () => {
+        (_, contextSafe) =>
+            // Prepared once the section is about a screen away, so it costs nothing at start-up.
+            whenNear(root.current, contextSafe!(() => {
             const mm = gsap.matchMedia();
             mm.add('all', () => {
                 gsap.from('[data-classes-in]', {
@@ -44,7 +46,7 @@ export function Classes() {
                     scrollTrigger: { trigger: root.current, start: 'top 70%', once: true },
                 });
             });
-        },
+        })),
         { scope: root },
     );
 
