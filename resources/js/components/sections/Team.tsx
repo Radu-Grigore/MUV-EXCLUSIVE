@@ -121,21 +121,25 @@ export function Team() {
 }
 
 function MemberCard({ m, onOpen }: { m: TeamMember; onOpen: () => void }) {
-    const photo = m.photos[0];
+    const photo = m.photos[0] as TeamMember['photos'][number] | undefined;
 
     return (
         <button type="button" data-cursor="Povestea" onClick={onOpen} aria-label={`${m.name} — citește povestea`} className="group block w-full text-left">
             <span className="relative block overflow-hidden rounded-[1.4rem] bg-sand shadow-[0_30px_60px_-35px_rgba(42,32,26,0.7)] sm:rounded-[1.8rem]">
-                <img
-                    src={asset(photo.src)}
-                    alt={`${m.name} — ${m.role}, MUV Exclusive`}
-                    width={800}
-                    height={1000}
-                    loading="lazy"
-                    decoding="async"
-                    className="block aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
-                    style={{ objectPosition: photo.position ?? '50% 20%' }}
-                />
+                {photo ? (
+                    <img
+                        src={asset(photo.src)}
+                        alt={`${m.name} — ${m.role}, MUV Exclusive`}
+                        width={800}
+                        height={1000}
+                        loading="lazy"
+                        decoding="async"
+                        className="block aspect-[4/5] w-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+                        style={{ objectPosition: photo.position ?? '50% 20%' }}
+                    />
+                ) : (
+                    <Avatar name={m.name} className="aspect-[4/5] w-full" />
+                )}
                 <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/55 to-transparent" />
                 <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-cream/95 py-1.5 pr-1.5 pl-3 text-[0.58rem] font-semibold tracking-[0.18em] text-espresso uppercase shadow transition-colors group-hover:bg-gold-soft sm:right-4 sm:bottom-4">
                     Povestea
@@ -157,5 +161,27 @@ function MemberCard({ m, onOpen }: { m: TeamMember; onOpen: () => void }) {
                 </span>
             </span>
         </button>
+    );
+}
+
+/** Stand-in for an instructor without a photo yet: her initials on the brand's warm gradient. */
+export function Avatar({ name, className = '', compact = false }: { name: string; className?: string; compact?: boolean }) {
+    const initials = name
+        .split(' ')
+        .map((w) => w[0])
+        .join('')
+        .slice(0, 2);
+    return (
+        <span
+            role="img"
+            aria-label={`${name} — fotografie în curând`}
+            className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
+            style={{ background: 'radial-gradient(70% 60% at 50% 38%, #f3e6d2 0%, #e3cfb2 55%, #c9a97f 100%)' }}
+        >
+            <span className="absolute top-1/2 left-1/2 aspect-square w-[78%] -translate-x-1/2 -translate-y-[58%] rounded-full border border-bronze/30" />
+            <span className="absolute top-1/2 left-1/2 aspect-square w-[68%] -translate-x-1/2 -translate-y-[58%] rounded-full border border-dashed border-bronze/25" />
+            <span className={`text-gold-gradient relative font-display leading-none tracking-[-0.02em] ${compact ? 'text-6xl' : 'text-[5.5rem] sm:text-[7rem]'}`}>{initials}</span>
+            <span className={`relative text-[0.6rem] font-medium tracking-[0.28em] text-bronze uppercase ${compact ? 'mt-2' : 'mt-4'}`}>Fotografie în curând</span>
+        </span>
     );
 }
