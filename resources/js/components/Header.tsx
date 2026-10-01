@@ -54,7 +54,7 @@ export function Header() {
                         <Logo light={open} />
                     </a>
 
-                    <nav className="hidden items-center gap-10 lg:flex" aria-label="Navigare principală">
+                    <nav className="hidden items-center gap-6 lg:flex xl:gap-9" aria-label="Navigare principală">
                         {navLinks.map((l) => (
                             <a
                                 key={l.href}
@@ -119,7 +119,7 @@ export function Header() {
                                 style={{ transitionDelay: open ? `${150 + i * 60}ms` : '0ms' }}
                             >
                                 <span className="text-[0.65rem] tracking-[0.2em] text-gold">0{i + 1}</span>
-                                <span className="font-display text-[2.6rem] leading-none font-light">{l.label}</span>
+                                <span className="font-display text-[2.4rem] leading-none font-light short:text-[2rem]">{l.label}</span>
                             </span>
                         </a>
                     ))}

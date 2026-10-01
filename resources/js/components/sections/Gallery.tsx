@@ -8,13 +8,13 @@ const Lightbox = lazy(() => import('./Lightbox'));
 
 const poster: GalleryItem = {
     src: asset('/images/classes-poster.webp'),
-    title: 'Clasele MUV',
+    title: 'Clasele MUV Exclusive',
     caption: 'Toate clasele MUV Exclusive',
     width: 750,
     height: 750,
 };
 
-/** "Clasele MUV" showcase: the all-classes poster in a glowing, tilting frame next to the class list. */
+/** "Clasele MUV Exclusive" showcase: the all-classes poster in a glowing, tilting frame next to the class list. */
 export function Gallery() {
     const root = useRef<HTMLElement>(null);
     const frame = useRef<HTMLButtonElement>(null);
@@ -86,7 +86,7 @@ export function Gallery() {
                             setLightboxUsed(true);
                             setZoomed(true);
                         }}
-                        aria-label="Vezi afișul Clasele MUV mărit"
+                        aria-label="Vezi afișul Clasele MUV Exclusive mărit"
                         className="group relative block w-full overflow-hidden rounded-[1.4rem] border border-gold/30 bg-ink p-1.5 sm:rounded-[2rem] sm:p-2 shadow-[0_0_80px_-10px_rgba(199,160,106,0.45),0_50px_90px_-40px_rgba(0,0,0,0.8)] [transform-style:preserve-3d]"
                     >
                         <img
@@ -106,7 +106,7 @@ export function Gallery() {
                         <span className="h-px w-8 bg-gold" /> Pregătim ceva frumos
                     </p>
                     <h2 data-split className="mt-3 font-display text-[2.6rem] leading-[0.95] sm:mt-5 sm:text-7xl low:text-6xl">
-                        Clasele <em className="text-gold-soft">MUV</em>
+                        Clasele <em className="text-gold-soft">MUV Exclusive</em>
                     </h2>
                     <p className="mt-6 hidden max-w-md leading-relaxed text-cream/70 sm:block low:hidden">
                         Energie, forță, echilibru și ritm — fiecare clasă are povestea ei. Alege-o pe cea care ți se potrivește azi.

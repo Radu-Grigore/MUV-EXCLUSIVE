@@ -7,7 +7,7 @@
 
         @php
             $pageTitle = isset($title) ? $title.' — MUV Exclusive' : 'MUV Exclusive — Sală de fitness pentru femei în Ploiești | Boutique Fitness Studio';
-            $pageDescription = $description ?? 'Studio boutique de fitness și wellness exclusiv pentru femei în Ploiești, cartier Albert, MRS Village, clădirea M, Aleea Smaraldului nr. 11. Personal Training, Body Sculpt, Aero Dance, Functional Shape, Tabata, Pilates, Step Aerobic și Khai Bo. Rezervări prin aplicația SmartGym. Deschidere oficială 01.11.2026.';
+            $pageDescription = $description ?? 'Studio boutique de fitness și wellness exclusiv pentru femei în Ploiești, cartier Albert, MRS Village, clădirea M, Aleea Smaraldului nr. 11. Personal Training, Body Sculpt, Abs & Glutes, Aero Dance, Functional Shape, Tabata, Pilates, Functional Step și Khai Bo. Rezervări prin aplicația SmartGym. Deschidere oficială 01.11.2026.';
         @endphp
         <title>{{ $pageTitle }}</title>
         <meta name="description" content="{{ $pageDescription }}">

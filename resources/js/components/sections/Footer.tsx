@@ -113,12 +113,10 @@ export function Footer({ onHome }: { onHome: boolean }) {
                 <span>Deschidere oficială {site.openingLabel}</span>
             </div>
 
-            <p
-                aria-hidden="true"
-                className="text-gold-gradient pointer-events-none pt-2 pb-8 text-center font-display text-[18vw] leading-[0.8] font-medium tracking-[-0.03em] select-none sm:text-[12vw] lg:pb-10 lg:text-[min(9vw,8rem)]"
-            >
-                MUV
-            </p>
+            <div aria-hidden="true" className="pointer-events-none flex flex-col items-center pt-2 pb-8 select-none lg:pb-10">
+                <span className="text-gold-gradient font-display text-[18vw] leading-[0.8] font-medium tracking-[-0.03em] sm:text-[12vw] lg:text-[min(9vw,8rem)]">MUV</span>
+                <span className="mt-2 pl-[0.6em] text-[3.4vw] font-light tracking-[0.6em] text-gold-soft sm:text-[2.2vw] lg:text-[min(1.6vw,1.4rem)]">EXCLUSIVE</span>
+            </div>
         </footer>
     );
 }

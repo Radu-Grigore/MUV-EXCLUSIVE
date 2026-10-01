@@ -68,7 +68,7 @@ export const memberships: Membership[] = [
     quarter: 899,
     perks: [
       "Acces nelimitat la toate clasele de grup",
-      "Body Sculpt, Aero Dance, Functional Shape, Tabata, Pilates, Step, Khai Bo",
+      "Body Sculpt, Abs & Glutes, Aero Dance, Functional Shape, Tabata, Pilates, Functional Step, Khai Bo",
       "Rezervări rapide în aplicația SmartGym",
     ],
   },
@@ -110,6 +110,7 @@ export const openingDay = [
 export const navLinks = [
   { href: "#despre", label: "Despre" },
   { href: "#clase", label: "Clase" },
+  { href: "#echipa", label: "Echipa" },
   { href: "#kids", label: "Kids Corner" },
   { href: "#abonamente", label: "Abonamente" },
   { href: "#rezervari", label: "Rezervări" },
@@ -172,6 +173,22 @@ export const classes: FitnessClass[] = [
     script: "More than fitness",
   },
   {
+    id: "abs-glutes",
+    name: "Abs & Glutes",
+    keywords: ["Abdomen", "Fesieri", "Postură"],
+    description:
+      "Un antrenament eficient care activează și întărește mușchii abdominali și fesieri, pentru un corp tonifiat, puternic și armonios.",
+    benefits: [
+      "Definește zona abdominală",
+      "Tonifică și ridică fesele",
+      "Îți îmbunătățește postura și stabilitatea",
+      "Îți oferă mai multă forță și încredere",
+    ],
+    icon: "flame",
+    accent: "#c58a6a",
+    script: "More than fitness",
+  },
+  {
     id: "aero-dance",
     name: "Aero Dance",
     keywords: ["Dans", "Ritm", "Energie"],
@@ -216,11 +233,11 @@ export const classes: FitnessClass[] = [
     script: "Stronger You",
   },
   {
-    id: "step",
-    name: "Step Aerobic",
-    keywords: ["Ritm", "Cardio", "Bună dispoziție"],
+    id: "functional-step",
+    name: "Functional Step",
+    keywords: ["Step", "Funcțional", "Cardio"],
     description:
-      "Un antrenament energic și distractiv care combină mișcarea cu muzica, pentru un corp tonifiat, o inimă mai sănătoasă și multă energie.",
+      "Un antrenament complet și versatil care combină exercițiile pe step cu mișcări funcționale, pentru un corp tonifiat, puternic și multe calorii arse.",
     benefits: [
       "Îmbunătățește rezistența cardiovasculară",
       "Ajută la arderea caloriilor",
@@ -241,6 +258,86 @@ export const classes: FitnessClass[] = [
     icon: "fist",
     accent: "#c9a25e",
     script: "Stronger, Faster, You",
+  },
+];
+
+/** The instructors (section "Echipa"). A bio is a list of paragraphs; an array inside it is a bullet list. */
+export type TeamMember = {
+  id: string;
+  name: string;
+  role: string;
+  extra?: string;
+  intro: string;
+  photos: { src: string; position?: string }[];
+  classes: string[];
+  schedule?: string[];
+  bio: (string | string[])[];
+  closing?: string;
+};
+
+export const team: TeamMember[] = [
+  {
+    id: "ana-voican",
+    name: "Ana Voican",
+    role: "Instructor Fitness, Functional & Weight training",
+    extra: "Fondator Strong & Fit Factory (online workout sessions)",
+    intro: "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
+    photos: [{ src: "/images/echipa/ana-voican.jpg", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg" }],
+    classes: ["HIIT & Tabata", "Abs & Glutes", "Body Sculpt"],
+    schedule: ["Marți și joi: 18:30–19:30", "Miercuri și vineri: 08:30–09:30"],
+    bio: [
+      "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
+      "Este pasionată de alergare, maratoane, ciclism și experiențe sportive care ne provoacă să ne depășim limitele. Pentru Ana, sportul este o formă de igienă personală: un obicei esențial pentru sănătate, energie și echilibru. Motivația ne ajută să începem, însă disciplina și consecvența sunt cele care ne duc mai departe.",
+      "În antrenamentele sale combină exercițiile funcționale, cardio și de forță, urmărind tonifierea corpului, dezvoltarea masei musculare și îmbunătățirea rezistenței cardio-respiratorii. Clasele sunt dinamice, eficiente și adaptabile diferitelor niveluri de pregătire, astfel încât fiecare participantă să poată progresa în propriul ritm.",
+      "În cadrul MUV Exclusive, Ana va susține clasele de HIIT & Tabata, Abs & Glutes, Body Sculpt:",
+      ["Marți și joi: 18:30–19:30", "Miercuri și vineri: 08:30–09:30"],
+      "Dincolo de antrenamentele din sală, alături de Ana dezvoltăm experiențe și retreaturi dedicate femeilor, în care mișcarea se îmbină cu relaxarea, timpul petrecut în natură și conectarea într-o comunitate autentică.",
+      "Vino să lucrăm împreună pentru un corp mai puternic, mai multă energie și un stil de viață pe care să îl poți susține pe termen lung.",
+    ],
+    closing: "Make it happen!",
+  },
+  {
+    id: "cristina-dom",
+    name: "Cristina Dom",
+    role: "Instructor Fitness & Aerobic, Personal Trainer",
+    intro: "Cu peste 20 de ani de experiență în dans, balet, coregrafie și fitness, Cristina aduce în fiecare antrenament mișcare, tehnică, energie și expresivitate.",
+    photos: [{ src: "/images/echipa/cristina-dom.jpg", position: "60% 30%" }],
+    classes: ["Khai Bo", "Aero Dance", "Functional Shape", "Functional Step", "Personal Training"],
+    bio: [
+      "Cu peste 20 de ani de experiență în dans, balet, coregrafie și fitness, Cristina aduce în fiecare antrenament o combinație armonioasă de mișcare, tehnică, energie și expresivitate.",
+      "Experiența sa îndelungată în dans și balet i-a dezvoltat o atenție deosebită pentru postură, coordonare, mobilitate și controlul corpului, iar pregătirea în fitness și aerobic completează această abordare prin antrenamente dinamice și eficiente.",
+      "Pentru Cristina, mișcarea înseamnă mai mult decât un antrenament: înseamnă energie, încredere și bucuria de a descoperi tot ceea ce poate face corpul tău. Clasele sale îmbină ritmul, exercițiile cardio, forța și coordonarea și pot fi adaptate diferitelor niveluri de pregătire.",
+      "În cadrul MUV Exclusive, Cristina va susține următoarele clase:",
+      [
+        "Khai Bo – energie, cardio și combinații inspirate din artele marțiale",
+        "Aero Dance – dans, ritm și un antrenament cardio care te face să uiți că faci sport",
+        "Functional Shape – exerciții funcționale pentru tonifiere, forță și mobilitate",
+        "Functional Step – cardio, coordonare și energie pe muzică",
+      ],
+      "În plus, în calitate de Personal Trainer, Cristina va lucra individual cu femeile care își doresc un program personalizat, adaptat obiectivelor și nivelului lor de pregătire.",
+      "La MUV Exclusive credem că sportul trebuie să fie eficient, dar și o experiență la care să vii cu drag. Alături de Cristina, fiecare antrenament vine cu energie, ritm și provocarea de a deveni puțin mai puternică de la o clasă la alta.",
+      "Vino să descoperi clasele Cristinei la MUV Exclusive și găsește forma de mișcare care te face să te simți bine în corpul tău.",
+    ],
+  },
+  {
+    id: "irina-visan",
+    name: "Irina Vișan",
+    role: "Instructor Pilates & Nutriționist Integrativ",
+    intro: "Cred într-o abordare a sănătății feminine în care mișcarea și alimentația nu funcționează separat, ci se completează.",
+    photos: [
+      { src: "/images/echipa/irina-visan.jpg", position: "60% 15%" },
+      { src: "/images/echipa/irina-visan-2.jpg" },
+      { src: "/images/echipa/irina-visan-3.jpg" },
+    ],
+    classes: ["Pilates", "Consiliere nutrițională", "Workshopuri"],
+    bio: [
+      "Cred într-o abordare a sănătății feminine în care mișcarea și alimentația nu funcționează separat, ci se completează.",
+      "Sunt instructor Pilates și nutritionist integrativ, cu peste 10 ani de experiență în ambele domenii. În activitatea mea lucrez în special cu femei care își doresc să își îmbunătățească starea de sănătate, compoziția corporală, nivelul de energie și relația cu propriul corp, fără soluții extreme și fără reguli imposibil de susținut pe termen lung.",
+      "În Pilates pun accent pe mișcare conștientă, control, postură, mobilitate și forță, cu respect pentru particularitățile fiecărui corp. Îmi doresc ca femeile cu care lucrez să nu facă pur și simplu „o clasă”, ci să înțeleagă mai bine cum se mișcă și cum își pot construi un corp mai puternic, mai armonios și mai funcțional.",
+      "În nutriție, abordarea mea este una practică și bazată pe știință, adaptată realității fiecărei femei și etapelor prin care corpul ei trece. Pun un accent deosebit pe sănătatea hormonală, perioada de perimenopauză și menopauză, menținerea masei musculare, gestionarea greutății și construirea unor obiceiuri care pot deveni parte din viața de zi cu zi.",
+      "În cadrul MUV Exclusive, voi susține clase de Pilates, programe individuale de consiliere și educație nutrițională, precum și workshopuri dedicate nutriției, sănătății feminine și unui stil de viață echilibrat.",
+      "Pentru mine, obiectivul nu este perfecțiunea, ci construirea unei forme de sănătate care poate fi trăită și menținută în viața reală.",
+    ],
   },
 ];
 

@@ -43,7 +43,7 @@ export function Manifesto() {
             <div className="mx-auto my-auto grid w-full max-w-[1440px] gap-5 px-5 sm:gap-14 sm:px-8 lg:grid-cols-12 lg:px-12">
                 <div className="lg:col-span-3">
                     <p className="eyebrow flex items-center gap-3 text-bronze">
-                        <span className="h-px w-8 bg-gold" /> Despre MUV
+                        <span className="h-px w-8 bg-gold" /> Despre MUV Exclusive
                     </p>
                     <div data-manifesto-img className="relative mt-10 hidden aspect-square w-full max-w-[260px] lg:block">
                         <div className="absolute -inset-3 rounded-full border border-gold/40" />

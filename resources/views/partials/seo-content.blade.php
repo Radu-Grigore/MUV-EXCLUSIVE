@@ -6,12 +6,19 @@
         <ul>
             <li>Personal Training</li>
             <li>Body Sculpt</li>
+            <li>Abs &amp; Glutes</li>
             <li>Aero Dance</li>
             <li>Functional Shape</li>
             <li>Tabata</li>
             <li>Pilates Clasic</li>
-            <li>Step Aerobic</li>
+            <li>Functional Step</li>
             <li>Khai Bo</li>
+        </ul>
+        <h2>Echipa</h2>
+        <ul>
+            <li>Ana Voican — Instructor Fitness, Functional &amp; Weight training</li>
+            <li>Cristina Dom — Instructor Fitness &amp; Aerobic, Personal Trainer</li>
+            <li>Irina Vișan — Instructor Pilates &amp; Nutriționist Integrativ</li>
         </ul>
         <h2>Abonamente</h2>
         <ul>

@@ -31,6 +31,8 @@ export function Preloader() {
 
             const tl = gsap.timeline({ paused: true });
             tl.from('[data-pre-letter]', { yPercent: 110, stagger: 0.05, duration: 0.6, ease: 'expo.out' })
+                .from('[data-pre-letter-sub]', { autoAlpha: 0, y: 12, duration: 0.5, ease: 'expo.out' }, 0.2)
+                .to('[data-pre-letter-sub]', { autoAlpha: 0, duration: 0.25 }, 0.72)
                 .to(counter, {
                     v: 100,
                     duration: 0.7,
@@ -65,6 +67,7 @@ export function Preloader() {
     return (
         <div ref={root} className="fixed inset-0 z-[100] flex flex-col bg-espresso text-cream" aria-hidden="true">
             <div className="flex flex-1 items-center justify-center">
+                <div className="flex flex-col items-center">
                 <p className="flex font-display text-[28vw] leading-[0.8] font-medium tracking-[-0.03em] sm:text-[16vw]">
                     {'MUV'.split('').map((l, i) => (
                         <span key={i} className="line-mask">
@@ -74,6 +77,8 @@ export function Preloader() {
                         </span>
                     ))}
                 </p>
+                <span data-pre-letter-sub className="mt-4 pl-[0.6em] text-[4.2vw] font-light tracking-[0.6em] text-gold-soft sm:text-[1.6vw]">EXCLUSIVE</span>
+                </div>
             </div>
             <div data-pre-meta className="flex items-end justify-between px-5 pb-8 sm:px-12">
                 <span className="eyebrow text-gold-soft">Women only fitness studio</span>
