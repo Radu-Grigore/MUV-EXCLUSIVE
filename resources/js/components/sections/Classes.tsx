@@ -126,7 +126,7 @@ export function Classes() {
                         ref={track}
                         onScroll={onTrackScroll}
                         data-classes-in
-                        className="no-scrollbar relative mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[calc(50vw_-_var(--card)_/_2)] py-2 [--card:min(74vw,calc((100svh_-_22.5rem)_*_0.714))] short:mt-3 short:[--card:min(68vw,calc((100svh_-_20rem)_*_0.714))] sm:mt-10 sm:gap-5 sm:[--card:min(56vw,calc((100svh_-_22rem)_*_0.714))]"
+                        className="no-scrollbar relative mt-4 flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[calc(50vw_-_var(--card)_/_2)] py-2 items-center [--card:min(74vw,calc((100svh_-_22.5rem)_*_0.667))] short:mt-3 short:[--card:min(68vw,calc((100svh_-_20rem)_*_0.667))] sm:mt-10 sm:gap-5 sm:[--card:min(56vw,calc((100svh_-_22rem)_*_0.667))]"
                     >
                         {classes.map((item, i) => (
                             <li key={item.id} className="w-[var(--card)] shrink-0 snap-center">
@@ -138,7 +138,7 @@ export function Classes() {
                                         i === index ? 'scale-100 opacity-100' : 'scale-[0.92] opacity-55'
                                     }`}
                                 >
-                                    <PosterImage c={item} className="aspect-[1060/1484] w-full object-contain" />
+                                    <PosterImage c={item} className="h-auto w-full" />
                                     {i === index && (
                                         <span className="absolute right-2.5 bottom-2.5 grid h-9 w-9 place-items-center rounded-full bg-cream/90 text-espresso shadow">
                                             <Icon name="zoom" className="h-4 w-4" />
@@ -186,7 +186,7 @@ export function Classes() {
                             aria-label={`Afișul ${c.name} — vezi-l pe tot ecranul`}
                             className="group relative h-full max-h-full overflow-hidden rounded-[1.6rem] bg-ink shadow-[0_50px_90px_-45px_rgba(42,32,26,0.85)]"
                         >
-                            <PosterImage key={c.id} c={c} className="aspect-[1060/1484] h-full w-auto max-w-full animate-poster-in object-contain" />
+                            <PosterImage key={c.id} c={c} className="h-full w-auto max-w-full animate-poster-in object-contain" />
                             <span className="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-cream/90 px-4 py-2 text-[0.6rem] font-semibold tracking-[0.2em] text-espresso uppercase opacity-0 shadow transition-opacity duration-300 group-hover:opacity-100">
                                 <Icon name="zoom" className="h-4 w-4" /> Mărește
                             </span>
