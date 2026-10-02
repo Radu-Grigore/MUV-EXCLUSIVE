@@ -1,7 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { classes, type FitnessClass, type GalleryItem } from '@/lib/site';
-import { posterFor } from '@/lib/posters';
+import { posterFor, posterSrcSet } from '@/lib/posters';
 import { gsap, lockScroll, whenNear } from '@/lib/scroll';
 import { bookingLinkProps } from '../BookingLink';
 import { Icon } from '../Icon';
@@ -138,7 +138,7 @@ export function Classes() {
                                         i === index ? 'scale-100 opacity-100' : 'scale-[0.92] opacity-55'
                                     }`}
                                 >
-                                    <PosterImage c={item} className="h-auto w-full" />
+                                    <PosterImage c={item} sizes="(min-width: 640px) 56vw, 74vw" className="h-auto w-full" />
                                     {i === index && (
                                         <span className="absolute right-2.5 bottom-2.5 grid h-9 w-9 place-items-center rounded-full bg-cream/90 text-espresso shadow">
                                             <Icon name="zoom" className="h-4 w-4" />
@@ -186,7 +186,7 @@ export function Classes() {
                             aria-label={`Afișul ${c.name} — vezi-l pe tot ecranul`}
                             className="group relative h-full max-h-full overflow-hidden rounded-[1.6rem] bg-ink shadow-[0_50px_90px_-45px_rgba(42,32,26,0.85)]"
                         >
-                            <PosterImage key={c.id} c={c} className="h-full w-auto max-w-full animate-poster-in object-contain" />
+                            <PosterImage key={c.id} c={c} sizes="54vh" className="h-full w-auto max-w-full animate-poster-in object-contain" />
                             <span className="absolute right-4 bottom-4 inline-flex items-center gap-2 rounded-full bg-cream/90 px-4 py-2 text-[0.6rem] font-semibold tracking-[0.2em] text-espresso uppercase opacity-0 shadow transition-opacity duration-300 group-hover:opacity-100">
                                 <Icon name="zoom" className="h-4 w-4" /> Mărește
                             </span>
@@ -265,7 +265,7 @@ export function Classes() {
                                         className={`group block w-full text-left transition-[transform,opacity] duration-500 ease-out-expo ${i === index ? '-translate-y-1.5' : 'opacity-60 hover:opacity-100'}`}
                                     >
                                         <span className={`block overflow-hidden rounded-lg bg-ink ring-offset-2 ring-offset-sand ${i === index ? 'ring-2 ring-bronze' : ''}`}>
-                                            <PosterImage c={item} className="aspect-[1060/1484] w-full object-cover object-top" />
+                                            <PosterImage c={item} sizes="7vw" className="aspect-[1060/1484] w-full object-cover object-top" />
                                         </span>
                                         <span className="mt-1.5 block truncate text-[0.62rem] font-medium tracking-[0.08em] text-cocoa uppercase">{item.name}</span>
                                     </button>
@@ -291,8 +291,20 @@ export function Classes() {
 }
 
 /** A class poster exactly as supplied (never cropped in the large views), or its name when there is no poster. */
-function PosterImage({ c, className }: { c: FitnessClass; className: string }) {
+function PosterImage({ c, className, sizes }: { c: FitnessClass; className: string; sizes: string }) {
     const src = posterFor(c.id);
     if (!src) return <span className={`flex items-end p-6 font-display text-4xl text-cream ${className}`}>{c.name}</span>;
-    return <img src={src} alt={`Afiș ${c.name} — MUV Exclusive`} width={1060} height={1484} loading="lazy" decoding="async" className={`block ${className}`} />;
+    return (
+        <img
+            src={src}
+            srcSet={posterSrcSet(c.id)}
+            sizes={sizes}
+            alt={`Afiș ${c.name} — MUV Exclusive`}
+            width={1060}
+            height={1484}
+            loading="lazy"
+            decoding="async"
+            className={`block ${className}`}
+        />
+    );
 }

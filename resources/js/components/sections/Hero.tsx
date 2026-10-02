@@ -122,6 +122,8 @@ export function Hero() {
                             <img
                                 data-hero-img
                                 src={asset('/images/athlete.webp')}
+                                srcSet={`${asset('/images/athlete-480.webp')} 480w, ${asset('/images/athlete.webp')} 760w`}
+                                sizes="(min-width: 1024px) 24vw, (min-width: 640px) 58vw, 66vw"
                                 alt="Femeie antrenându-se în studioul MUV Exclusive"
                                 width={760}
                                 height={1500}
@@ -199,11 +201,11 @@ export function Hero() {
 function OpeningBadge({ pathId, className }: { pathId: string; className: string }) {
     return (
         <div data-hero-badge className={`place-items-center rounded-full bg-cream text-espresso shadow-[0_20px_40px_-20px_rgba(42,32,26,0.6)] ${className}`}>
-            <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full animate-spin-slow text-bronze" aria-hidden="true">
+            <svg viewBox="0 0 200 200" className="absolute inset-0 h-full w-full animate-spin-slow text-bronze" aria-hidden="true">
                 <defs>
-                    <path id={pathId} d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0" />
+                    <path id={pathId} d="M100,100 m-76,0 a76,76 0 1,1 152,0 a76,76 0 1,1 -152,0" />
                 </defs>
-                <text className="fill-current text-[7.2px] font-medium tracking-[0.22em] uppercase">
+                <text className="fill-current text-[14.4px] font-medium tracking-[0.22em] uppercase">
                     <textPath href={`#${pathId}`}>Deschidere oficială · Grand opening ·</textPath>
                 </text>
             </svg>

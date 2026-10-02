@@ -14,3 +14,19 @@ for (const [path, url] of Object.entries(files).sort(([a], [b]) => Number(a.ends
 export function posterFor(classId: string): string | undefined {
     return byId[classId];
 }
+
+// Lighter WebP copies of each poster (same picture, 480, 640 and 800 px wide) for phones and
+// small frames; the browser picks the smallest one that is still sharp. Regenerate them
+// when a poster changes (see the guide).
+const sized = import.meta.glob<string>('../../images/clase/web/*.webp', { eager: true, query: '?url', import: 'default' });
+
+/** `srcset` for a poster: the WebP copies plus the original at its full width. */
+export function posterSrcSet(classId: string, fullWidth = 1060): string | undefined {
+    const full = byId[classId];
+    if (!full) return undefined;
+    const parts = [480, 640, 800].flatMap((w) => {
+        const url = sized[`../../images/clase/web/${classId}-${w}.webp`];
+        return url ? [`${url} ${w}w`] : [];
+    });
+    return [...parts, `${full} ${fullWidth}w`].join(', ');
+}

@@ -3,7 +3,9 @@
     "private": true,
     "type": "module",
     "scripts": {
+        "prebuild": "node scripts/poster-sizes.mjs",
         "build": "vite build",
+        "prebuild:static": "node scripts/poster-sizes.mjs",
         "build:static": "vite build --config vite.static.config.js",
         "dev": "vite"
     },
@@ -15,6 +17,7 @@
         "@vitejs/plugin-react": "^6.1.1",
         "concurrently": "^10.0.3",
         "laravel-vite-plugin": "^3.1",
+        "sharp": "^0.35.5",
         "tailwindcss": "^4.0.0",
         "typescript": "^7.0.2",
         "vite": "^8.0.0"

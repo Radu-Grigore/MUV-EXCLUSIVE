@@ -28,3 +28,6 @@ export function pageHref(slug: string): string {
 export function homeHref(anchor = ''): string {
     return STATIC ? anchor || '#/' : `${base}/${anchor}`;
 }
+
+/** The legal pages' addresses (their texts live in lib/legal.ts and load only on those pages). */
+export const legalSlugs = ['termeni-si-conditii', 'politica-de-confidentialitate', 'politica-de-cookies', 'politica-de-anulare-si-rambursare'];

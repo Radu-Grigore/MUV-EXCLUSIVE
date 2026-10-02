@@ -1,12 +1,12 @@
 import { gsap } from 'gsap';
-import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from 'gsap/SplitText';
-import Lenis from 'lenis';
+import type Lenis from 'lenis';
 
-gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin);
+// SplitText and DrawSVG are only used below the first screen; they are registered with those sections (lib/gsap-extra).
+gsap.registerPlugin(ScrollTrigger);
 
 let lenis: Lenis | null = null;
+let lenisLoading = false;
 
 /**
  * The site's animations are part of the brand, so they run even when the phone asks for
@@ -33,15 +33,20 @@ export function initSmoothScroll() {
     });
 
     // Phones and tablets keep native scrolling, which is already smooth there.
-    if (lenis || window.matchMedia('(pointer: coarse)').matches) return;
-
-    lenis = new Lenis({
-        lerp: 0.09,
-        allowNestedScroll: true,
+    // Computers load it on the side, so it never holds up the first paint.
+    if (lenis || lenisLoading || window.matchMedia('(pointer: coarse)').matches) return;
+    lenisLoading = true;
+    import('lenis').then(({ default: LenisClass }) => {
+        lenis = new LenisClass({
+            lerp: 0.09,
+            allowNestedScroll: true,
+        });
+        // The intro or an open panel may already have locked the page.
+        if (document.documentElement.style.overflow === 'hidden') lenis.stop();
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add((time) => lenis?.raf(time * 1000));
+        gsap.ticker.lagSmoothing(0);
     });
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis?.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
 
 }
 
@@ -118,20 +123,34 @@ export function onScroll(callback: (y: number, direction: number) => void) {
  * Runs an animation set-up once `el` is about a screen away from the viewport (and its clean-up on unmount).
  * Sections below the fold then cost nothing at start-up; by the time they scroll in, their animations are ready.
  */
-export function whenNear(el: Element | null | undefined, setup: () => void | (() => void), margin = '100% 0px'): () => void {
+export function whenNear(el: Element | null | undefined, setup: () => void | (() => void), margin = '150% 0px'): () => void {
     if (!el) return () => {};
     let cleanup: void | (() => void);
+    let idle = 0;
+    let timer = 0;
+    let done = false;
+    const run = () => {
+        if (done) return;
+        done = true;
+        cleanup = setup();
+    };
     const io = new IntersectionObserver(
         (entries) => {
             if (!entries.some((e) => e.isIntersecting)) return;
             io.disconnect();
-            cleanup = setup();
+            // In a quiet moment between frames (at the latest 300 ms later), so it never lands mid-scroll.
+            if (typeof window.requestIdleCallback === 'function') idle = window.requestIdleCallback(run, { timeout: 300 });
+            else timer = Number(setTimeout(run, 50));
+            // A visitor who jumps straight to it gets it at once.
+            if (entries.some((e) => e.intersectionRatio > 0 && e.boundingClientRect.top < window.innerHeight && e.boundingClientRect.bottom > 0)) run();
         },
         { rootMargin: margin },
     );
     io.observe(el);
     return () => {
         io.disconnect();
+        if (idle) window.cancelIdleCallback(idle);
+        clearTimeout(timer);
         if (typeof cleanup === 'function') cleanup();
     };
 }
@@ -145,4 +164,4 @@ let finishIntro: () => void = () => {};
 export const introDone = new Promise<void>((resolve) => (finishIntro = resolve));
 export { finishIntro };
 
-export { gsap, ScrollTrigger, SplitText };
+export { gsap, ScrollTrigger };

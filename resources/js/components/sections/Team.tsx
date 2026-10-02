@@ -124,11 +124,11 @@ function MemberCard({ m, onOpen }: { m: TeamMember; onOpen: () => void }) {
     const photo = m.photos[0] as TeamMember['photos'][number] | undefined;
 
     return (
-        <button type="button" data-cursor="Povestea" onClick={onOpen} aria-label={`${m.name} — citește povestea`} className="group block w-full text-left">
+        <button type="button" data-cursor="Povestea" onClick={onOpen} className="group block w-full text-left">
             <span className="relative block overflow-hidden rounded-[1.4rem] bg-sand shadow-[0_30px_60px_-35px_rgba(42,32,26,0.7)] sm:rounded-[1.8rem]">
                 {photo ? (
                     <img
-                        src={asset(photo.src)}
+                        src={asset(photo.card ?? photo.src)}
                         alt={`${m.name} — ${m.role}, MUV Exclusive`}
                         width={800}
                         height={1000}

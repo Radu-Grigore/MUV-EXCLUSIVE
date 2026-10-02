@@ -35,7 +35,9 @@ export default defineConfig(({ command }) => ({
             fonts: [
                 ...satoshi,
                 google('DM Sans', { alias: 'dmsans', weights: [300, 400, 500, 600, 700], subsets, preload: satoshi.length === 0 }),
-                google('Instrument Serif', { alias: 'instrument', weights: [400], styles: ['normal', 'italic'], subsets }),
+                google('Instrument Serif', { alias: 'instrument', weights: [400], styles: ['normal'], subsets }),
+                // The italic only appears further down the page, so it is not preloaded.
+                google('Instrument Serif', { alias: 'instrument-italic', weights: [400], styles: ['italic'], subsets, preload: false }),
                 google('Allura', { alias: 'allura', subsets, preload: false }),
             ],
         }),

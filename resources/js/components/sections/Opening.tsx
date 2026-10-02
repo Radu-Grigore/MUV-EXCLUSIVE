@@ -2,6 +2,7 @@ import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
 import { openingDay, site, smartgym } from '@/lib/site';
 import { bookingLinkProps } from '../BookingLink';
+import '@/lib/gsap-extra';
 import { gsap, whenNear } from '@/lib/scroll';
 import { Countdown } from '../Countdown';
 import { Icon } from '../Icon';
@@ -103,7 +104,7 @@ export function Opening() {
                 <div className="lg:col-span-5">
                     <div
                         data-day-card
-                        className="relative mx-auto max-w-xl overflow-hidden rounded-[1.6rem] border border-gold/25 bg-white/[0.05] p-5 text-left backdrop-blur-md short:p-4 sm:rounded-[2rem] sm:p-10 low:p-8"
+                        className="relative mx-auto max-w-xl overflow-hidden rounded-[1.6rem] border border-gold/25 bg-[linear-gradient(160deg,rgba(42,32,26,0.72),rgba(22,17,14,0.62))] p-5 text-left short:p-4 sm:rounded-[2rem] sm:p-10 low:p-8"
                     >
                         <p className="eyebrow text-[0.6rem] text-gold-soft sm:text-[0.7rem]">În ziua deschiderii</p>
                         <ul className="mt-4 grid grid-cols-3 gap-3 short:mt-3 sm:mt-6 lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-gold/15">

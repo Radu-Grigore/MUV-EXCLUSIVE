@@ -107,7 +107,7 @@ export function Kids() {
 
                 <div className="relative z-20 mx-auto flex w-full max-w-[1300px] flex-1 flex-col justify-end gap-10 px-3 pt-[28svh] pb-3 sm:flex-none sm:justify-start sm:px-10 sm:pt-[340px] sm:pb-10 lg:min-h-[calc(100svh-112px)] lg:flex-row lg:items-center lg:justify-between lg:px-14 lg:py-16">
                     {/* Text card */}
-                    <div data-kids-card className="rounded-[1.5rem] bg-white/90 p-5 shadow sm:rounded-[2rem] sm:bg-white/85 sm:p-10 sm:shadow-[0_40px_80px_-40px_rgba(42,32,26,0.55)] backdrop-blur-md sm:p-10 lg:max-w-[520px]">
+                    <div data-kids-card className="rounded-[1.5rem] bg-white/95 p-5 shadow sm:rounded-[2rem] sm:bg-white/95 sm:p-10 sm:shadow-[0_40px_80px_-40px_rgba(42,32,26,0.55)] lg:max-w-[520px]">
                         <span
                             data-kids-new
                             className="inline-block -rotate-6 rounded-xl bg-[#6f7f4d] px-4 py-1.5 text-xs font-bold tracking-[0.2em] text-white uppercase shadow-lg"

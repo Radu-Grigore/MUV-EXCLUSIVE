@@ -50,8 +50,9 @@ export function Header() {
                 } ${scrolled && !open ? 'bg-cream/80 shadow-[0_1px_0_rgba(139,108,79,0.12)] backdrop-blur-lg' : ''}`}
             >
                 <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between px-5 sm:px-8 lg:px-12">
-                    <a href="#top" onClick={(e) => go(e, '#top')} aria-label="MUV Exclusive — începutul paginii" className="relative z-10">
-                        <Logo light={open} />
+                    <a href="#top" onClick={(e) => go(e, '#top')} className="relative z-10">
+                        <span className="sr-only">MUV Exclusive — începutul paginii</span>
+                        <Logo light={open} aria-hidden />
                     </a>
 
                     <nav className="hidden items-center gap-6 lg:flex xl:gap-9" aria-label="Navigare principală">

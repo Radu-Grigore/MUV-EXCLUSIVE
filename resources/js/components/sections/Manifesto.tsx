@@ -49,6 +49,8 @@ export function Manifesto() {
                         <div className="absolute -inset-3 rounded-full border border-gold/40" />
                         <img
                             src={asset('/images/logo-sign.webp')}
+                            srcSet={`${asset('/images/logo-sign-192.webp')} 192w, ${asset('/images/logo-sign.webp')} 750w`}
+                            sizes="260px"
                             alt="Sigla MUV Exclusive iluminată pe peretele studioului"
                             width={750}
                             height={750}
@@ -70,10 +72,10 @@ export function Manifesto() {
 
                     <div className="mt-5 flex items-center gap-4 sm:mt-14 sm:gap-6 lg:hidden">
                         <img
-                            src={asset('/images/logo-sign.webp')}
+                            src={asset('/images/logo-sign-192.webp')}
                             alt=""
-                            width={750}
-                            height={750}
+                            width={192}
+                            height={192}
                             loading="lazy"
                             decoding="async"
                             className="h-14 w-14 rounded-full object-cover sm:h-24 sm:w-24"

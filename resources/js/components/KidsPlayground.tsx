@@ -1,5 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
+import '@/lib/gsap-extra';
 import { gsap, hasFinePointer, prefersReducedMotion, ScrollTrigger, whenNear } from '@/lib/scroll';
 
 const palette = ['#e9b949', '#5b8fc7', '#c86b6b', '#6f7f4d', '#7ec8e3', '#f28c5b'];
@@ -55,6 +56,15 @@ export function KidsPlayground() {
             const path = root.current!.querySelector<SVGPathElement>('#kids-plane-path')!;
             const plane = root.current!.querySelector<SVGGElement>('[data-plane]')!;
             const length = path.getTotalLength();
+            // The path is sampled once; each frame only interpolates between the stored points.
+            const STEPS = 240;
+            const points = Array.from({ length: STEPS + 1 }, (_, i) => path.getPointAtLength((i / STEPS) * length));
+            const pointAt = (t: number) => {
+                const f = Math.min(STEPS, Math.max(0, t * STEPS));
+                const i = Math.min(STEPS - 1, Math.floor(f));
+                const k = f - i;
+                return { x: points[i].x + (points[i + 1].x - points[i].x) * k, y: points[i].y + (points[i + 1].y - points[i].y) * k };
+            };
             const flight = { p: 0 };
             loops.push(
                 gsap.to(flight, {
@@ -63,9 +73,8 @@ export function KidsPlayground() {
                     ease: 'sine.inOut',
                     repeat: -1,
                     onUpdate: () => {
-                        const at = flight.p * length;
-                        const a = path.getPointAtLength(at);
-                        const b = path.getPointAtLength(Math.min(length, at + 1));
+                        const a = pointAt(flight.p);
+                        const b = pointAt(Math.min(1, flight.p + 1 / length));
                         const angle = (Math.atan2(b.y - a.y, b.x - a.x) * 180) / Math.PI;
                         plane.setAttribute('transform', `translate(${a.x} ${a.y}) rotate(${angle})`);
                     },

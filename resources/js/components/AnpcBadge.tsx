@@ -5,7 +5,7 @@ export function AnpcSalBadge({ className = '' }: { className?: string }) {
     return (
         <a href="https://anpc.ro/ce-este-sal/" target="_blank" rel="noopener noreferrer" className={`inline-block transition-opacity hover:opacity-90 ${className}`}>
             <img
-                src={asset('/images/anpc-sal.png')}
+                src={asset('/images/anpc-sal.webp')}
                 alt="ANPC — Soluționarea alternativă a litigiilor (detalii)"
                 width={250}
                 height={62}

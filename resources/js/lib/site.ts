@@ -268,7 +268,8 @@ export type TeamMember = {
   role: string;
   extra?: string;
   intro: string;
-  photos: { src: string; position?: string }[];
+  /** `card`: a lighter copy sized for the card; the dialog shows `src`. */
+  photos: { src: string; card?: string; position?: string }[];
   classes: string[];
   schedule?: string[];
   bio: (string | string[])[];
@@ -282,7 +283,7 @@ export const team: TeamMember[] = [
     role: "Instructor Fitness, Functional & Weight training",
     extra: "Fondator Strong & Fit Factory (online workout sessions)",
     intro: "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
-    photos: [{ src: "/images/echipa/ana-voican.jpg", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg" }],
+    photos: [{ src: "/images/echipa/ana-voican.jpg", card: "/images/echipa/ana-voican-card.webp", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg" }],
     classes: ["HIIT & Tabata", "Abs & Glutes", "Body Sculpt"],
     schedule: ["Marți și joi: 18:30–19:30", "Miercuri și vineri: 08:30–09:30"],
     bio: [
@@ -326,7 +327,7 @@ export const team: TeamMember[] = [
     role: "Instructor Pilates & Nutriționist Integrativ",
     intro: "Cred într-o abordare a sănătății feminine în care mișcarea și alimentația nu funcționează separat, ci se completează.",
     photos: [
-      { src: "/images/echipa/irina-visan.jpg", position: "60% 15%" },
+      { src: "/images/echipa/irina-visan.jpg", card: "/images/echipa/irina-visan-card.webp", position: "60% 15%" },
       { src: "/images/echipa/irina-visan-2.jpg" },
       { src: "/images/echipa/irina-visan-3.jpg" },
     ],

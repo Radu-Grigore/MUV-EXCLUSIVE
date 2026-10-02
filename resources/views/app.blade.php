@@ -30,8 +30,11 @@
         @endif
 
         <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+        {{-- Satoshi is served by Fontshare: open both connections early. --}}
+        <link rel="preconnect" href="https://api.fontshare.com">
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
         {{-- The hero photo is the largest element on screen: fetch it straight away. --}}
-        <link rel="preload" as="image" href="{{ asset('images/athlete.webp') }}" fetchpriority="high">
+        <link rel="preload" as="image" href="{{ asset('images/athlete.webp') }}" imagesrcset="{{ asset('images/athlete-480.webp') }} 480w, {{ asset('images/athlete.webp') }} 760w" imagesizes="(min-width: 1024px) 24vw, (min-width: 640px) 58vw, 66vw" fetchpriority="high">
         {{-- The inlined font CSS uses paths relative to build/assets; anchor them so they work in any folder. --}}
         {!! str_replace('url("./', 'url("'.asset('build/assets').'/', (string) \Illuminate\Support\Facades\Vite::fonts()) !!}
         @viteReactRefresh
@@ -50,6 +53,7 @@
         </div>
         @if (($page ?? 'home') === 'home')
         {{-- First frame of the intro, painted straight from the HTML while the JavaScript loads. --}}
+        <noscript><style>#boot{display:none}</style></noscript>
         <div id="boot" class="fixed inset-0 z-[100] flex flex-col bg-espresso text-cream" aria-hidden="true">
             <div class="flex-1"></div>
             <div class="flex items-end justify-between px-5 pb-8 sm:px-12">
