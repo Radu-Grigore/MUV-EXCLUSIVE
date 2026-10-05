@@ -68,7 +68,7 @@ export const memberships: Membership[] = [
     quarter: 899,
     perks: [
       "Acces nelimitat la toate clasele de grup",
-      "Body Sculpt, Abs & Glutes, Aero Dance, Functional Shape, Tabata, Pilates, Functional Step, Khai Bo",
+      "Body Sculpt, Abs & Glutes, Aero Dance, Functional Shape, Tabata, Boot Camp, Pilates, Functional Step, Khai Bo",
       "Rezervări rapide în aplicația SmartGym",
     ],
   },
@@ -319,7 +319,7 @@ export const team: TeamMember[] = [
       { src: "/images/echipa/cristina-dom-2.jpg" },
       { src: "/images/echipa/cristina-dom-3.jpg" },
     ],
-    classes: ["Khai Bo", "Aero Dance", "Functional Shape", "Functional Step", "Personal Training"],
+    classes: ["Khai Bo", "Aero Dance", "Functional Shape", "Functional Step", "Boot Camp", "Personal Training"],
     bio: [
       "Cu peste 20 de ani de experiență în dans, balet, coregrafie și fitness, Cristina aduce în fiecare antrenament o combinație armonioasă de mișcare, tehnică, energie și expresivitate.",
       "Experiența sa îndelungată în dans și balet i-a dezvoltat o atenție deosebită pentru postură, coordonare, mobilitate și controlul corpului, iar pregătirea în fitness și aerobic completează această abordare prin antrenamente dinamice și eficiente.",
@@ -330,6 +330,7 @@ export const team: TeamMember[] = [
         "Aero Dance – dans, ritm și un antrenament cardio care te face să uiți că faci sport",
         "Functional Shape – exerciții funcționale pentru tonifiere, forță și mobilitate",
         "Functional Step – cardio, coordonare și energie pe muzică",
+        "Boot Camp – cardio și forță pe intervale, pentru un corp mai puternic și mai rezistent",
       ],
       "În plus, în calitate de Personal Trainer, Cristina va lucra individual cu femeile care își doresc un program personalizat, adaptat obiectivelor și nivelului lor de pregătire.",
       "La MUV Exclusive credem că sportul trebuie să fie eficient, dar și o experiență la care să vii cu drag. Alături de Cristina, fiecare antrenament vine cu energie, ritm și provocarea de a deveni puțin mai puternică de la o clasă la alta.",
@@ -387,6 +388,8 @@ export type Service = {
   lead: string;
   body: string[];
   note: string;
+  /** Price list (lei), shown on the card and in the panel. */
+  prices?: { label: string; detail?: string; price: number }[];
 };
 
 /** Complementary services, booked by appointment (WhatsApp / phone), not through the class app. */
@@ -405,6 +408,11 @@ export const services: Service[] = [
       "Pentru noi, un stil de viață activ înseamnă mai mult decât antrenament. Înseamnă să ai grijă de corpul tău și atunci când muncește, și atunci când are nevoie să se refacă.",
     ],
     note: "Serviciile de masaj se realizează pe bază de programare.",
+    prices: [
+      { label: "O ședință", detail: "60 min", price: 150 },
+      { label: "Abonament 4 ședințe", price: 560 },
+      { label: "Abonament 8 ședințe", price: 1100 },
+    ],
   },
   {
     id: "nutritie",

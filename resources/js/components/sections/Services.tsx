@@ -96,24 +96,46 @@ export function Services() {
                                 <p className={`mt-6 hidden leading-relaxed sm:block sm:text-base lg:max-w-xl ${i === 0 ? 'text-cream/75' : 'text-cocoa'}`}>{s.lead}</p>
                                 <p className={`mt-2 font-script text-[1.7rem] leading-tight short:text-[1.5rem] sm:mt-6 sm:text-4xl ${i === 0 ? 'text-gold-soft' : 'text-bronze'}`}>{s.motto}</p>
                                 <div className="mt-auto flex items-center gap-2.5 pt-3 sm:gap-3 sm:pt-8">
-                                    <a
-                                        href={bookServiceHref(s)}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-[0.62rem] font-semibold tracking-[0.2em] uppercase transition-colors sm:py-4 sm:text-[0.66rem] ${
-                                            i === 0 ? 'bg-gold text-ink hover:bg-gold-soft' : 'bg-espresso text-cream hover:bg-bronze'
-                                        }`}
-                                    >
-                                        <Icon name="whatsapp" className="h-4 w-4" /> Programează-te
-                                    </a>
+                                    {s.prices ? (
+                                        // Priced services show their price list here; booking is in the panel.
+                                        <ul className="grid flex-1 grid-cols-3 gap-2 sm:gap-3" aria-label={`Prețuri ${s.title.toLowerCase()}`}>
+                                            {s.prices.map((p) => (
+                                                <li
+                                                    key={p.label}
+                                                    className={`flex flex-col justify-between rounded-2xl border px-2 py-2 text-center sm:px-3 sm:py-3 ${i === 0 ? 'border-gold/25 bg-cream/5' : 'border-espresso/10 bg-white/70'}`}
+                                                >
+                                                    <span className={`block text-[0.52rem] leading-tight font-medium tracking-[0.12em] uppercase sm:text-[0.6rem] ${i === 0 ? 'text-cream/70' : 'text-cocoa'}`}>
+                                                        {p.label}
+                                                        {p.detail && <span className="block normal-case tracking-normal opacity-80">{p.detail}</span>}
+                                                    </span>
+                                                    <span className={`mt-1 block font-display text-[1.45rem] leading-none sm:text-[2rem] ${i === 0 ? 'text-gold-soft' : 'text-espresso'}`}>
+                                                        {p.price}
+                                                        <span className="ml-0.5 font-sans text-[0.55rem] tracking-[0.1em] uppercase opacity-70 sm:text-[0.62rem]">lei</span>
+                                                    </span>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    ) : (
+                                        <a
+                                            href={bookServiceHref(s)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-[0.62rem] font-semibold tracking-[0.2em] uppercase transition-colors sm:py-4 sm:text-[0.66rem] ${
+                                                i === 0 ? 'bg-gold text-ink hover:bg-gold-soft' : 'bg-espresso text-cream hover:bg-bronze'
+                                            }`}
+                                        >
+                                            <Icon name="whatsapp" className="h-4 w-4" /> Programează-te
+                                        </a>
+                                    )}
                                     <button
                                         type="button"
                                         onClick={() => open(s)}
-                                        className={`inline-flex items-center gap-2 rounded-full border px-4 py-3 text-[0.62rem] font-semibold tracking-[0.2em] uppercase transition-colors sm:px-6 sm:py-4 sm:text-[0.66rem] ${
-                                            i === 0 ? 'border-cream/25 hover:border-gold' : 'border-espresso/15 hover:border-espresso'
-                                        }`}
+                                        aria-label={s.prices ? `Detalii despre ${s.title.toLowerCase()}` : undefined}
+                                        className={`inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-[0.62rem] font-semibold tracking-[0.2em] uppercase transition-colors sm:text-[0.66rem] ${
+                                            s.prices ? 'h-11 w-11 self-center sm:h-14 sm:w-14' : 'px-4 py-3 sm:px-6 sm:py-4'
+                                        } ${i === 0 ? 'border-cream/25 hover:border-gold' : 'border-espresso/15 hover:border-espresso'}`}
                                     >
-                                        Detalii <Icon name="plus" className="h-3.5 w-3.5" />
+                                        {!s.prices && 'Detalii'} <Icon name="plus" className="h-3.5 w-3.5" />
                                     </button>
                                 </div>
                             </article>

@@ -72,6 +72,21 @@ function Panel({ s, onClose }: { s: Service; onClose: () => void }) {
                             <p key={p}>{p}</p>
                         ))}
                     </div>
+                    {s.prices && (
+                        <ul className="mt-6 divide-y divide-espresso/10 rounded-2xl border border-espresso/10 bg-white/60">
+                            {s.prices.map((p) => (
+                                <li key={p.label} className="flex items-baseline justify-between gap-4 px-4 py-3">
+                                    <span className="text-sm text-cocoa">
+                                        {p.label}
+                                        {p.detail && <span className="text-cocoa/70"> ({p.detail})</span>}
+                                    </span>
+                                    <span className="font-display text-2xl text-espresso">
+                                        {p.price} <span className="font-sans text-xs text-cocoa">lei</span>
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                     <p className="mt-6 font-script text-4xl text-bronze sm:text-5xl">{s.motto}</p>
                     <p className="mt-4 rounded-2xl border border-espresso/10 bg-white/60 p-4 text-sm text-cocoa">{s.note}</p>
                 </div>
