@@ -444,6 +444,8 @@ export type Service = {
   note: string;
   /** Its own page (the card's "Detalii" goes there instead of opening the panel). */
   page?: string;
+  /** The panel also lists the nutrition programmes (lib/nutrition.ts). */
+  programs?: boolean;
   /** Price list (lei), shown on the card and in the panel. */
   prices?: { label: string; detail?: string; price: number }[];
 };
@@ -486,7 +488,7 @@ export const services: Service[] = [
       "Pentru că schimbarea reală nu înseamnă să faci totul perfect. Înseamnă să găsești o formulă care funcționează pentru tine și pe care o poți păstra.",
     ],
     note: "Consultațiile și programele de nutriție se realizează pe bază de programare.",
-    page: "nutritie",
+    programs: true,
     prices: [
       { label: "MUV Nutrition – 4 săptămâni", price: 1000 },
       { label: "Program individual aprofundat de nutriție", price: 2000 },

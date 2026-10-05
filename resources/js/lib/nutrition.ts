@@ -1,4 +1,4 @@
-/** The nutrition page (/nutritie). Text exactly as supplied by MUV Exclusive — do not reword. */
+/** The nutrition programmes, shown in the Nutriție panel. Text exactly as supplied by MUV Exclusive — do not reword. */
 export type NutritionProgram = {
     id: string;
     name: string;
@@ -10,19 +10,6 @@ export type NutritionProgram = {
     closing: string[];
     duration: string;
     investment: string;
-};
-
-export const nutritionIntro = {
-    tagline: 'Mișcare, alimentație și echilibru — într-o abordare care ține cont de tine, nu doar de obiectivul tău.',
-    paragraphs: [
-        'Rezultatele care se păstrează în timp nu se construiesc doar în sala de antrenament. Alimentația influențează energia, recuperarea, compoziția corporală, starea de bine și felul în care corpul răspunde diferitelor etape ale vieții.',
-        'La MUV Exclusive, nutriția completează mișcarea printr-o abordare personalizată, realistă și adaptată stilului tău de viață.',
-        'Fie că îți dorești să îți îmbunătățești obiceiurile alimentare, să îți susții mai bine antrenamentele, să îți optimizezi greutatea și compoziția corporală sau pur și simplu să înțelegi mai bine de ce are nevoie corpul tău, construim împreună o strategie pe care să o poți aplica în viața reală.',
-        'Punem accent pe sănătatea feminină, echilibru, energie, masă musculară și obiceiuri sustenabile, fără diete extreme, reguli rigide sau soluții rapide.',
-        'Pentru că schimbarea reală nu înseamnă să faci totul perfect. Înseamnă să găsești o formulă care funcționează pentru tine și pe care o poți păstra.',
-    ],
-    motto: 'Move. Nourish. Feel good.',
-    note: 'Consultațiile și programele de nutriție se realizează pe bază de programare.',
 };
 
 export const nutritionPrograms: NutritionProgram[] = [
