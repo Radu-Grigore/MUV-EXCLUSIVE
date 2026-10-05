@@ -64,7 +64,7 @@ function Panel({ m, onClose }: { m: TeamMember; onClose: () => void }) {
                 </div>
 
                 <div className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6 sm:px-10">
-                    {/* Photos: one, or a swipeable row when there are several; a monogram when there is none yet */}
+                    {/* Photos, whole and uncropped: one, or a swipeable row when there are several; a monogram when there is none yet */}
                     {m.photos.length === 0 && <Avatar name={m.name} compact className="h-56 w-full rounded-[1.4rem]" />}
                     <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 sm:-mx-10 sm:px-10">
                         {m.photos.map((p, i) => (
@@ -74,8 +74,7 @@ function Panel({ m, onClose }: { m: TeamMember; onClose: () => void }) {
                                 alt={`${m.name} — fotografie ${i + 1}`}
                                 loading={i === 0 ? 'eager' : 'lazy'}
                                 decoding="async"
-                                className={`h-72 shrink-0 snap-start rounded-[1.4rem] object-cover sm:h-80 ${m.photos.length > 1 ? 'w-[78%]' : 'w-full'}`}
-                                style={{ objectPosition: p.position ?? '50% 20%' }}
+                                className="h-[26rem] w-auto max-w-none shrink-0 snap-start rounded-[1.4rem] bg-sand sm:h-[30rem]"
                             />
                         ))}
                     </div>

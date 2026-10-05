@@ -347,7 +347,7 @@ export const team: TeamMember[] = [
     role: "Instructor certificat Aerobic & Fitness",
     intro: "Cu peste 20 de ani de experiență în aerobic și fitness, Valy este pasionată de mișcare, sănătate și energia pe care sportul o aduce în viața de zi cu zi.",
     photos: [
-      { src: "/images/echipa/valy-cirstea.jpg", card: "/images/echipa/valy-cirstea-card.webp", position: "50% 0%" },
+      { src: "/images/echipa/valy-cirstea.jpg", card: "/images/echipa/valy-cirstea-card.webp", position: "50% 50%" },
       { src: "/images/echipa/valy-cirstea-2.jpg" },
     ],
     classes: ["Aerobic", "Fitness", "Tonifiere"],
