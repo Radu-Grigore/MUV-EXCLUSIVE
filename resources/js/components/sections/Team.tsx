@@ -7,7 +7,7 @@ import { Icon } from '../Icon';
 // The full story opens in a panel; Motion is only loaded when someone opens one.
 const TeamDialog = lazy(() => import('./TeamDialog'));
 
-/** The three instructors: one screen with their photos, roles and classes; each opens to her full story. */
+/** The instructors: one screen with their photos, roles and classes; each opens to her full story. */
 export function Team() {
     const root = useRef<HTMLElement>(null);
     const track = useRef<HTMLUListElement>(null);
@@ -85,7 +85,7 @@ export function Team() {
                         </h2>
                     </div>
                     <p className="mt-2 text-[0.8rem] text-cocoa short:hidden sm:text-sm lg:mt-0 lg:max-w-xs lg:text-right">
-                        Trei instructoare, trei stiluri de mișcare. Apasă pe o instructoare ca să-i citești povestea.
+                        Patru instructoare, patru stiluri de mișcare. Apasă pe o instructoare ca să-i citești povestea.
                     </p>
                 </div>
 
@@ -95,7 +95,7 @@ export function Team() {
                         ref={track}
                         data-members
                         onScroll={onTrackScroll}
-                        className="no-scrollbar relative flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[calc(50vw_-_var(--card)_/_2)] pb-1 [--card:min(76vw,calc((100svh_-_24rem)_*_0.8))] short:[--card:min(72vw,calc((100svh_-_21rem)_*_0.8))] sm:gap-6 sm:[--card:min(44vw,calc((100svh_-_24rem)_*_0.8))] lg:h-full lg:justify-center lg:gap-8 lg:overflow-visible lg:px-0 lg:[--card:min(calc((100cqw_-_4rem)_/_3),calc((100cqh_-_8.5rem)_*_0.8))]"
+                        className="no-scrollbar relative flex snap-x snap-mandatory gap-3 overflow-x-auto overscroll-x-contain px-[calc(50vw_-_var(--card)_/_2)] pb-1 [--card:min(76vw,calc((100svh_-_24rem)_*_0.8))] short:[--card:min(72vw,calc((100svh_-_21rem)_*_0.8))] sm:gap-6 sm:[--card:min(44vw,calc((100svh_-_24rem)_*_0.8))] lg:h-full lg:justify-center lg:gap-6 lg:overflow-visible lg:px-0 lg:[--card:min(calc((100cqw_-_4.5rem)_/_4),calc((100cqh_-_8.5rem)_*_0.8))] xl:gap-8 xl:[--card:min(calc((100cqw_-_6rem)_/_4),calc((100cqh_-_8.5rem)_*_0.8))]"
                     >
                         {team.map((m) => (
                             <li key={m.id} data-member className="w-[var(--card)] shrink-0 snap-center">

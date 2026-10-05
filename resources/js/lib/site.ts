@@ -341,6 +341,25 @@ export const team: TeamMember[] = [
       "Pentru mine, obiectivul nu este perfecțiunea, ci construirea unei forme de sănătate care poate fi trăită și menținută în viața reală.",
     ],
   },
+  {
+    id: "valy-cirstea",
+    name: "Valy Cîrstea",
+    role: "Instructor certificat Aerobic & Fitness",
+    intro: "Cu peste 20 de ani de experiență în aerobic și fitness, Valy este pasionată de mișcare, sănătate și energia pe care sportul o aduce în viața de zi cu zi.",
+    photos: [
+      { src: "/images/echipa/valy-cirstea.jpg", card: "/images/echipa/valy-cirstea-card.webp", position: "50% 0%" },
+      { src: "/images/echipa/valy-cirstea-2.jpg" },
+    ],
+    classes: ["Aerobic", "Fitness", "Tonifiere"],
+    bio: [
+      "Cu peste 20 de ani de experiență în aerobic și fitness, Valy este pasionată de mișcare, sănătate și energia pe care sportul o aduce în viața de zi cu zi.",
+      "Pentru ea, fiecare antrenament trebuie să fie dinamic, eficient și să îți dea o stare bună. Experiența acumulată de-a lungul anilor o ajută să combine exercițiile astfel încât fiecare clasă să te provoace, dar în același timp să îți permită să lucrezi în propriul ritm.",
+      "Valy pune accent pe tonifiere, rezistență, coordonare și mobilitate, dar și pe atmosfera din timpul antrenamentului. Muzică, energie pozitivă și multă mișcare – pentru că rezultatele vin mai ușor atunci când îți place ceea ce faci.",
+      "Cu Valy, nu vii doar să bifezi un antrenament. Vii să te miști, să îți depășești limitele, să te încarci cu energie și să pleci din sală cu o stare mai bună decât atunci când ai intrat.",
+      "La MUV Exclusive, Valy aduce experiența celor peste 20 de ani de fitness într-un spațiu dedicat femeilor și într-o comunitate în care ne dorim ca fiecare dintre voi să își găsească plăcerea de a face mișcare.",
+      "Pregătește-te pentru antrenamente cu energie, ritm și multă voie bună!",
+    ],
+  },
 ];
 
 export type GalleryItem = { src: string; title: string; caption: string; width: number; height: number };
