@@ -10,6 +10,7 @@
             <li>Aero Dance</li>
             <li>Functional Shape</li>
             <li>Tabata</li>
+            <li>Boot Camp</li>
             <li>Pilates Clasic</li>
             <li>Functional Step</li>
             <li>Khai Bo</li>

@@ -293,7 +293,27 @@ export function Classes() {
 /** A class poster exactly as supplied (never cropped in the large views), or its name when there is no poster. */
 function PosterImage({ c, className, sizes }: { c: FitnessClass; className: string; sizes: string }) {
     const src = posterFor(c.id);
-    if (!src) return <span className={`flex items-end p-6 font-display text-4xl text-cream ${className}`}>{c.name}</span>;
+    // No poster yet: a placeholder with the poster's shape, so every frame keeps the same size.
+    if (!src) {
+        const tiny = sizes === '7vw';
+        return (
+            <span
+                role="img"
+                aria-label={`${c.name} — MUV Exclusive`}
+                className={`relative flex aspect-[1060/1484] flex-col justify-between overflow-hidden bg-[radial-gradient(80%_60%_at_70%_20%,#4a3726_0%,#16110e_70%)] p-[8%] text-left text-cream ${className}`}
+            >
+                <span className="grid aspect-square w-[22%] place-items-center rounded-full border border-gold/40 text-gold-soft">
+                    <Icon name={c.icon} className="h-1/2 w-1/2" />
+                </span>
+                {!tiny && (
+                    <span>
+                        <span className="block font-display text-[2.2rem] leading-[0.9] text-cream sm:text-5xl">{c.name}</span>
+                        <span className="mt-3 block font-script text-2xl leading-none text-gold-soft sm:text-3xl">{c.script ?? 'More than fitness'}</span>
+                    </span>
+                )}
+            </span>
+        );
+    }
     return (
         <img
             src={src}

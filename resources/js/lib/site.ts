@@ -223,6 +223,17 @@ export const classes: FitnessClass[] = [
     script: "Stronger, Faster, You",
   },
   {
+    id: "bootcamp",
+    name: "Boot Camp",
+    keywords: ["Cardio & forță", "Intervale", "Energie"],
+    description:
+      "Un antrenament intens și dinamic care combină exercițiile cardio și de forță, pentru un corp mai puternic, mai rezistent și plin de energie. Lucrezi pe intervale: 1 minut de exerciții intense, 20 de secunde pauză.",
+    benefits: ["Arde caloriile și îmbunătățește rezistența", "Activează toți mușchii corpului", "Crește forța și condiția fizică", "Îți oferă energie și motivație"],
+    icon: "bolt",
+    accent: "#e0b45a",
+    script: "More than fitness",
+  },
+  {
     id: "pilates",
     name: "Pilates Clasic",
     keywords: ["Postură", "Flexibilitate", "Echilibru"],
