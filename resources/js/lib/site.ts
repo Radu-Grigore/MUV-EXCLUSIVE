@@ -344,26 +344,6 @@ export type TeamMember = {
 
 export const team: TeamMember[] = [
   {
-    id: "ana-voican",
-    name: "Ana Voican",
-    role: "Instructor Fitness, Functional & Weight training",
-    extra: "Fondator Strong & Fit Factory (online workout sessions)",
-    intro: "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
-    photos: [{ src: "/images/echipa/ana-voican.jpg", card: "/images/echipa/ana-voican-card.webp", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg" }],
-    classes: ["HIIT & Tabata", "Abs & Glutes", "Body Sculpt"],
-    schedule: ["Marți și joi: 18:30–19:20", "Miercuri și vineri: 08:30–09:30"],
-    bio: [
-      "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
-      "Este pasionată de alergare, maratoane, ciclism și experiențe sportive care ne provoacă să ne depășim limitele. Pentru Ana, sportul este o formă de igienă personală: un obicei esențial pentru sănătate, energie și echilibru. Motivația ne ajută să începem, însă disciplina și consecvența sunt cele care ne duc mai departe.",
-      "În antrenamentele sale combină exercițiile funcționale, cardio și de forță, urmărind tonifierea corpului, dezvoltarea masei musculare și îmbunătățirea rezistenței cardio-respiratorii. Clasele sunt dinamice, eficiente și adaptabile diferitelor niveluri de pregătire, astfel încât fiecare participantă să poată progresa în propriul ritm.",
-      "În cadrul MUV Exclusive, Ana va susține clasele de HIIT & Tabata, Abs & Glutes, Body Sculpt:",
-      ["Marți și joi: 18:30–19:20", "Miercuri și vineri: 08:30–09:30"],
-      "Dincolo de antrenamentele din sală, alături de Ana dezvoltăm experiențe și retreaturi dedicate femeilor, în care mișcarea se îmbină cu relaxarea, timpul petrecut în natură și conectarea într-o comunitate autentică.",
-      "Vino să lucrăm împreună pentru un corp mai puternic, mai multă energie și un stil de viață pe care să îl poți susține pe termen lung.",
-    ],
-    closing: "Make it happen!",
-  },
-  {
     id: "cristina-dom",
     name: "Cristina Dom",
     role: "Instructor Fitness & Aerobic, Personal Trainer",
@@ -390,6 +370,26 @@ export const team: TeamMember[] = [
       "La MUV Exclusive credem că sportul trebuie să fie eficient, dar și o experiență la care să vii cu drag. Alături de Cristina, fiecare antrenament vine cu energie, ritm și provocarea de a deveni puțin mai puternică de la o clasă la alta.",
       "Vino să descoperi clasele Cristinei la MUV Exclusive și găsește forma de mișcare care te face să te simți bine în corpul tău.",
     ],
+  },
+  {
+    id: "ana-voican",
+    name: "Ana Voican",
+    role: "Instructor Fitness, Functional & Weight training",
+    extra: "Fondator Strong & Fit Factory (online workout sessions)",
+    intro: "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
+    photos: [{ src: "/images/echipa/ana-voican.jpg", card: "/images/echipa/ana-voican-card.webp", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg" }],
+    classes: ["HIIT & Tabata", "Abs & Glutes", "Body Sculpt"],
+    schedule: ["Marți și joi: 18:30–19:20", "Miercuri și vineri: 08:30–09:30"],
+    bio: [
+      "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
+      "Este pasionată de alergare, maratoane, ciclism și experiențe sportive care ne provoacă să ne depășim limitele. Pentru Ana, sportul este o formă de igienă personală: un obicei esențial pentru sănătate, energie și echilibru. Motivația ne ajută să începem, însă disciplina și consecvența sunt cele care ne duc mai departe.",
+      "În antrenamentele sale combină exercițiile funcționale, cardio și de forță, urmărind tonifierea corpului, dezvoltarea masei musculare și îmbunătățirea rezistenței cardio-respiratorii. Clasele sunt dinamice, eficiente și adaptabile diferitelor niveluri de pregătire, astfel încât fiecare participantă să poată progresa în propriul ritm.",
+      "În cadrul MUV Exclusive, Ana va susține clasele de HIIT & Tabata, Abs & Glutes, Body Sculpt:",
+      ["Marți și joi: 18:30–19:20", "Miercuri și vineri: 08:30–09:30"],
+      "Dincolo de antrenamentele din sală, alături de Ana dezvoltăm experiențe și retreaturi dedicate femeilor, în care mișcarea se îmbină cu relaxarea, timpul petrecut în natură și conectarea într-o comunitate autentică.",
+      "Vino să lucrăm împreună pentru un corp mai puternic, mai multă energie și un stil de viață pe care să îl poți susține pe termen lung.",
+    ],
+    closing: "Make it happen!",
   },
   {
     id: "irina-visan",

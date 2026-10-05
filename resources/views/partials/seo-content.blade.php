@@ -17,8 +17,8 @@
         </ul>
         <h2>Echipa</h2>
         <ul>
-            <li>Ana Voican — Instructor Fitness, Functional &amp; Weight training</li>
             <li>Cristina Dom — Instructor Fitness &amp; Aerobic, Personal Trainer</li>
+            <li>Ana Voican — Instructor Fitness, Functional &amp; Weight training</li>
             <li>Irina Vișan — Instructor Pilates &amp; Nutriționist Integrativ</li>
             <li>Valy Cîrstea — Instructor certificat Aerobic &amp; Fitness</li>
         </ul>

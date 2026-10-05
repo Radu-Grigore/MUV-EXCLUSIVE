@@ -44,8 +44,16 @@ export function Team() {
         setActive(m);
     }
 
-    /** Phone row: the card closest to the middle is the active one (for the dots). */
+    /** Phone row: the card closest to the middle is the active one (for the dots). Measured at most once per frame. */
+    const frame = useRef(0);
     function onTrackScroll() {
+        if (frame.current) return;
+        frame.current = requestAnimationFrame(() => {
+            frame.current = 0;
+            pickActive();
+        });
+    }
+    function pickActive() {
         const el = track.current;
         if (!el) return;
         const middle = el.scrollLeft + el.clientWidth / 2;
@@ -59,7 +67,7 @@ export function Team() {
                 best = i;
             }
         });
-        setIndex(best);
+        setIndex((i) => (i === best ? i : best));
     }
 
     return (
@@ -129,6 +137,8 @@ function MemberCard({ m, onOpen }: { m: TeamMember; onOpen: () => void }) {
                 {photo ? (
                     <img
                         src={asset(photo.card ?? photo.src)}
+                        srcSet={photo.card ? `${asset(photo.card.replace(/\.webp$/, '-600.webp'))} 600w, ${asset(photo.card)} 1000w` : undefined}
+                        sizes="(min-width: 1024px) 24vw, (min-width: 640px) 44vw, 76vw"
                         alt={`${m.name} — ${m.role}, MUV Exclusive`}
                         width={800}
                         height={1000}
@@ -140,7 +150,6 @@ function MemberCard({ m, onOpen }: { m: TeamMember; onOpen: () => void }) {
                 ) : (
                     <Avatar name={m.name} className="aspect-[4/5] w-full" />
                 )}
-                <span className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-ink/55 to-transparent" />
                 <span className="absolute right-3 bottom-3 inline-flex items-center gap-1.5 rounded-full bg-cream/95 py-1.5 pr-1.5 pl-3 text-[0.58rem] font-semibold tracking-[0.18em] text-espresso uppercase shadow transition-colors group-hover:bg-gold-soft sm:right-4 sm:bottom-4">
                     Povestea
                     <span className="grid h-6 w-6 place-items-center rounded-full bg-espresso text-cream">
