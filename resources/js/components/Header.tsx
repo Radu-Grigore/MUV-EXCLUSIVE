@@ -55,13 +55,13 @@ export function Header() {
                         <Logo light={open} aria-hidden />
                     </a>
 
-                    <nav className="hidden items-center gap-6 lg:flex xl:gap-9" aria-label="Navigare principală">
+                    <nav className="hidden items-center gap-4 lg:flex xl:gap-7 2xl:gap-9" aria-label="Navigare principală">
                         {navLinks.map((l) => (
                             <a
                                 key={l.href}
                                 href={l.href}
                                 onClick={(e) => go(e, l.href)}
-                                className="group relative text-[0.68rem] font-medium tracking-[0.26em] text-cocoa uppercase transition-colors hover:text-espresso"
+                                className="group relative text-[0.64rem] font-medium tracking-[0.18em] whitespace-nowrap text-cocoa uppercase xl:text-[0.68rem] xl:tracking-[0.26em] transition-colors hover:text-espresso"
                             >
                                 {l.label}
                                 <span className="absolute -bottom-1.5 left-0 h-px w-full origin-right scale-x-0 bg-gold transition-transform duration-500 ease-out-expo group-hover:origin-left group-hover:scale-x-100" />
@@ -72,10 +72,11 @@ export function Header() {
                     <div className="relative z-10 flex items-center gap-3">
                         <a
                             href={site.phoneHref}
-                            className="hidden items-center gap-2 rounded-full bg-espresso px-5 py-2.5 text-[0.66rem] font-semibold tracking-[0.2em] text-cream uppercase transition-colors hover:bg-bronze sm:inline-flex"
+                            aria-label={`Sună-ne: ${site.phone}`}
+                            className="hidden items-center gap-2 rounded-full bg-espresso px-5 py-2.5 text-[0.66rem] font-semibold tracking-[0.2em] whitespace-nowrap text-cream uppercase transition-colors hover:bg-bronze sm:inline-flex lg:px-3 xl:px-5"
                         >
                             <Icon name="phone" className="h-4 w-4" />
-                            {site.phone}
+                            <span className="lg:hidden xl:inline">{site.phone}</span>
                         </a>
                         <button
                             type="button"

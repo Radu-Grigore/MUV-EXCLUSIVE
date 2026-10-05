@@ -113,6 +113,7 @@ export const navLinks = [
   { href: "#echipa", label: "Echipa" },
   { href: "#kids", label: "Kids Corner" },
   { href: "#abonamente", label: "Abonamente" },
+  { href: "#servicii", label: "Servicii" },
   { href: "#rezervari", label: "Rezervări" },
   { href: "#contact", label: "Contact" },
 ];
@@ -359,6 +360,53 @@ export const team: TeamMember[] = [
       "La MUV Exclusive, Valy aduce experiența celor peste 20 de ani de fitness într-un spațiu dedicat femeilor și într-o comunitate în care ne dorim ca fiecare dintre voi să își găsească plăcerea de a face mișcare.",
       "Pregătește-te pentru antrenamente cu energie, ritm și multă voie bună!",
     ],
+  },
+];
+
+export type Service = {
+  id: string;
+  title: string;
+  tagline: string;
+  icon: IconName;
+  motto: string;
+  /** The short version on the card; the full text opens in a panel. */
+  lead: string;
+  body: string[];
+  note: string;
+};
+
+/** Complementary services, booked by appointment (WhatsApp / phone), not through the class app. */
+export const services: Service[] = [
+  {
+    id: "masaj",
+    title: "Masaj",
+    tagline: "Recuperare. Relaxare. Timp pentru tine.",
+    icon: "lotus",
+    motto: "Antrenează-te. Recuperează-te. Simte-te bine.",
+    lead: "Mișcarea și recuperarea merg împreună. Completăm antrenamentele cu masaj pentru relaxare, recuperare musculară și starea generală de bine.",
+    body: [
+      "Mișcarea și recuperarea merg împreună. De aceea, la MUV Exclusive, completăm antrenamentele cu servicii de masaj dedicate relaxării, recuperării musculare și stării generale de bine.",
+      "Fie că ai nevoie de relaxare după o perioadă solicitantă, de detensionarea musculaturii după antrenamente sau pur și simplu de un moment în care să încetinești ritmul, ședințele de masaj sunt adaptate nevoilor tale.",
+      "Este acel timp în care corpul se relaxează, tensiunea se eliberează, iar tu îți recapeți energia.",
+      "Pentru noi, un stil de viață activ înseamnă mai mult decât antrenament. Înseamnă să ai grijă de corpul tău și atunci când muncește, și atunci când are nevoie să se refacă.",
+    ],
+    note: "Serviciile de masaj se realizează pe bază de programare.",
+  },
+  {
+    id: "nutritie",
+    title: "Consultații de nutriție",
+    tagline: "Mișcare, alimentație și echilibru – împreună.",
+    icon: "leaf",
+    motto: "Move. Nourish. Feel good.",
+    lead: "Rezultatele pe termen lung nu se construiesc doar în sală. Recomandări adaptate stilului tău de viață, preferințelor și obiectivelor tale.",
+    body: [
+      "Rezultatele pe termen lung nu se construiesc doar în sala de antrenament. Alimentația are un rol important în felul în care ne simțim, în energia pe care o avem și în atingerea obiectivelor personale.",
+      "La MUV Exclusive, consultațiile de nutriție completează programul tău de mișcare prin recomandări adaptate stilului tău de viață, preferințelor și obiectivelor tale.",
+      "Fie că îți dorești să îți îmbunătățești obiceiurile alimentare, să îți susții antrenamentele printr-o alimentație mai echilibrată sau să lucrezi pentru atingerea unui obiectiv de greutate și compoziție corporală, vei beneficia de o abordare personalizată și realistă.",
+      "Fără soluții complicate și fără perfecțiune. Ne dorim să construim obiceiuri pe care să le poți integra și păstra pe termen lung.",
+      "Pentru că atunci când mișcarea și alimentația lucrează împreună, schimbarea devine parte din stilul tău de viață.",
+    ],
+    note: "Consultațiile de nutriție se realizează pe bază de programare.",
   },
 ];
 

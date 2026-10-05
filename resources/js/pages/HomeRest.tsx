@@ -10,6 +10,7 @@ import { Kids } from '@/components/sections/Kids';
 import { Manifesto } from '@/components/sections/Manifesto';
 import { Opening } from '@/components/sections/Opening';
 import { Pricing } from '@/components/sections/Pricing';
+import { Services } from '@/components/sections/Services';
 import { Team } from '@/components/sections/Team';
 import { SplitText } from '@/lib/gsap-extra';
 import { gsap, introDone, scrollToTarget, whenNear } from '@/lib/scroll';
@@ -52,6 +53,7 @@ export function Sections() {
             <Team />
             <Kids />
             <Pricing />
+            <Services />
             <Gallery />
             <Booking />
             <Opening />

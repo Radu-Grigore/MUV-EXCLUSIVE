@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,15 +20,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Behind a host proxy/CDN the request can look like plain http; asset URLs must stay https.
-        if (str_starts_with((string) config('app.url'), 'https://')) {
-            URL::forceScheme('https');
-        }
-
-        // In production every generated URL (canonical, og:url, assets) uses the site's own address,
-        // whatever host name the request came in on.
-        if ($this->app->isProduction()) {
-            URL::forceRootUrl((string) config('app.url'));
-        }
+        // Files (scripts, fonts, images) always load from the address the page was opened on, so the
+        // site works on the final domain, a test folder or a temporary host alike. Only the SEO addresses
+        // (canonical, og:url, Google data) use the official address from APP_URL.
+        $site = rtrim((string) config('app.url'), '/');
+        View::share('siteUrl', $site);
+        View::share('canonicalUrl', $site.(request()->path() === '/' ? '/' : '/'.request()->path()));
     }
 }

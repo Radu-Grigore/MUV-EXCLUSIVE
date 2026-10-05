@@ -28,6 +28,11 @@
             <li>Unlimited + Kids Corner — 399 lei / lună sau 999 lei / 3 luni</li>
             <li>Personal Training — 249 lei (antrenorul se achită separat, în funcție de numărul de ore)</li>
         </ul>
+        <h2>Servicii complementare</h2>
+        <ul>
+            <li>Masaj — recuperare, relaxare, timp pentru tine (pe bază de programare)</li>
+            <li>Consultații de nutriție — mișcare, alimentație și echilibru (pe bază de programare)</li>
+        </ul>
         <h2>Rezervări</h2>
         <p>Rezervările la clase se fac în aplicația SmartGym, cu codul sălii 3490.</p>
         <h2>Contact</h2>

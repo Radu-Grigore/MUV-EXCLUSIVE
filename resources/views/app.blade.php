@@ -18,13 +18,13 @@
         <meta property="og:locale" content="ro_RO">
         <meta property="og:title" content="{{ $pageTitle }}">
         <meta property="og:description" content="{{ $pageDescription }}">
-        <meta property="og:url" content="{{ url()->current() }}">
-        <meta property="og:image" content="{{ asset('images/campaign.webp') }}">
+        <meta property="og:url" content="{{ $canonicalUrl }}">
+        <meta property="og:image" content="{{ $siteUrl }}/images/campaign.webp">
         <meta property="og:image:width" content="1334">
         <meta property="og:image:height" content="750">
         <meta property="og:image:alt" content="MUV Exclusive — Boutique Fitness Studio, Women Only, Ploiești">
         <meta name="twitter:card" content="summary_large_image">
-        <link rel="canonical" href="{{ url()->current() }}">
+        <link rel="canonical" href="{{ $canonicalUrl }}">
         @if (($page ?? 'home') === 'home')
             @include('partials.structured-data')
         @endif
@@ -54,7 +54,8 @@
         @if (($page ?? 'home') === 'home')
         {{-- First frame of the intro, painted straight from the HTML while the JavaScript loads. --}}
         <noscript><style>#boot{display:none}</style></noscript>
-        <div id="boot" class="fixed inset-0 z-[100] flex flex-col bg-espresso text-cream" aria-hidden="true">
+        {{-- Safety net: if the scripts cannot run, this frame fades away by itself and the plain page shows. --}}
+        <div id="boot" class="fixed inset-0 z-[100] flex flex-col bg-espresso text-cream" style="animation: boot-out .6s ease 8s forwards" aria-hidden="true">
             <div class="flex-1"></div>
             <div class="flex items-end justify-between px-5 pb-8 sm:px-12">
                 <span class="eyebrow text-gold-soft">Women only fitness studio</span>

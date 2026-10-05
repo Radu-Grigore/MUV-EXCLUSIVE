@@ -144,3 +144,11 @@ html.has-cursor textarea {
     justify-content: center;
   }
 }
+
+/* The HTML intro frame (#boot) removes itself when the app starts; this only matters if it never does. */
+@keyframes boot-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
