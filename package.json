@@ -3,10 +3,8 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "prebuild": "node scripts/poster-sizes.mjs",
-        "build": "vite build",
-        "prebuild:static": "node scripts/poster-sizes.mjs",
-        "build:static": "vite build --config vite.static.config.js",
+        "build": "node scripts/poster-sizes.mjs && vite build",
+        "build:static": "node scripts/poster-sizes.mjs && vite build --config vite.static.config.js",
         "dev": "vite"
     },
     "devDependencies": {

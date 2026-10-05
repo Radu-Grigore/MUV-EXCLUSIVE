@@ -1,5 +1,5 @@
 // Makes the lighter WebP copies of the class posters (resources/images/clase/web/<id>-480|640|800.webp).
-// Runs before every build; a copy is only (re)made when its poster is newer, and copies of removed posters are deleted.
+// Runs at the start of every build (npm run build / build:static); a copy is only (re)made when its poster is newer, and copies of removed posters are deleted.
 import { existsSync, mkdirSync, readdirSync, rmSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import sharp from 'sharp';
