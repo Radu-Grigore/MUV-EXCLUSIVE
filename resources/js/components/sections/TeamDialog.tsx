@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { asset, site, type TeamMember } from '@/lib/site';
 import { lockScroll, scrollToTarget } from '@/lib/scroll';
@@ -66,18 +66,7 @@ function Panel({ m, onClose }: { m: TeamMember; onClose: () => void }) {
                 <div className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6 sm:px-10">
                     {/* Photos, whole and uncropped: one, or a swipeable row when there are several; a monogram when there is none yet */}
                     {m.photos.length === 0 && <Avatar name={m.name} compact className="h-56 w-full rounded-[1.4rem]" />}
-                    <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 sm:-mx-10 sm:px-10">
-                        {m.photos.map((p, i) => (
-                            <img
-                                key={p.src}
-                                src={asset(p.src)}
-                                alt={`${m.name} — fotografie ${i + 1}`}
-                                loading={i === 0 ? 'eager' : 'lazy'}
-                                decoding="async"
-                                className="h-[26rem] w-auto max-w-none shrink-0 snap-start rounded-[1.4rem] bg-sand sm:h-[30rem]"
-                            />
-                        ))}
-                    </div>
+                    {m.photos.length > 0 && <PhotoRow m={m} />}
 
                     <h3 id="member-title" className="mt-6 font-display text-[2.6rem] leading-[0.95] sm:text-5xl">
                         {m.name}
@@ -143,5 +132,107 @@ function Panel({ m, onClose }: { m: TeamMember; onClose: () => void }) {
                 </div>
             </motion.aside>
         </motion.div>
+    );
+}
+
+/**
+ * The instructor's photos in a row. Phones swipe; on a computer the arrows (or dragging with the mouse)
+ * move from one photo to the next.
+ */
+function PhotoRow({ m }: { m: TeamMember }) {
+    const row = useRef<HTMLDivElement>(null);
+    const drag = useRef<{ x: number; left: number; moved: boolean } | null>(null);
+    const [edge, setEdge] = useState({ start: true, end: m.photos.length < 2 });
+
+    function update() {
+        const el = row.current;
+        if (!el) return;
+        setEdge({ start: el.scrollLeft <= 4, end: el.scrollLeft + el.clientWidth >= el.scrollWidth - 4 });
+    }
+
+    // Re-measured as the photos load and when the window changes size (the row's width depends on both).
+    useEffect(() => {
+        update();
+        const ro = new ResizeObserver(update);
+        if (row.current) ro.observe(row.current);
+        return () => ro.disconnect();
+    }, []);
+
+    function step(dir: 1 | -1) {
+        const el = row.current;
+        if (!el) return;
+        const items = Array.from(el.children) as HTMLElement[];
+        const pad = parseFloat(getComputedStyle(el).paddingLeft) || 0;
+        // The next photo whose left edge lies past (or before) the current position.
+        const lefts = items.map((c) => c.offsetLeft - pad);
+        const target = dir > 0 ? lefts.find((l) => l > el.scrollLeft + 4) : [...lefts].reverse().find((l) => l < el.scrollLeft - 4);
+        el.scrollTo({ left: target ?? (dir > 0 ? el.scrollWidth : 0), behavior: 'smooth' });
+    }
+
+    function onPointerDown(e: React.PointerEvent<HTMLDivElement>) {
+        if (e.pointerType !== 'mouse' || !row.current) return;
+        drag.current = { x: e.clientX, left: row.current.scrollLeft, moved: false };
+        row.current.style.scrollSnapType = 'none';
+    }
+    function onPointerMove(e: React.PointerEvent<HTMLDivElement>) {
+        const d = drag.current;
+        if (!d || !row.current) return;
+        const dx = e.clientX - d.x;
+        if (Math.abs(dx) > 3) d.moved = true;
+        row.current.scrollLeft = d.left - dx;
+    }
+    function endDrag() {
+        if (!drag.current || !row.current) return;
+        drag.current = null;
+        row.current.style.scrollSnapType = '';
+    }
+
+    const many = m.photos.length > 1;
+
+    return (
+        <div className="relative -mx-6 sm:-mx-10">
+            <div
+                ref={row}
+                onScroll={update}
+                onPointerDown={onPointerDown}
+                onPointerMove={onPointerMove}
+                onPointerUp={endDrag}
+                onPointerLeave={endDrag}
+                className={`no-scrollbar flex snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 sm:scroll-px-10 sm:px-10 ${many ? 'md:cursor-grab md:active:cursor-grabbing' : ''}`}
+            >
+                {m.photos.map((p, i) => (
+                    <img
+                        key={p.src}
+                        src={asset(p.src)}
+                        alt={`${m.name} — fotografie ${i + 1}`}
+                        loading={i === 0 ? 'eager' : 'lazy'}
+                        decoding="async"
+                        draggable={false}
+                        onLoad={update}
+                        className="h-[26rem] w-auto max-w-none shrink-0 snap-start rounded-[1.4rem] bg-sand select-none sm:h-[30rem]"
+                    />
+                ))}
+            </div>
+            {many && (
+                <>
+                    <button
+                        type="button"
+                        onClick={() => step(-1)}
+                        aria-label="Fotografia anterioară"
+                        className={`absolute top-1/2 left-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-cream/90 text-espresso shadow-lg transition-opacity hover:bg-white md:grid ${edge.start ? 'pointer-events-none opacity-0' : ''}`}
+                    >
+                        <Icon name="arrow" className="h-4 w-4 rotate-180" />
+                    </button>
+                    <button
+                        type="button"
+                        onClick={() => step(1)}
+                        aria-label="Fotografia următoare"
+                        className={`absolute top-1/2 right-3 z-10 hidden h-11 w-11 -translate-y-1/2 place-items-center rounded-full bg-cream/90 text-espresso shadow-lg transition-opacity hover:bg-white md:grid ${edge.end ? 'pointer-events-none opacity-0' : ''}`}
+                    >
+                        <Icon name="arrow" className="h-4 w-4" />
+                    </button>
+                </>
+            )}
+        </div>
     );
 }
