@@ -107,7 +107,7 @@ export function Opening() {
                         className="relative mx-auto max-w-xl overflow-hidden rounded-[1.6rem] border border-gold/25 bg-[linear-gradient(160deg,rgba(42,32,26,0.72),rgba(22,17,14,0.62))] p-5 text-left short:p-4 sm:rounded-[2rem] sm:p-10 low:p-8 lower:p-6"
                     >
                         <p className="eyebrow text-[0.6rem] text-gold-soft sm:text-[0.7rem]">În ziua deschiderii</p>
-                        <ul className="mt-3 grid grid-cols-3 gap-3 short:hidden sm:mt-5 lower:mt-3">
+                        <ul className="mt-3 grid grid-cols-3 gap-3 sm:mt-5 lower:mt-3">
                             {openingDay.map((item) => (
                                 <li key={item.label} data-stat>
                                     <span className="block font-display text-[2.1rem] leading-none text-gold-soft sm:text-5xl low:text-[2.6rem] lower:text-[2.2rem]">{item.value}</span>
@@ -128,10 +128,10 @@ export function Opening() {
                             ))}
                         </ol>
 
-                        <p className="mt-3 border-t border-gold/15 pt-3 text-[0.78rem] leading-relaxed text-cream/70 short:hidden sm:mt-6 sm:pt-5 sm:text-sm low:mt-4 low:pt-4 lower:mt-3 lower:pt-3">
+                        <p className="mt-3 border-t border-gold/15 pt-3 text-[0.78rem] leading-relaxed text-cream/70 sm:mt-6 sm:pt-5 sm:text-sm low:mt-4 low:pt-4 lower:mt-3 lower:pt-3">
                             Rezervările se fac prin aplicația <span className="text-cream">SmartGym</span>, cu codul sălii{' '}
                             <span className="font-semibold text-gold-soft">{smartgym.gymCode}</span>.
-                            <span className="hidden sm:inline lower:hidden"> Pentru informații suplimentare, ne poți contacta pe WhatsApp.</span>
+                            <span className="lower:hidden"> Pentru informații suplimentare, ne poți contacta pe WhatsApp.</span>
                         </p>
 
                         <div className="mt-4 flex items-center gap-2.5 short:mt-3 sm:mt-8 sm:gap-3 low:mt-6 lower:mt-4">

@@ -41,7 +41,7 @@
         <h2>Servicii complementare</h2>
         <ul>
             <li>Masaj — recuperare, relaxare, timp pentru tine (pe bază de programare)</li>
-            <li>Consultații de nutriție — mișcare, alimentație și echilibru (pe bază de programare)</li>
+            <li>Nutriție — MUV Nutrition (4 săptămâni, 1.000 lei) și Program individual aprofundat de nutriție (2.000 lei), pe bază de programare</li>
         </ul>
         <h2>Deschidere oficială — 01.11.2026</h2>
         <ul>

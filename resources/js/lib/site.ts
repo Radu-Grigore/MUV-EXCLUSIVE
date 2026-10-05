@@ -472,11 +472,11 @@ export const services: Service[] = [
   },
   {
     id: "nutritie",
-    title: "Consultații de nutriție",
+    title: "Nutriție",
     tagline: "Mișcare, alimentație și echilibru.",
     icon: "leaf",
     motto: "Move. Nourish. Feel good.",
-    lead: "O abordare care ține cont de tine, nu doar de obiectivul tău: personalizată, realistă și adaptată stilului tău de viață.",
+    lead: "La MUV Exclusive, nutriția completează mișcarea printr-o abordare personalizată, realistă și adaptată stilului tău de viață.",
     body: [
       "Mișcare, alimentație și echilibru — într-o abordare care ține cont de tine, nu doar de obiectivul tău.",
       "Rezultatele care se păstrează în timp nu se construiesc doar în sala de antrenament. Alimentația influențează energia, recuperarea, compoziția corporală, starea de bine și felul în care corpul răspunde diferitelor etape ale vieții.",
