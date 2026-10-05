@@ -34,6 +34,14 @@
             <li>Masaj — recuperare, relaxare, timp pentru tine (pe bază de programare)</li>
             <li>Consultații de nutriție — mișcare, alimentație și echilibru (pe bază de programare)</li>
         </ul>
+        <h2>Deschidere oficială — 01.11.2026</h2>
+        <ul>
+            <li>09:30–10:30 — Full Body cu Valy</li>
+            <li>11:00–12:00 — Tabata cu Ana</li>
+            <li>12:30–13:30 — Aero Dance cu Cristina</li>
+            <li>16:30–17:30 — Khai Bo cu Cristina</li>
+            <li>18:00–19:30 — Pilates și Nutriție cu Irina</li>
+        </ul>
         <h2>Rezervări</h2>
         <p>Rezervările la clase se fac în aplicația SmartGym, cu codul sălii 3490.</p>
         <h2>Contact</h2>

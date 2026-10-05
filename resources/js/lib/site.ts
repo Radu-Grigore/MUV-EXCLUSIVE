@@ -107,6 +107,15 @@ export const openingDay = [
   { value: 90, label: "locuri disponibile" },
 ];
 
+/** The opening day's timetable (01.11.2026). */
+export const openingSchedule = [
+  { time: "09:30–10:30", name: "Full Body", by: "Valy" },
+  { time: "11:00–12:00", name: "Tabata", by: "Ana" },
+  { time: "12:30–13:30", name: "Aero Dance", by: "Cristina" },
+  { time: "16:30–17:30", name: "Khai Bo", by: "Cristina" },
+  { time: "18:00–19:30", name: "Pilates & Nutriție", by: "Irina" },
+];
+
 export const navLinks = [
   { href: "#despre", label: "Despre" },
   { href: "#clase", label: "Clase" },

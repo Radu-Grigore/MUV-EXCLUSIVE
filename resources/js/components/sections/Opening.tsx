@@ -1,6 +1,6 @@
 import { useGSAP } from '@gsap/react';
 import { useRef } from 'react';
-import { openingDay, site, smartgym } from '@/lib/site';
+import { openingDay, openingSchedule, site, smartgym } from '@/lib/site';
 import { bookingLinkProps } from '../BookingLink';
 import '@/lib/gsap-extra';
 import { gsap, whenNear } from '@/lib/scroll';
@@ -65,7 +65,7 @@ export function Opening() {
     );
 
     return (
-        <section ref={root} id="deschidere" data-snap className="phone-screen relative overflow-hidden bg-ink py-8 text-cream short:py-5 sm:flex sm:min-h-[calc(100svh-72px)] sm:flex-col sm:justify-center sm:py-24 low:py-10">
+        <section ref={root} id="deschidere" data-snap className="phone-screen relative overflow-hidden bg-ink py-5 text-cream sm:flex sm:min-h-[calc(100svh-72px)] sm:flex-col sm:justify-center sm:py-24 low:py-10 lower:py-6">
             <div className="pointer-events-none absolute inset-0 opacity-70">
                 <ShaderClouds colors={MIST} speed={0.7} />
             </div>
@@ -93,9 +93,9 @@ export function Opening() {
                     >
                         01<span className="text-gold">.</span>11<span className="text-gold">.</span>2026
                     </h2>
-                    <p className="mt-2 font-script text-4xl text-gold-soft tiny:hidden sm:mt-4 sm:text-6xl low:mt-3">Te așteptăm!</p>
+                    <p className="mt-4 hidden font-script text-6xl text-gold-soft sm:block low:mt-3">Te așteptăm!</p>
 
-                    <div className="mx-auto mt-6 max-w-2xl short:mt-4 sm:mt-10 lg:max-w-[31rem] low:mt-8 low:max-w-[28rem]">
+                    <div className="mx-auto mt-4 max-w-2xl sm:mt-10 lg:max-w-[31rem] low:mt-8 low:max-w-[28rem]">
                         <Countdown />
                     </div>
                 </div>
@@ -104,29 +104,37 @@ export function Opening() {
                 <div className="lg:col-span-5">
                     <div
                         data-day-card
-                        className="relative mx-auto max-w-xl overflow-hidden rounded-[1.6rem] border border-gold/25 bg-[linear-gradient(160deg,rgba(42,32,26,0.72),rgba(22,17,14,0.62))] p-5 text-left short:p-4 sm:rounded-[2rem] sm:p-10 low:p-8"
+                        className="relative mx-auto max-w-xl overflow-hidden rounded-[1.6rem] border border-gold/25 bg-[linear-gradient(160deg,rgba(42,32,26,0.72),rgba(22,17,14,0.62))] p-5 text-left short:p-4 sm:rounded-[2rem] sm:p-10 low:p-8 lower:p-6"
                     >
                         <p className="eyebrow text-[0.6rem] text-gold-soft sm:text-[0.7rem]">În ziua deschiderii</p>
-                        <ul className="mt-4 grid grid-cols-3 gap-3 short:mt-3 sm:mt-6 lg:grid-cols-1 lg:gap-0 lg:divide-y lg:divide-gold/15">
+                        <ul className="mt-3 grid grid-cols-3 gap-3 short:hidden sm:mt-5 lower:mt-3">
                             {openingDay.map((item) => (
-                                <li key={item.label} data-stat className="lg:flex lg:items-center lg:gap-6 lg:py-4 lg:first:pt-0 lower:py-3">
-                                    <span className="block font-display text-[2.8rem] leading-none text-gold-soft short:text-[2.3rem] sm:text-6xl lg:w-24 lg:shrink-0 lg:text-7xl low:text-6xl">
-                                        {item.value}
-                                    </span>
-                                    <span className="mt-1.5 block text-[0.62rem] leading-snug tracking-[0.1em] text-cream/75 uppercase sm:text-xs sm:tracking-[0.16em] lg:mt-0 lg:text-sm">
-                                        {item.label}
-                                    </span>
+                                <li key={item.label} data-stat>
+                                    <span className="block font-display text-[2.1rem] leading-none text-gold-soft sm:text-5xl low:text-[2.6rem] lower:text-[2.2rem]">{item.value}</span>
+                                    <span className="mt-1 block text-[0.56rem] leading-snug tracking-[0.1em] text-cream/75 uppercase sm:text-[0.66rem] sm:tracking-[0.14em]">{item.label}</span>
                                 </li>
                             ))}
                         </ul>
 
-                        <p className="mt-5 border-t border-gold/15 pt-4 text-[0.8rem] leading-relaxed text-cream/70 short:mt-4 short:pt-3 sm:mt-8 sm:pt-6 sm:text-sm lg:border-t-0 lg:pt-0 low:mt-4">
+                        {/* The day's timetable */}
+                        <p className="eyebrow mt-4 text-[0.56rem] text-gold-soft/80 short:mt-3 sm:mt-7 sm:text-[0.62rem] low:mt-5 lower:mt-3">Programul zilei</p>
+                        <ol className="mt-1.5 divide-y divide-gold/15 sm:mt-2">
+                            {openingSchedule.map((c) => (
+                                <li key={c.time} data-stat className="flex items-baseline gap-3 py-1.5 text-[0.78rem] short:py-1 sm:gap-4 sm:py-2.5 sm:text-[0.95rem] low:py-2 lower:py-1.5">
+                                    <span className="w-[6.4rem] shrink-0 font-medium text-gold-soft tabular-nums sm:w-[7.6rem]">{c.time}</span>
+                                    <span className="min-w-0 flex-1 truncate text-cream">{c.name}</span>
+                                    <span className="shrink-0 text-cream/60">{c.by}</span>
+                                </li>
+                            ))}
+                        </ol>
+
+                        <p className="mt-3 border-t border-gold/15 pt-3 text-[0.78rem] leading-relaxed text-cream/70 short:hidden sm:mt-6 sm:pt-5 sm:text-sm low:mt-4 low:pt-4 lower:mt-3 lower:pt-3">
                             Rezervările se fac prin aplicația <span className="text-cream">SmartGym</span>, cu codul sălii{' '}
                             <span className="font-semibold text-gold-soft">{smartgym.gymCode}</span>.
-                            <span className="hidden sm:inline"> Pentru informații suplimentare, ne poți contacta pe WhatsApp.</span>
+                            <span className="hidden sm:inline lower:hidden"> Pentru informații suplimentare, ne poți contacta pe WhatsApp.</span>
                         </p>
 
-                        <div className="mt-4 flex items-center gap-2.5 short:mt-3 sm:mt-8 sm:gap-3 low:mt-6">
+                        <div className="mt-4 flex items-center gap-2.5 short:mt-3 sm:mt-8 sm:gap-3 low:mt-6 lower:mt-4">
                             <a
                                 {...bookingLinkProps()}
                                 data-magnetic
