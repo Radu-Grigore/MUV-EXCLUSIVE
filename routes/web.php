@@ -20,6 +20,12 @@ Route::withoutMiddleware([StartSession::class, ShareErrorsFromSession::class, Pr
         Route::view($slug, 'app', ['page' => $slug, 'title' => $title, 'description' => $description]);
     }
 
+    Route::view('date-de-identificare', 'app', [
+        'page' => 'date-de-identificare',
+        'title' => 'Date de identificare',
+        'description' => 'Datele de identificare ale SC AMD Energy Studio SRL, firma care operează sala MUV Exclusive din Ploiești: CUI, Nr. Reg. Com., sediu social și contact.',
+    ]);
+
     // Content pages (their text lives in resources/js/lib/pages.ts).
     Route::view('clase-de-pilates', 'app', [
         'page' => 'clase-de-pilates',

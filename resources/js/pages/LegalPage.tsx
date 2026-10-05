@@ -1,5 +1,6 @@
 import { legalDoc } from '@/lib/legal';
 import { infoPage } from '@/lib/pages';
+import Company from './Company';
 import Info from './Info';
 import Legal from './Legal';
 
@@ -7,6 +8,7 @@ import Legal from './Legal';
 export default function LegalPage({ slug }: { slug: string }) {
     const doc = legalDoc(slug);
     if (doc) return <Legal doc={doc} />;
+    if (slug === 'date-de-identificare') return <Company />;
     const page = infoPage(slug);
     return page ? <Info page={page} /> : null;
 }

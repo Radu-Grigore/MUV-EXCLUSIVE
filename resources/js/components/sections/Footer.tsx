@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { openCookieSettings } from '@/lib/consent';
 import { legalDocs } from '@/lib/legal';
 import { homeHref, pageHref } from '@/lib/routes';
-import { company, navLinks, site } from '@/lib/site';
+import { navLinks, site } from '@/lib/site';
 import { onScroll, scrollToTarget } from '@/lib/scroll';
 import { AnpcSalBadge } from '../AnpcBadge';
 import { Icon } from '../Icon';
@@ -12,15 +12,6 @@ export function Footer({ onHome }: { onHome: boolean }) {
         { href: site.facebook, label: 'Facebook', icon: 'facebook' as const },
         { href: site.instagram, label: 'Instagram', icon: 'instagram' as const },
         { href: site.whatsapp, label: 'WhatsApp', icon: 'whatsapp' as const },
-    ];
-    const details = [
-        { label: 'Firma', value: company.name },
-        { label: 'CUI', value: company.cui },
-        { label: 'Nr. Reg. Com.', value: company.regCom },
-        { label: 'Sediu social', value: company.seat },
-        { label: 'Adresa sălii', value: site.address },
-        { label: 'Telefon', value: site.phoneIntl, href: site.phoneHref },
-        { label: 'Email', value: site.email, href: `mailto:${site.email}` },
     ];
 
     return (
@@ -88,33 +79,16 @@ export function Footer({ onHome }: { onHome: boolean }) {
                     </ul>
                     <div className="mt-5">
                         <a
-                            href={pageHref('clase-de-pilates')}
+                            href={pageHref('date-de-identificare')}
                             className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-5 py-2.5 text-[0.62rem] font-semibold tracking-[0.2em] text-gold-soft uppercase transition-colors hover:border-gold hover:bg-gold/10"
                         >
-                            Clase de Pilates <Icon name="arrow" className="h-3.5 w-3.5" />
+                            Date de identificare <Icon name="arrow" className="h-3.5 w-3.5" />
                         </a>
                     </div>
                     <AnpcSalBadge className="mt-5" />
                 </div>
             </div>
 
-            {/* Company details, under the ANPC pictogram */}
-            <div className="mx-auto mt-12 max-w-[1440px] px-5 sm:px-8 lg:px-12">
-                <address className="grid gap-x-8 gap-y-4 rounded-[1.5rem] border border-cream/10 bg-white/[0.03] p-5 not-italic sm:grid-cols-2 sm:p-7 lg:grid-cols-4">
-                    {details.map((d) => (
-                        <div key={d.label} className={d.label === 'Adresa sălii' || d.label === 'Sediu social' ? 'sm:col-span-2' : ''}>
-                            <p className="text-[0.6rem] font-medium tracking-[0.24em] text-gold-soft/80 uppercase">{d.label}</p>
-                            {d.href ? (
-                                <a href={d.href} className="mt-1 inline-block text-sm font-semibold text-cream transition-colors hover:text-gold-soft">
-                                    {d.value}
-                                </a>
-                            ) : (
-                                <p className="mt-1 text-sm leading-snug text-cream/90">{d.value}</p>
-                            )}
-                        </div>
-                    ))}
-                </address>
-            </div>
 
             <div className="mx-auto mt-10 flex max-w-[1440px] flex-col items-center justify-between gap-2 border-t border-cream/10 px-5 py-6 text-center text-[0.62rem] tracking-[0.2em] uppercase sm:flex-row sm:px-8 sm:text-left lg:px-12">
                 <span>© {new Date().getFullYear()} MUV Exclusive. Toate drepturile rezervate.</span>
