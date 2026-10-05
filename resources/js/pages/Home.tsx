@@ -26,9 +26,15 @@ export default function Home() {
         document.getElementById('boot')?.remove();
         document.title = 'MUV Exclusive — Sală de fitness pentru femei în Ploiești | Boutique Fitness Studio';
         initSmoothScroll();
-        // Fonts and lazy images change section heights; re-measure pinned/scrubbed sections once settled.
-        document.fonts?.ready.then(() => ScrollTrigger.refresh());
-        window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+        // Fonts and lazy images change section heights: re-measure the scroll animations once, when
+        // everything has loaded and the phone is idle (each re-measure lays out the whole page).
+        const settle = () => {
+            const run = () => ScrollTrigger.refresh();
+            if (typeof window.requestIdleCallback === 'function') window.requestIdleCallback(run, { timeout: 2000 });
+            else setTimeout(run, 300);
+        };
+        if (document.readyState === 'complete') settle();
+        else window.addEventListener('load', settle, { once: true });
     }, []);
 
     return (

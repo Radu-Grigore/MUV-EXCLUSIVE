@@ -4,6 +4,8 @@ import type Lenis from 'lenis';
 
 // SplitText and DrawSVG are only used below the first screen; they are registered with those sections (lib/gsap-extra).
 gsap.registerPlugin(ScrollTrigger);
+// On phones the address bar slides in and out while scrolling; that is not a real resize, so don't re-measure for it.
+ScrollTrigger.config({ ignoreMobileResize: true });
 
 let lenis: Lenis | null = null;
 let lenisLoading = false;

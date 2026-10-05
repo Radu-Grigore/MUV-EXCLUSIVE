@@ -42,6 +42,17 @@
             {{-- Production: the page CSS is inlined, saving a render-blocking request. --}}
             <style>{!! \Illuminate\Support\Facades\Vite::content('resources/css/app.css') !!}</style>
             @vite(['resources/js/app.tsx'])
+            @if (($page ?? 'home') !== 'home')
+                {{-- Secondary pages: fetch their own code alongside the app instead of after it. --}}
+                @php
+                    $manifest = json_decode((string) @file_get_contents(public_path('build/manifest.json')), true) ?: [];
+                    $pageChunk = $manifest['resources/js/pages/LegalPage.tsx'] ?? null;
+                    $pageFiles = $pageChunk ? [$pageChunk['file'], ...array_map(fn ($k) => $manifest[$k]['file'] ?? null, array_filter($pageChunk['imports'] ?? [], fn ($k) => str_starts_with($k, '_')))] : [];
+                @endphp
+                @foreach (array_filter($pageFiles) as $file)
+                    <link rel="modulepreload" href="{{ asset('build/'.$file) }}">
+                @endforeach
+            @endif
         @else
             @vite(['resources/css/app.css', 'resources/js/app.tsx'])
         @endif

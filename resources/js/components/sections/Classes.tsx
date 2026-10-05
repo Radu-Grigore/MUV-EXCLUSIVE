@@ -102,7 +102,7 @@ export function Classes() {
             ref={root}
             id="clase"
             data-snap
-            className="phone-screen relative overflow-hidden bg-sand py-5 text-espresso sm:py-16 lg:flex lg:h-[calc(100svh-72px)] lg:min-h-[640px] lg:flex-col lg:py-10 low:py-8"
+            className="phone-screen relative overflow-hidden bg-sand py-4 text-espresso short:py-3 sm:py-16 lg:flex lg:h-[calc(100svh-72px)] lg:min-h-[640px] lg:flex-col lg:py-10 low:py-8"
         >
             <div className="mx-auto flex w-full max-w-[1440px] flex-col lg:min-h-0 lg:flex-1 lg:px-12">
                 {/* Heading */}

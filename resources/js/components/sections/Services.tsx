@@ -52,7 +52,7 @@ export function Services() {
             ref={root}
             id="servicii"
             data-snap
-            className="phone-screen relative flex flex-col justify-center overflow-hidden bg-cream py-6 text-espresso short:py-4 sm:py-20 lg:min-h-[calc(100svh-72px)] lg:py-12 lower:py-6"
+            className="phone-screen relative flex flex-col justify-center overflow-hidden bg-cream py-5 text-espresso short:py-4 sm:py-20 lg:min-h-[calc(100svh-72px)] lg:py-12 lower:py-6"
         >
             <div
                 className="pointer-events-none absolute inset-0"

@@ -49,4 +49,12 @@ class PagesTest extends TestCase
         $this->assertSame('ExerciseGym', $data['@type']);
         $this->assertSame('Ploiești', $data['address']['addressLocality']);
     }
+
+    public function test_unknown_pages_get_the_branded_404(): void
+    {
+        $this->get('/pagina-care-nu-exista')
+            ->assertNotFound()
+            ->assertSee('Pagina nu există')
+            ->assertSee('Înapoi la site');
+    }
 }

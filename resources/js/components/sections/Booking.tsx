@@ -78,7 +78,7 @@ export function Booking() {
             ref={root}
             id="rezervari"
             data-snap
-            className="phone-screen relative overflow-hidden bg-cream py-6 text-espresso sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12"
+            className="phone-screen relative overflow-hidden bg-cream py-6 text-espresso short:py-4 sm:py-24 lg:flex lg:min-h-[calc(100svh-72px)] lg:flex-col lg:justify-center lg:py-12"
         >
             <div
                 className="pointer-events-none absolute inset-0"

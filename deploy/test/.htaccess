@@ -40,6 +40,11 @@
     Require all denied
 </FilesMatch>
 
+# Never serve configuration, logs, backups or dependency manifests, wherever they are
+<FilesMatch "(?i)(\.(env|log|sql|sqlite|bak|backup|old|orig|swp|ini|sh|lock|ya?ml|md|dist)|composer\.json|package(-lock)?\.json|artisan|web\.config)$">
+    Require all denied
+</FilesMatch>
+
 # Security headers
 <IfModule mod_headers.c>
     # Test copy: keep it out of search results
@@ -51,6 +56,7 @@
     Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
     Header always set Cross-Origin-Opener-Policy "same-origin-allow-popups"
     Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://api.fontshare.com; font-src 'self' data: https://cdn.fontshare.com; img-src 'self' data: blob:; connect-src 'self'; frame-src https://www.google.com https://maps.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+    Header always set X-Permitted-Cross-Domain-Policies "none"
     Header always unset X-Powered-By
     Header unset X-Powered-By
 </IfModule>
