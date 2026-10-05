@@ -198,7 +198,7 @@ function PhotoRow({ m }: { m: TeamMember }) {
                 onPointerMove={onPointerMove}
                 onPointerUp={endDrag}
                 onPointerLeave={endDrag}
-                className={`no-scrollbar flex snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 sm:scroll-px-10 sm:px-10 ${many ? 'md:cursor-grab md:active:cursor-grabbing' : ''}`}
+                className={`no-scrollbar flex items-start snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 sm:scroll-px-10 sm:px-10 ${many ? 'md:cursor-grab md:active:cursor-grabbing' : ''}`}
             >
                 {m.photos.map((p, i) => (
                     <img
@@ -209,7 +209,7 @@ function PhotoRow({ m }: { m: TeamMember }) {
                         decoding="async"
                         draggable={false}
                         onLoad={update}
-                        className="h-[26rem] w-auto max-w-none shrink-0 snap-start rounded-[1.4rem] bg-sand select-none sm:h-[30rem]"
+                        className="h-auto max-h-[26rem] w-auto max-w-[calc(100vw-3rem)] shrink-0 snap-start rounded-[1.4rem] bg-sand select-none sm:max-h-[30rem] sm:max-w-[calc(100vw-5rem)] md:max-w-[520px]"
                     />
                 ))}
             </div>
