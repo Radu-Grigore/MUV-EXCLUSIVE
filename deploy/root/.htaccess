@@ -7,7 +7,6 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteBase /
 
     # One address for the site: https://muvexclusive.ro (www and http are redirected)
     RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]

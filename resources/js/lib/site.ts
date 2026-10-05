@@ -107,6 +107,43 @@ export const openingDay = [
   { value: 90, label: "locuri disponibile" },
 ];
 
+export type Slot = { time: string; name: string; by: "Ana" | "Cristina" | "Irina" | "Valy" };
+
+/** Weekly timetable for November 2026 (Monday first). Booking is through the SmartGym app. */
+export const timetable: { day: string; short: string; slots: Slot[] }[] = [
+  { day: "Luni", short: "Lu", slots: [
+    { time: "08:30–09:30", name: "Abs & Glutes", by: "Valy" },
+    { time: "17:30–18:20", name: "Pilates", by: "Irina" },
+    { time: "18:30–19:20", name: "Khai Bo", by: "Cristina" },
+    { time: "19:30–20:20", name: "Aero Dance", by: "Cristina" },
+  ] },
+  { day: "Marți", short: "Ma", slots: [
+    { time: "08:30–09:30", name: "Pilates", by: "Irina" },
+    { time: "17:30–18:20", name: "Functional Shape", by: "Cristina" },
+    { time: "18:30–19:20", name: "Abs & Glutes", by: "Ana" },
+    { time: "19:30–20:20", name: "Boot Camp", by: "Cristina" },
+  ] },
+  { day: "Miercuri", short: "Mi", slots: [
+    { time: "08:30–09:30", name: "Tabata", by: "Ana" },
+    { time: "17:30–18:20", name: "Pilates", by: "Irina" },
+    { time: "18:30–19:20", name: "Aero Dance", by: "Cristina" },
+    { time: "19:30–20:20", name: "Functional Step", by: "Cristina" },
+  ] },
+  { day: "Joi", short: "Jo", slots: [
+    { time: "08:30–09:30", name: "Pilates", by: "Irina" },
+    { time: "17:30–18:20", name: "Khai Bo", by: "Cristina" },
+    { time: "18:30–19:20", name: "Abs & Glutes", by: "Ana" },
+    { time: "19:30–20:20", name: "Functional Shape", by: "Cristina" },
+  ] },
+  { day: "Vineri", short: "Vi", slots: [
+    { time: "08:30–09:30", name: "Body Sculpt", by: "Ana" },
+    { time: "17:30–18:20", name: "Aero Dance", by: "Cristina" },
+    { time: "18:30–19:20", name: "Boot Camp", by: "Cristina" },
+  ] },
+  { day: "Sâmbătă", short: "Sâ", slots: [{ time: "10:00–11:00", name: "Total Body", by: "Valy" }] },
+  { day: "Duminică", short: "Du", slots: [] },
+];
+
 /** The opening day's timetable (01.11.2026). */
 export const openingSchedule = [
   { time: "09:30–10:30", name: "Full Body", by: "Valy" },
@@ -120,6 +157,7 @@ export const navLinks = [
   { href: "#despre", label: "Despre" },
   { href: "#clase", label: "Clase" },
   { href: "#echipa", label: "Echipa" },
+  { href: "#program", label: "Program" },
   { href: "#kids", label: "Kids Corner" },
   { href: "#abonamente", label: "Abonamente" },
   { href: "#servicii", label: "Servicii" },
@@ -152,6 +190,11 @@ export type FitnessClass = {
   icon: IconName;
   accent: string;
   script?: string;
+  /** Optional longer presentation, shown in the class panel ("Citește mai mult"). */
+  tagline?: string;
+  story?: string[];
+  /** Slug of the class's own page, when it has one. */
+  page?: string;
 };
 
 export const classes: FitnessClass[] = [
@@ -245,10 +288,12 @@ export const classes: FitnessClass[] = [
   {
     id: "pilates",
     name: "Pilates Clasic",
-    keywords: ["Postură", "Flexibilitate", "Echilibru"],
+    keywords: ["Postură", "Forță", "Mobilitate"],
     description:
-      "O combinație perfectă între mișcare, respirație și concentrare, care te ajută să îți întărești corpul, să îți îmbunătățești postura și să îți găsești echilibrul, atât fizic, cât și mental.",
-    benefits: ["Postură corectă", "Corp mai puternic", "Echilibru mental", "Mai multă energie"],
+      "Pilates este mai mult decât un antrenament: o metodă de mișcare care dezvoltă controlul, stabilitatea, mobilitatea și forța, ajutând corpul să funcționeze mai eficient și mai echilibrat.",
+    benefits: ["Postură mai bună", "Musculatură mai puternică", "Articulații mai bine susținute", "Conștientizarea corpului"],
+    tagline: "Mișcare conștientă, forță, postură și un corp care să te susțină cât mai bine în timp.",
+    page: "clase-de-pilates",
     icon: "lotus",
     accent: "#9a7bb0",
     script: "Stronger You",
@@ -306,13 +351,13 @@ export const team: TeamMember[] = [
     intro: "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
     photos: [{ src: "/images/echipa/ana-voican.jpg", card: "/images/echipa/ana-voican-card.webp", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg" }],
     classes: ["HIIT & Tabata", "Abs & Glutes", "Body Sculpt"],
-    schedule: ["Marți și joi: 18:30–19:30", "Miercuri și vineri: 08:30–09:30"],
+    schedule: ["Marți și joi: 18:30–19:20", "Miercuri și vineri: 08:30–09:30"],
     bio: [
       "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
       "Este pasionată de alergare, maratoane, ciclism și experiențe sportive care ne provoacă să ne depășim limitele. Pentru Ana, sportul este o formă de igienă personală: un obicei esențial pentru sănătate, energie și echilibru. Motivația ne ajută să începem, însă disciplina și consecvența sunt cele care ne duc mai departe.",
       "În antrenamentele sale combină exercițiile funcționale, cardio și de forță, urmărind tonifierea corpului, dezvoltarea masei musculare și îmbunătățirea rezistenței cardio-respiratorii. Clasele sunt dinamice, eficiente și adaptabile diferitelor niveluri de pregătire, astfel încât fiecare participantă să poată progresa în propriul ritm.",
       "În cadrul MUV Exclusive, Ana va susține clasele de HIIT & Tabata, Abs & Glutes, Body Sculpt:",
-      ["Marți și joi: 18:30–19:30", "Miercuri și vineri: 08:30–09:30"],
+      ["Marți și joi: 18:30–19:20", "Miercuri și vineri: 08:30–09:30"],
       "Dincolo de antrenamentele din sală, alături de Ana dezvoltăm experiențe și retreaturi dedicate femeilor, în care mișcarea se îmbină cu relaxarea, timpul petrecut în natură și conectarea într-o comunitate autentică.",
       "Vino să lucrăm împreună pentru un corp mai puternic, mai multă energie și un stil de viață pe care să îl poți susține pe termen lung.",
     ],
@@ -426,18 +471,19 @@ export const services: Service[] = [
   {
     id: "nutritie",
     title: "Consultații de nutriție",
-    tagline: "Mișcare, alimentație și echilibru – împreună.",
+    tagline: "Mișcare, alimentație și echilibru.",
     icon: "leaf",
     motto: "Move. Nourish. Feel good.",
-    lead: "Rezultatele pe termen lung nu se construiesc doar în sală. Recomandări adaptate stilului tău de viață, preferințelor și obiectivelor tale.",
+    lead: "O abordare care ține cont de tine, nu doar de obiectivul tău: personalizată, realistă și adaptată stilului tău de viață.",
     body: [
-      "Rezultatele pe termen lung nu se construiesc doar în sala de antrenament. Alimentația are un rol important în felul în care ne simțim, în energia pe care o avem și în atingerea obiectivelor personale.",
-      "La MUV Exclusive, consultațiile de nutriție completează programul tău de mișcare prin recomandări adaptate stilului tău de viață, preferințelor și obiectivelor tale.",
-      "Fie că îți dorești să îți îmbunătățești obiceiurile alimentare, să îți susții antrenamentele printr-o alimentație mai echilibrată sau să lucrezi pentru atingerea unui obiectiv de greutate și compoziție corporală, vei beneficia de o abordare personalizată și realistă.",
-      "Fără soluții complicate și fără perfecțiune. Ne dorim să construim obiceiuri pe care să le poți integra și păstra pe termen lung.",
-      "Pentru că atunci când mișcarea și alimentația lucrează împreună, schimbarea devine parte din stilul tău de viață.",
+      "Mișcare, alimentație și echilibru — într-o abordare care ține cont de tine, nu doar de obiectivul tău.",
+      "Rezultatele care se păstrează în timp nu se construiesc doar în sala de antrenament. Alimentația influențează energia, recuperarea, compoziția corporală, starea de bine și felul în care corpul răspunde diferitelor etape ale vieții.",
+      "La MUV Exclusive, nutriția completează mișcarea printr-o abordare personalizată, realistă și adaptată stilului tău de viață.",
+      "Fie că îți dorești să îți îmbunătățești obiceiurile alimentare, să îți susții mai bine antrenamentele, să îți optimizezi greutatea și compoziția corporală sau pur și simplu să înțelegi mai bine de ce are nevoie corpul tău, construim împreună o strategie pe care să o poți aplica în viața reală.",
+      "Punem accent pe sănătatea feminină, echilibru, energie, masă musculară și obiceiuri sustenabile, fără diete extreme, reguli rigide sau soluții rapide.",
+      "Pentru că schimbarea reală nu înseamnă să faci totul perfect. Înseamnă să găsești o formulă care funcționează pentru tine și pe care o poți păstra.",
     ],
-    note: "Consultațiile de nutriție se realizează pe bază de programare.",
+    note: "Consultațiile și programele de nutriție se realizează pe bază de programare.",
   },
 ];
 

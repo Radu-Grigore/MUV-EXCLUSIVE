@@ -1,5 +1,5 @@
-# MUV Exclusive — TEST copy at rbsolutions.ro/muv-exclusive (the real site is https://muvexclusive.ro)
-# Goes in htdocs/muv-exclusive/. Search engines are told not to index this copy.
+# MUV Exclusive — TEST copy (e.g. test.rbsolutions.ro or rbsolutions.ro/muv-exclusive); the real site is https://muvexclusive.ro
+# Works at a domain root or in a subfolder. Search engines are told not to index this copy.
 
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
@@ -7,7 +7,6 @@
     </IfModule>
 
     RewriteEngine On
-    RewriteBase /muv-exclusive/
 
     # Always HTTPS
     RewriteCond %{HTTPS} !=on

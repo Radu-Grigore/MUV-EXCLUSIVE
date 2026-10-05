@@ -86,6 +86,14 @@ export function Footer({ onHome }: { onHome: boolean }) {
                             </button>
                         </li>
                     </ul>
+                    <div className="mt-5">
+                        <a
+                            href={pageHref('clase-de-pilates')}
+                            className="inline-flex items-center gap-2 rounded-full border border-gold/40 px-5 py-2.5 text-[0.62rem] font-semibold tracking-[0.2em] text-gold-soft uppercase transition-colors hover:border-gold hover:bg-gold/10"
+                        >
+                            Clase de Pilates <Icon name="arrow" className="h-3.5 w-3.5" />
+                        </a>
+                    </div>
                     <AnpcSalBadge className="mt-5" />
                 </div>
             </div>

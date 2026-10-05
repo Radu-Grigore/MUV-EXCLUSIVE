@@ -2,6 +2,7 @@ import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { classes, type FitnessClass, type GalleryItem } from '@/lib/site';
 import { posterFor, posterSrcSet } from '@/lib/posters';
+import { pageHref } from '@/lib/routes';
 import { gsap, lockScroll, whenNear } from '@/lib/scroll';
 import { bookingLinkProps } from '../BookingLink';
 import { Icon } from '../Icon';
@@ -206,7 +207,17 @@ export function Classes() {
                                     </li>
                                 ))}
                             </ul>
-                            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cocoa low:mt-4 low:text-base lower:line-clamp-3">{c.description}</p>
+                            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-cocoa low:mt-4 low:text-base lower:line-clamp-3">
+                                {c.description}
+                            </p>
+                            {c.page && (
+                                <a
+                                    href={pageHref(c.page)}
+                                    className="mt-2 inline-block text-sm font-medium text-bronze underline decoration-bronze/40 underline-offset-4 hover:decoration-bronze"
+                                >
+                                    Citește mai mult despre {c.name.split(' ')[0]}
+                                </a>
+                            )}
                             <ul className="mt-6 grid max-w-2xl grid-cols-2 gap-x-8 gap-y-3 low:mt-4 low:gap-y-2">
                                 {c.benefits.map((b) => (
                                     <li key={b} className="flex items-start gap-3 text-[0.95rem] low:text-sm">

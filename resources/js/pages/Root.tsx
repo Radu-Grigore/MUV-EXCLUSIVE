@@ -1,8 +1,8 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { currentPage, isStaticBuild, legalSlugs } from '@/lib/routes';
+import { currentPage, infoSlugs, isStaticBuild, legalSlugs } from '@/lib/routes';
 import Home from './Home';
 
-// The legal pages (and their long texts) are only downloaded when one of them is opened.
+// The legal and content pages (and their long texts) are only downloaded when one of them is opened.
 const LegalPage = lazy(() => import('./LegalPage'));
 
 /** Picks the page: the main one-page site, or one of the legal pages. */
@@ -17,7 +17,7 @@ export default function Root() {
         return () => window.removeEventListener('hashchange', onHash);
     }, []);
 
-    return legalSlugs.includes(page) ? (
+    return legalSlugs.includes(page) || infoSlugs.includes(page) ? (
         <Suspense fallback={null}>
             <LegalPage slug={page} />
         </Suspense>

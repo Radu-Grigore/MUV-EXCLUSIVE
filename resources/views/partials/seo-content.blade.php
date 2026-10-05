@@ -22,6 +22,15 @@
             <li>Irina Vișan — Instructor Pilates &amp; Nutriționist Integrativ</li>
             <li>Valy Cîrstea — Instructor certificat Aerobic &amp; Fitness</li>
         </ul>
+        <h2>Programul claselor — noiembrie 2026</h2>
+        <ul>
+            <li>Luni: 08:30 Abs &amp; Glutes (Valy), 17:30 Pilates (Irina), 18:30 Khai Bo (Cristina), 19:30 Aero Dance (Cristina)</li>
+            <li>Marți: 08:30 Pilates (Irina), 17:30 Functional Shape (Cristina), 18:30 Abs &amp; Glutes (Ana), 19:30 Boot Camp (Cristina)</li>
+            <li>Miercuri: 08:30 Tabata (Ana), 17:30 Pilates (Irina), 18:30 Aero Dance (Cristina), 19:30 Functional Step (Cristina)</li>
+            <li>Joi: 08:30 Pilates (Irina), 17:30 Khai Bo (Cristina), 18:30 Abs &amp; Glutes (Ana), 19:30 Functional Shape (Cristina)</li>
+            <li>Vineri: 08:30 Body Sculpt (Ana), 17:30 Aero Dance (Cristina), 18:30 Boot Camp (Cristina)</li>
+            <li>Sâmbătă: 10:00 Total Body (Valy)</li>
+        </ul>
         <h2>Abonamente</h2>
         <ul>
             <li>Day Pass — 49 lei / o zi</li>

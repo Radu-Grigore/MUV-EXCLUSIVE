@@ -19,4 +19,11 @@ Route::withoutMiddleware([StartSession::class, ShareErrorsFromSession::class, Pr
     ] as $slug => [$title, $description]) {
         Route::view($slug, 'app', ['page' => $slug, 'title' => $title, 'description' => $description]);
     }
+
+    // Content pages (their text lives in resources/js/lib/pages.ts).
+    Route::view('clase-de-pilates', 'app', [
+        'page' => 'clase-de-pilates',
+        'title' => 'Clase de Pilates',
+        'description' => 'Clase de Pilates la MUV Exclusive Ploiești: mișcare conștientă, forță, postură și mobilitate, adaptate fiecărei participante. Rezervări în aplicația SmartGym.',
+    ]);
 });

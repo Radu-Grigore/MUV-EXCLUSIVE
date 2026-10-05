@@ -1,4 +1,5 @@
 import { Check } from 'lucide-react';
+import { pageHref } from '@/lib/routes';
 import { AnimatePresence, motion, useDragControls, type Variants } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -124,9 +125,25 @@ function ClassPanel({ c, onClose, onChange }: { c: FitnessClass; onClose: () => 
                 <div className="flex-1 overflow-y-auto overscroll-contain px-6 pb-6 sm:px-10">
                     <AnimatePresence mode="wait">
                         <motion.div key={c.id} variants={content} initial="hidden" animate="show" exit={{ opacity: 0, transition: { duration: 0.15 } }}>
-                            <motion.p variants={item} className="text-[1.05rem] leading-relaxed text-cocoa">
-                                {c.description}
-                            </motion.p>
+                            {c.tagline && (
+                                <motion.p variants={item} className="mb-4 font-display text-2xl leading-snug text-espresso italic">
+                                    {c.tagline}
+                                </motion.p>
+                            )}
+                            {(c.story ?? [c.description]).map((para) => (
+                                <motion.p key={para} variants={item} className="mt-4 text-[1.05rem] leading-relaxed text-cocoa first:mt-0">
+                                    {para}
+                                </motion.p>
+                            ))}
+                            {c.page && (
+                                <motion.a
+                                    variants={item}
+                                    href={pageHref(c.page)}
+                                    className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-bronze underline decoration-bronze/40 underline-offset-4"
+                                >
+                                    Citește mai mult despre {c.name.split(' ')[0]} <Icon name="arrow" className="h-3.5 w-3.5" />
+                                </motion.a>
+                            )}
 
                             <motion.h4 variants={item} className="eyebrow mt-9 text-bronze">
                                 Ce câștigi

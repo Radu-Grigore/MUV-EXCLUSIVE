@@ -11,13 +11,14 @@ class PagesTest extends TestCase
         $this->get('/')->assertOk()->assertSee('data-page="home"', false)->assertSee('id="boot"', false);
     }
 
-    public function test_each_legal_page_has_its_own_url_and_title(): void
+    public function test_each_secondary_page_has_its_own_url_and_title(): void
     {
         foreach ([
             'termeni-si-conditii' => 'Termeni și condiții',
             'politica-de-confidentialitate' => 'Politica de confidențialitate',
             'politica-de-cookies' => 'Politica de cookies',
             'politica-de-anulare-si-rambursare' => 'Politica de anulare și rambursare',
+            'clase-de-pilates' => 'Clase de Pilates',
         ] as $slug => $title) {
             $this->get("/{$slug}")
                 ->assertOk()
