@@ -303,8 +303,11 @@ export const team: TeamMember[] = [
     name: "Cristina Dom",
     role: "Instructor Fitness & Aerobic, Personal Trainer",
     intro: "Cu peste 20 de ani de experiență în dans, balet, coregrafie și fitness, Cristina aduce în fiecare antrenament mișcare, tehnică, energie și expresivitate.",
-    // No photo yet: the card shows a monogram avatar until one is added here.
-    photos: [],
+    photos: [
+      { src: "/images/echipa/cristina-dom.jpg", card: "/images/echipa/cristina-dom-card.webp", position: "50% 50%" },
+      { src: "/images/echipa/cristina-dom-2.jpg" },
+      { src: "/images/echipa/cristina-dom-3.jpg" },
+    ],
     classes: ["Khai Bo", "Aero Dance", "Functional Shape", "Functional Step", "Personal Training"],
     bio: [
       "Cu peste 20 de ani de experiență în dans, balet, coregrafie și fitness, Cristina aduce în fiecare antrenament o combinație armonioasă de mișcare, tehnică, energie și expresivitate.",
