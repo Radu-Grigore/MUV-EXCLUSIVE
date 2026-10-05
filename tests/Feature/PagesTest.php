@@ -20,6 +20,7 @@ class PagesTest extends TestCase
             'politica-de-anulare-si-rambursare' => 'Politica de anulare și rambursare',
             'clase-de-pilates' => 'Clase de Pilates',
             'date-de-identificare' => 'Date de identificare',
+            'nutritie' => 'Nutriție',
         ] as $slug => $title) {
             $this->get("/{$slug}")
                 ->assertOk()

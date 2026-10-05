@@ -33,4 +33,4 @@ export function homeHref(anchor = ''): string {
 export const legalSlugs = ['termeni-si-conditii', 'politica-de-confidentialitate', 'politica-de-cookies', 'politica-de-anulare-si-rambursare'];
 
 /** Content pages (lib/pages.ts), loaded the same way. */
-export const infoSlugs = ['clase-de-pilates', 'date-de-identificare'];
+export const infoSlugs = ['clase-de-pilates', 'date-de-identificare', 'nutritie'];

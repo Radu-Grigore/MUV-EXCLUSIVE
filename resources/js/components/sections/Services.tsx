@@ -1,6 +1,7 @@
 import { useGSAP } from '@gsap/react';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { services, site, type Service } from '@/lib/site';
+import { pageHref } from '@/lib/routes';
 import { gsap, lockScroll, whenNear } from '@/lib/scroll';
 import { Icon } from '../Icon';
 
@@ -51,7 +52,7 @@ export function Services() {
             ref={root}
             id="servicii"
             data-snap
-            className="phone-screen relative flex flex-col justify-center overflow-hidden bg-cream py-6 text-espresso sm:py-20 lg:min-h-[calc(100svh-72px)] lg:py-12"
+            className="phone-screen relative flex flex-col justify-center overflow-hidden bg-cream py-6 text-espresso short:py-4 sm:py-20 lg:min-h-[calc(100svh-72px)] lg:py-12 lower:py-6"
         >
             <div
                 className="pointer-events-none absolute inset-0"
@@ -76,7 +77,7 @@ export function Services() {
                     {services.map((s, i) => (
                         <li key={s.id} data-service>
                             <article
-                                className={`relative flex h-full flex-col overflow-hidden rounded-[1.6rem] p-5 short:p-4 sm:rounded-[2rem] sm:p-10 lg:p-12 low:p-9 ${
+                                className={`relative flex h-full flex-col overflow-hidden rounded-[1.6rem] p-5 short:p-4 sm:rounded-[2rem] sm:p-10 lg:p-12 low:p-9 lower:p-7 ${
                                     i === 0 ? 'bg-espresso text-cream' : 'bg-white/80 text-espresso shadow-[0_30px_60px_-40px_rgba(42,32,26,0.6)]'
                                 }`}
                             >
@@ -84,21 +85,36 @@ export function Services() {
                                     aria-hidden="true"
                                     className={`pointer-events-none absolute -top-16 -right-16 h-56 w-56 rounded-full border sm:h-72 sm:w-72 ${i === 0 ? 'border-gold/20' : 'border-bronze/15'}`}
                                 />
-                                <div className="flex items-center gap-3 sm:gap-4">
+                                <div className="flex items-start gap-3 sm:gap-4">
                                     <span className={`grid h-11 w-11 shrink-0 place-items-center rounded-full sm:h-14 sm:w-14 ${i === 0 ? 'bg-gold/15 text-gold-soft' : 'bg-gold-soft/50 text-bronze'}`}>
                                         <Icon name={s.icon} className="h-5 w-5 sm:h-6 sm:w-6" />
                                     </span>
-                                    <div className="min-w-0">
+                                    <div className="min-w-0 flex-1">
                                         <h3 className="font-display text-[1.75rem] leading-none short:text-[1.5rem] sm:text-5xl">{s.title}</h3>
                                         <p className={`mt-1 text-[0.62rem] tracking-[0.16em] uppercase sm:mt-2 sm:text-xs ${i === 0 ? 'text-gold-soft' : 'text-bronze'}`}>{s.tagline}</p>
                                     </div>
+                                    {/* Details: the service's own page, or the panel with its full text */}
+                                    {(() => {
+                                        const cls = `relative z-10 inline-flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-2 text-[0.58rem] font-semibold tracking-[0.18em] uppercase transition-colors sm:px-5 sm:py-3 sm:text-[0.64rem] ${
+                                            i === 0 ? 'border-cream/25 hover:border-gold hover:text-gold-soft' : 'border-espresso/15 hover:border-espresso'
+                                        }`;
+                                        return s.page ? (
+                                            <a href={pageHref(s.page)} className={cls}>
+                                                Detalii <Icon name="arrow" className="h-3 w-3" />
+                                            </a>
+                                        ) : (
+                                            <button type="button" onClick={() => open(s)} className={cls}>
+                                                Detalii <Icon name="arrow" className="h-3 w-3" />
+                                            </button>
+                                        );
+                                    })()}
                                 </div>
-                                <p className={`mt-6 hidden leading-relaxed sm:block sm:text-base lg:max-w-xl ${i === 0 ? 'text-cream/75' : 'text-cocoa'}`}>{s.lead}</p>
-                                <p className={`mt-2 font-script text-[1.7rem] leading-tight short:text-[1.5rem] sm:mt-6 sm:text-4xl ${i === 0 ? 'text-gold-soft' : 'text-bronze'}`}>{s.motto}</p>
-                                <div className="mt-auto flex items-center gap-2.5 pt-3 sm:gap-3 sm:pt-8">
+                                <p className={`mt-6 hidden leading-relaxed sm:block lg:hidden xl:block lower:hidden sm:text-base lg:max-w-xl ${i === 0 ? 'text-cream/75' : 'text-cocoa'}`}>{s.lead}</p>
+                                <p className={`mt-2 font-script text-[1.7rem] leading-tight short:hidden sm:mt-6 sm:text-4xl lower:mt-4 lower:text-3xl ${i === 0 ? 'text-gold-soft' : 'text-bronze'}`}>{s.motto}</p>
+                                <div className="mt-auto pt-3 sm:pt-8 lower:pt-5">
                                     {s.prices ? (
-                                        // Priced services show their price list here; booking is in the panel.
-                                        <ul className="grid flex-1 grid-cols-3 gap-2 sm:gap-3" aria-label={`Prețuri ${s.title.toLowerCase()}`}>
+                                        // Priced services show their price list here; booking is in the details.
+                                        <ul className="grid gap-2 sm:gap-3" style={{ gridTemplateColumns: `repeat(${s.prices.length}, minmax(0, 1fr))` }} aria-label={`Prețuri ${s.title.toLowerCase()}`}>
                                             {s.prices.map((p) => (
                                                 <li
                                                     key={p.label}
@@ -109,7 +125,7 @@ export function Services() {
                                                         {p.detail && <span className="block normal-case tracking-normal opacity-80">{p.detail}</span>}
                                                     </span>
                                                     <span className={`mt-1 block font-display text-[1.45rem] leading-none sm:text-[2rem] ${i === 0 ? 'text-gold-soft' : 'text-espresso'}`}>
-                                                        {p.price}
+                                                        {p.price.toLocaleString('ro-RO')}
                                                         <span className="ml-0.5 font-sans text-[0.55rem] tracking-[0.1em] uppercase opacity-70 sm:text-[0.62rem]">lei</span>
                                                     </span>
                                                 </li>
@@ -120,23 +136,13 @@ export function Services() {
                                             href={bookServiceHref(s)}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            className={`inline-flex flex-1 items-center justify-center gap-2 rounded-full py-3 text-[0.62rem] font-semibold tracking-[0.2em] uppercase transition-colors sm:py-4 sm:text-[0.66rem] ${
+                                            className={`inline-flex w-full items-center justify-center gap-2 rounded-full py-3 text-[0.62rem] font-semibold tracking-[0.2em] uppercase transition-colors sm:py-4 sm:text-[0.66rem] ${
                                                 i === 0 ? 'bg-gold text-ink hover:bg-gold-soft' : 'bg-espresso text-cream hover:bg-bronze'
                                             }`}
                                         >
                                             <Icon name="whatsapp" className="h-4 w-4" /> Programează-te
                                         </a>
                                     )}
-                                    <button
-                                        type="button"
-                                        onClick={() => open(s)}
-                                        aria-label={s.prices ? `Detalii despre ${s.title.toLowerCase()}` : undefined}
-                                        className={`inline-flex shrink-0 items-center justify-center gap-2 rounded-full border text-[0.62rem] font-semibold tracking-[0.2em] uppercase transition-colors sm:text-[0.66rem] ${
-                                            s.prices ? 'h-11 w-11 self-center sm:h-14 sm:w-14' : 'px-4 py-3 sm:px-6 sm:py-4'
-                                        } ${i === 0 ? 'border-cream/25 hover:border-gold' : 'border-espresso/15 hover:border-espresso'}`}
-                                    >
-                                        {!s.prices && 'Detalii'} <Icon name="plus" className="h-3.5 w-3.5" />
-                                    </button>
                                 </div>
                             </article>
                         </li>

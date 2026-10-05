@@ -26,6 +26,12 @@ Route::withoutMiddleware([StartSession::class, ShareErrorsFromSession::class, Pr
         'description' => 'Datele de identificare ale SC AMD Energy Studio SRL, firma care operează sala MUV Exclusive din Ploiești: CUI, Nr. Reg. Com., sediu social și contact.',
     ]);
 
+    Route::view('nutritie', 'app', [
+        'page' => 'nutritie',
+        'title' => 'Nutriție',
+        'description' => 'Consultații și programe de nutriție la MUV Exclusive Ploiești: MUV Nutrition (4 săptămâni, 1.000 lei) și programul individual aprofundat (6–8 săptămâni + follow-up, 2.000 lei).',
+    ]);
+
     // Content pages (their text lives in resources/js/lib/pages.ts).
     Route::view('clase-de-pilates', 'app', [
         'page' => 'clase-de-pilates',

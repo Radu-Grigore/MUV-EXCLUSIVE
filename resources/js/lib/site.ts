@@ -442,6 +442,8 @@ export type Service = {
   lead: string;
   body: string[];
   note: string;
+  /** Its own page (the card's "Detalii" goes there instead of opening the panel). */
+  page?: string;
   /** Price list (lei), shown on the card and in the panel. */
   prices?: { label: string; detail?: string; price: number }[];
 };
@@ -484,6 +486,11 @@ export const services: Service[] = [
       "Pentru că schimbarea reală nu înseamnă să faci totul perfect. Înseamnă să găsești o formulă care funcționează pentru tine și pe care o poți păstra.",
     ],
     note: "Consultațiile și programele de nutriție se realizează pe bază de programare.",
+    page: "nutritie",
+    prices: [
+      { label: "MUV Nutrition", detail: "4 săptămâni", price: 1000 },
+      { label: "Program aprofundat", detail: "6–8 săpt. + follow-up", price: 2000 },
+    ],
   },
 ];
 
