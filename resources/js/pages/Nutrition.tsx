@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { CookieBanner } from '@/components/CookieBanner';
 import { Icon } from '@/components/Icon';
 import { Logo } from '@/components/Logo';
@@ -7,7 +7,6 @@ import { nutritionIntro, nutritionPrograms, type NutritionProgram } from '@/lib/
 import { homeHref } from '@/lib/routes';
 import { site } from '@/lib/site';
 
-const lei = (n: number) => n.toLocaleString('ro-RO');
 const TOTAL_WEEKS = Math.max(...nutritionPrograms.map((p) => p.weeks.max + p.weeks.followUp));
 
 function whatsappFor(p: NutritionProgram) {
@@ -45,32 +44,18 @@ function WeekBar({ p, dark }: { p: NutritionProgram; dark: boolean }) {
 }
 
 function ProgramCard({ p, dark }: { p: NutritionProgram; dark: boolean }) {
-    const [all, setAll] = useState(false);
-    const shown = all ? p.includes : p.includes.slice(0, 6);
-    const muted = dark ? 'text-cream/70' : 'text-cocoa';
+    const muted = dark ? 'text-cream/75' : 'text-cocoa';
+    const accent = dark ? 'text-gold-soft' : 'text-bronze';
 
+    // The text follows the order and wording supplied, untouched; only the week bar is added as a picture of the duration.
     return (
         <article
             className={`relative flex flex-col overflow-hidden rounded-[2rem] p-6 sm:p-10 ${
                 dark ? 'bg-espresso text-cream' : 'bg-white/80 text-espresso shadow-[0_40px_70px_-50px_rgba(42,32,26,0.7)]'
             }`}
         >
-            {dark && (
-                <span className="absolute top-6 right-6 rounded-full bg-gold px-3 py-1 text-[0.58rem] font-semibold tracking-[0.18em] text-ink uppercase sm:top-8 sm:right-8">
-                    Cel mai complet
-                </span>
-            )}
-            <p className={`eyebrow pr-32 ${dark ? 'text-gold-soft' : 'text-bronze'}`}>{p.durationShort}</p>
-            <h2 className="mt-3 pr-24 font-display text-[2.2rem] leading-[0.95] sm:text-5xl">{p.name}</h2>
-            <p className={`mt-4 leading-relaxed ${muted}`}>{p.subtitle}</p>
-
-            <div className="mt-6 flex items-end gap-2">
-                <span className={`font-display text-6xl leading-none ${dark ? 'text-gold-soft' : 'text-espresso'}`}>{lei(p.price)}</span>
-                <span className={`mb-1.5 text-xs tracking-[0.16em] uppercase ${muted}`}>lei · investiție</span>
-            </div>
-            <p className={`mt-2 text-sm ${muted}`}>
-                Durată: <span className={dark ? 'text-cream' : 'text-espresso'}>{p.duration}</span>
-            </p>
+            <h2 className="font-display text-[2.2rem] leading-[0.95] sm:text-5xl">{p.name}</h2>
+            <p className={`mt-4 font-display text-xl leading-snug italic sm:text-2xl ${accent}`}>{p.subtitle}</p>
 
             <div className="mt-6">
                 <WeekBar p={p} dark={dark} />
@@ -82,9 +67,9 @@ function ProgramCard({ p, dark }: { p: NutritionProgram; dark: boolean }) {
                 ))}
             </div>
 
-            <h3 className={`eyebrow mt-8 ${dark ? 'text-gold-soft' : 'text-bronze'}`}>Programul include</h3>
+            <h3 className={`mt-8 font-display text-2xl ${dark ? 'text-cream' : 'text-espresso'}`}>Programul include:</h3>
             <ul className="mt-3 space-y-2.5">
-                {shown.map((item) => (
+                {p.includes.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-[0.95rem] leading-snug">
                         <span className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${dark ? 'bg-gold text-ink' : 'bg-espresso text-gold-soft'}`}>
                             <Icon name="check" className="h-3 w-3" />
@@ -93,32 +78,33 @@ function ProgramCard({ p, dark }: { p: NutritionProgram; dark: boolean }) {
                     </li>
                 ))}
             </ul>
-            {p.includes.length > 6 && (
-                <button
-                    type="button"
-                    onClick={() => setAll((v) => !v)}
-                    aria-expanded={all}
-                    className={`mt-4 self-start text-sm font-medium underline underline-offset-4 ${dark ? 'text-gold-soft decoration-gold/40' : 'text-bronze decoration-bronze/40'}`}
-                >
-                    {all ? 'Arată mai puțin' : `Vezi tot ce include (+${p.includes.length - 6})`}
-                </button>
-            )}
 
-            <div className={`mt-8 space-y-3 border-t pt-6 text-sm leading-relaxed ${dark ? 'border-cream/10 text-cream/60' : 'border-espresso/10 text-cocoa/80'}`}>
+            <div className={`mt-8 space-y-3 text-[0.95rem] leading-relaxed ${muted}`}>
                 {p.closing.map((t) => (
                     <p key={t}>{t}</p>
                 ))}
             </div>
 
+            <dl className={`mt-8 grid gap-4 rounded-2xl border p-5 sm:grid-cols-[1fr_auto] sm:items-end ${dark ? 'border-gold/25 bg-cream/[0.04]' : 'border-espresso/10 bg-cream/60'}`}>
+                <div>
+                    <dt className={`text-sm ${muted}`}>Durată:</dt>
+                    <dd className="mt-1 text-[0.95rem] font-medium">{p.duration}</dd>
+                </div>
+                <div className="sm:text-right">
+                    <dt className={`text-sm ${muted}`}>Investiție:</dt>
+                    <dd className={`mt-1 font-display text-5xl leading-none ${dark ? 'text-gold-soft' : 'text-espresso'}`}>{p.investment}</dd>
+                </div>
+            </dl>
+
             <a
                 href={whatsappFor(p)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`mt-8 inline-flex items-center justify-center gap-2 rounded-full py-4 text-[0.66rem] font-semibold tracking-[0.2em] uppercase transition-colors ${
+                className={`mt-6 inline-flex items-center justify-center gap-2 rounded-full py-4 text-[0.66rem] font-semibold tracking-[0.2em] uppercase transition-colors ${
                     dark ? 'bg-gold text-ink hover:bg-gold-soft' : 'bg-espresso text-cream hover:bg-bronze'
                 }`}
             >
-                <Icon name="whatsapp" className="h-4 w-4" /> Vreau acest program
+                <Icon name="whatsapp" className="h-4 w-4" /> Programează-te pe WhatsApp
             </a>
         </article>
     );
@@ -155,7 +141,7 @@ export default function Nutrition() {
                             <span className="h-px w-8 bg-gold" /> Servicii complementare
                         </p>
                         <h1 className="mt-4 font-display text-[3rem] leading-[0.92] sm:text-7xl lg:text-8xl">
-                            Nutriție <em className="text-bronze">MUV</em>
+                            Nutriție
                         </h1>
                         <p className="mt-6 max-w-2xl font-display text-2xl leading-snug text-espresso italic sm:text-3xl">{nutritionIntro.tagline}</p>
                     </div>
@@ -163,7 +149,7 @@ export default function Nutrition() {
                         {nutritionIntro.paragraphs.map((t) => (
                             <p key={t}>{t}</p>
                         ))}
-                        <p className="font-script text-4xl text-bronze">Move. Nourish. Feel good.</p>
+                        <p className="font-script text-4xl text-bronze">{nutritionIntro.motto}</p>
                     </div>
                 </section>
 
@@ -187,7 +173,7 @@ export default function Nutrition() {
                             <ProgramCard key={p.id} p={p} dark={i === 1} />
                         ))}
                     </div>
-                    <p className="mt-8 text-center text-sm text-cocoa">Consultațiile și programele de nutriție se realizează pe bază de programare.</p>
+                    <p className="mt-8 text-center text-sm text-cocoa">{nutritionIntro.note}</p>
                 </section>
             </main>
 

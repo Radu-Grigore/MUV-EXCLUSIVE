@@ -488,8 +488,8 @@ export const services: Service[] = [
     note: "Consultațiile și programele de nutriție se realizează pe bază de programare.",
     page: "nutritie",
     prices: [
-      { label: "MUV Nutrition", detail: "4 săptămâni", price: 1000 },
-      { label: "Program aprofundat", detail: "6–8 săpt. + follow-up", price: 2000 },
+      { label: "MUV Nutrition – 4 săptămâni", price: 1000 },
+      { label: "Program individual aprofundat de nutriție", price: 2000 },
     ],
   },
 ];
