@@ -150,7 +150,8 @@ function MemberCard({ m, onOpen }: { m: TeamMember; onOpen: () => void }) {
             </span>
             <span className="mt-3 block px-0.5 short:mt-2">
                 <span className="block font-display text-[1.7rem] leading-none short:text-[1.45rem] sm:text-3xl">{m.name}</span>
-                <span className="mt-1.5 block text-[0.6rem] leading-snug font-medium tracking-[0.16em] text-bronze uppercase sm:text-[0.66rem]">{m.role}</span>
+                {/* Always two lines tall on wider screens, so the class chips line up across the cards. */}
+                <span className="mt-1.5 block text-[0.6rem] leading-snug font-medium tracking-[0.16em] text-bronze uppercase sm:min-h-[2.75em] sm:text-[0.66rem]">{m.role}</span>
                 <span className="mt-2 flex flex-wrap gap-1.5 short:hidden">
                     {m.classes.slice(0, 3).map((c) => (
                         <span key={c} className="rounded-full border border-bronze/25 px-2.5 py-1 text-[0.62rem] text-cocoa">
