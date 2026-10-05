@@ -201,16 +201,25 @@ function PhotoRow({ m }: { m: TeamMember }) {
                 className={`no-scrollbar flex items-start snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 sm:scroll-px-10 sm:px-10 ${many ? 'md:cursor-grab md:active:cursor-grabbing' : ''}`}
             >
                 {m.photos.map((p, i) => (
-                    <img
+                    // Each photo gets its exact box from its own proportions: as wide as the panel allows,
+                    // never taller than the row, so it always shows whole (in every browser, before it loads too).
+                    <span
                         key={p.src}
-                        src={asset(p.src)}
-                        alt={`${m.name} — fotografie ${i + 1}`}
-                        loading={i === 0 ? 'eager' : 'lazy'}
-                        decoding="async"
-                        draggable={false}
-                        onLoad={update}
-                        className="h-auto max-h-[26rem] w-auto max-w-[calc(100vw-3rem)] shrink-0 snap-start rounded-[1.4rem] bg-sand select-none sm:max-h-[30rem] sm:max-w-[calc(100vw-5rem)] md:max-w-[520px]"
-                    />
+                        className="block shrink-0 snap-start overflow-hidden rounded-[1.4rem] bg-sand [--maxh:26rem] [--maxw:calc(100vw-3rem)] sm:[--maxh:30rem] sm:[--maxw:calc(100vw-5rem)] md:[--maxw:520px]"
+                        style={{ aspectRatio: `${p.w} / ${p.h}`, width: `min(var(--maxw), calc(var(--maxh) * ${(p.w / p.h).toFixed(4)}))` }}
+                    >
+                        <img
+                            src={asset(p.src)}
+                            alt={`${m.name} — fotografie ${i + 1}`}
+                            width={p.w}
+                            height={p.h}
+                            loading={i === 0 ? 'eager' : 'lazy'}
+                            decoding="async"
+                            draggable={false}
+                            onLoad={update}
+                            className="block h-full w-full object-cover select-none"
+                        />
+                    </span>
                 ))}
             </div>
             {many && (

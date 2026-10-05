@@ -335,7 +335,8 @@ export type TeamMember = {
   extra?: string;
   intro: string;
   /** `card`: a lighter copy sized for the card; the dialog shows `src`. */
-  photos: { src: string; card?: string; position?: string }[];
+  /** `w`/`h`: the photo's pixel size, so the story panel can size it exactly before it loads. */
+  photos: { src: string; w: number; h: number; card?: string; position?: string }[];
   classes: string[];
   schedule?: string[];
   bio: (string | string[])[];
@@ -349,9 +350,9 @@ export const team: TeamMember[] = [
     role: "Instructor Fitness & Aerobic, Personal Trainer",
     intro: "Cu peste 20 de ani de experiență în dans, balet, coregrafie și fitness, Cristina aduce în fiecare antrenament mișcare, tehnică, energie și expresivitate.",
     photos: [
-      { src: "/images/echipa/cristina-dom.jpg", card: "/images/echipa/cristina-dom-card.webp", position: "50% 50%" },
-      { src: "/images/echipa/cristina-dom-2.jpg" },
-      { src: "/images/echipa/cristina-dom-3.jpg" },
+      { src: "/images/echipa/cristina-dom.jpg", w: 1200, h: 1200, card: "/images/echipa/cristina-dom-card.webp", position: "50% 50%" },
+      { src: "/images/echipa/cristina-dom-2.jpg", w: 1200, h: 1097 },
+      { src: "/images/echipa/cristina-dom-3.jpg", w: 1200, h: 1200 },
     ],
     classes: ["Khai Bo", "Aero Dance", "Functional Shape", "Functional Step", "Boot Camp", "Personal Training"],
     bio: [
@@ -377,7 +378,7 @@ export const team: TeamMember[] = [
     role: "Instructor Fitness, Functional & Weight training",
     extra: "Fondator Strong & Fit Factory (online workout sessions)",
     intro: "De peste 10 ani, Ana este preocupată constant de mișcare și de construirea unui stil de viață sănătos, având formare în cadrul World Class.",
-    photos: [{ src: "/images/echipa/ana-voican.jpg", card: "/images/echipa/ana-voican-card.webp", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg" }],
+    photos: [{ src: "/images/echipa/ana-voican.jpg", w: 1145, h: 1373, card: "/images/echipa/ana-voican-card.webp", position: "50% 20%" }, { src: "/images/echipa/ana-voican-2.jpg", w: 1377, h: 1142 }],
     classes: ["HIIT & Tabata", "Abs & Glutes", "Body Sculpt"],
     schedule: ["Marți și joi: 18:30–19:20", "Miercuri și vineri: 08:30–09:30"],
     bio: [
@@ -397,9 +398,9 @@ export const team: TeamMember[] = [
     role: "Instructor Pilates & Nutriționist Integrativ",
     intro: "Cred într-o abordare a sănătății feminine în care mișcarea și alimentația nu funcționează separat, ci se completează.",
     photos: [
-      { src: "/images/echipa/irina-visan.jpg", card: "/images/echipa/irina-visan-card.webp", position: "60% 15%" },
-      { src: "/images/echipa/irina-visan-2.jpg" },
-      { src: "/images/echipa/irina-visan-3.jpg" },
+      { src: "/images/echipa/irina-visan.jpg", w: 1024, h: 1536, card: "/images/echipa/irina-visan-card.webp", position: "60% 15%" },
+      { src: "/images/echipa/irina-visan-2.jpg", w: 1024, h: 1536 },
+      { src: "/images/echipa/irina-visan-3.jpg", w: 1024, h: 1535 },
     ],
     classes: ["Pilates", "Consiliere nutrițională", "Workshopuri"],
     bio: [
@@ -417,8 +418,8 @@ export const team: TeamMember[] = [
     role: "Instructor certificat Aerobic & Fitness",
     intro: "Cu peste 20 de ani de experiență în aerobic și fitness, Valy este pasionată de mișcare, sănătate și energia pe care sportul o aduce în viața de zi cu zi.",
     photos: [
-      { src: "/images/echipa/valy-cirstea.jpg", card: "/images/echipa/valy-cirstea-card.webp", position: "50% 50%" },
-      { src: "/images/echipa/valy-cirstea-2.jpg" },
+      { src: "/images/echipa/valy-cirstea.jpg", w: 628, h: 1600, card: "/images/echipa/valy-cirstea-card.webp", position: "50% 50%" },
+      { src: "/images/echipa/valy-cirstea-2.jpg", w: 631, h: 1600 },
     ],
     classes: ["Aerobic", "Fitness", "Tonifiere"],
     bio: [
